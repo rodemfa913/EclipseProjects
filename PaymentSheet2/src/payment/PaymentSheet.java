@@ -2,7 +2,6 @@ package payment;
 
 import java.util.*;
 import payment.model.*;
-import payment.util.Pair;
 
 public class PaymentSheet {
 	private static HashMap<Integer, Employee> bkpEmployees, employees;
@@ -53,12 +52,9 @@ public class PaymentSheet {
 	}
 	
 	private static void addEmployee() {
-		for (int id : employees.keySet()) {
-			bkpEmployees.put(id, employees.get(id));
-		}
+		backUpData();
 		
 		Employee employee = new Employee();
-		
 		editInfo(employee);
 		employees.put(employeeCount, employee);
 		
@@ -68,14 +64,19 @@ public class PaymentSheet {
 		System.out.println("Empregado " + employee.name + " (id: " + (employeeCount++) + ") adicionado.");
 	}
 	
+	private static void backUpData() {
+		for (int id : employees.keySet()) {
+			bkpEmployees.put(id, employees.get(id));
+		}
+	}
+	
 	private static void editEmployee() {
-		Pair<Integer, Employee> pair = getEmployee();
-		if (pair == null) return;
+		backUpData();
 		
-		int id = pair.getFirst();
-		Employee bkpEmployee = pair.getSecond();
-		bkpEmployees.put(id, bkpEmployee);
-		Employee employee = new Employee(bkpEmployee);
+		int id = getEmployeeId();
+		if (id < 0) return;
+		
+		Employee employee = new Employee(employees.get(id));
 		editInfo(employee);
 		employees.put(id, employee);
 		
@@ -133,32 +134,27 @@ public class PaymentSheet {
 
 		System.out.println("Empregados (backup):");
 		for (int id : bkpEmployees.keySet()) {
-			System.out.println(id + ": " + bkpEmployees.get(id));
+			System.out.println("  " + id + ": " + bkpEmployees.get(id));
 		}
 	}
 	
-	private static Pair<Integer, Employee> getEmployee() {
+	private static int getEmployeeId() {
 		System.out.print("Id do empregado: ");
 		int id = input.nextInt(); input.nextLine();
-		
 		if (!employees.containsKey(id)) {
 			System.err.println("Não encontrado.");
-			return null;
+			return -1;
 		}
-		
-		Employee employee = employees.get(id);
-		
-		return new Pair<Integer, Employee>(id, employee);
+		return id;
 	}
 	
 	private static void removeEmployee() {
-		Pair<Integer, Employee> pair = getEmployee();
-		if (pair == null) return;
+		backUpData();
 		
-		int id = pair.getFirst();
-		Employee employee = pair.getSecond();
-		employees.remove(id);
-		bkpEmployees.put(id, employee);
+		int id = getEmployeeId();
+		if (id < 0) return;
+		
+		Employee employee = employees.remove(id);
 		
 		lastAction = Action.REMOVE;
 		redo = false;
