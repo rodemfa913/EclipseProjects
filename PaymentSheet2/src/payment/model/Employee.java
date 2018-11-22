@@ -22,4 +22,8 @@ public class Employee {
 		this.salary = other.salary;
 		this.type = other.type;
 	}
+	
+	@Override public String toString() {
+		return this.name + " (" + this.type.toString().toLowerCase() + ")";
+	}
 }

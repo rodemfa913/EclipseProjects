@@ -31,6 +31,9 @@ public class PaymentSheet {
 			if (option == 0) break;
 			
 			switch (option) {
+			case -1:
+				debug();
+				break;
 			case 1:
 				addEmployee();
 				break;
@@ -50,6 +53,10 @@ public class PaymentSheet {
 	}
 	
 	private static void addEmployee() {
+		for (int id : employees.keySet()) {
+			bkpEmployees.put(id, employees.get(id));
+		}
+		
 		Employee employee = new Employee();
 		
 		editInfo(employee);
@@ -116,6 +123,18 @@ public class PaymentSheet {
 		
 		System.out.print("Salário: ");
 		employee.salary = input.nextDouble(); input.nextLine();
+	}
+	
+	private static void debug() {
+		System.out.println("Empregados:");
+		for (int id : employees.keySet()) {
+			System.out.println("  " + id + ": " + employees.get(id));
+		}
+
+		System.out.println("Empregados (backup):");
+		for (int id : bkpEmployees.keySet()) {
+			System.out.println(id + ": " + bkpEmployees.get(id));
+		}
 	}
 	
 	private static Pair<Integer, Employee> getEmployee() {
