@@ -4,20 +4,52 @@ import java.util.*;
 import payment.model.*;
 
 public class PaymentSheet {
-	private static HashMap<Integer, String> actions;
+	private enum Action {
+		ADD, REMOVE, EDIT, LAUNCH_CARD, LAUNCH_SALE;
+		
+		public boolean doAction() {
+			switch (this) {
+			case ADD:
+				return addEmployee();
+			case EDIT:
+				return editEmployee();
+			case LAUNCH_CARD:
+				return launchPointCard();
+			case LAUNCH_SALE:
+				return launchSaleResult();
+			default:
+				return removeEmployee();
+			}
+		}
+		
+		@Override public String toString() {
+			switch (this) {
+			case ADD:
+				return "adicionar empregado";
+			case EDIT:
+				return "editar empregado";
+			case LAUNCH_CARD:
+				return "lançar cartão de ponto";
+			case LAUNCH_SALE:
+				return "lançar resultado de venda";
+			default:
+				return "remover empregado";
+			}
+		}
+	}
+	
+	private static ArrayList<Action> actions;
 	private static HashMap<Integer, Employee> bkpEmployees, employees;
 	private static int employeeCount;
 	private static Scanner input;
-	private static int lastAction;
+	private static Action lastAction;
 	private static boolean redo;
 	
 	public static void main(String[] args) {
-		actions = new HashMap<>();
-		actions.put(1, "adicionar empregado");
-		actions.put(2, "remover empregado");
-		actions.put(3, "editar empregado");
-		actions.put(6, "lançar cartão de ponto");
-		actions.put(7, "lançar resultado de venda");
+		actions = new ArrayList<>();
+		for (Action action : Action.values()) {
+			actions.add(action);
+		}
 		
 		bkpEmployees = new HashMap<>();
 		employees = new HashMap<>();
@@ -25,58 +57,40 @@ public class PaymentSheet {
 		
 		while (true) {
 			System.out.print("---\n 0 - sair\n");
-			for (int action : actions.keySet()) {
-				System.out.printf("%2d - %s\n", action, actions.get(action));
+			for (int a = 1; a <= actions.size(); a++) {
+				System.out.printf("%2d - %s\n", a, actions.get(a - 1));
 			}
 			System.out.print("99 - desfazer/refazer\n---\n");
 			System.out.print("Escolha uma ação: ");
-			int action = input.nextInt(); input.nextLine();
-			if (action == 0) break;
-			
-			boolean ok = false;
-			switch (action) {
-			case -1:
-				debug();
-				break;
-			case 1:
-				ok = addEmployee();
-				break;
-			case 2:
-				ok = removeEmployee();
-				break;
-			case 3:
-				ok = editEmployee();
-				break;
-			case 6:
-				ok = launchPointCard();
-				break;
-			case 7:
-				ok = launchSaleResult();
-			case 99:
-				undoLastAction();
-				break;
-			default:
-				System.err.println("Opção inválida.");
-			}
-			if (ok) {
-				lastAction = action;
-				redo = false;
-			}
+			int a = input.nextInt(); input.nextLine();
+			if (a == 0) break;
+			if (a == -1) debug();
+			else if (a == 99) undoLastAction();
+			else if (a >= 1 && a <= actions.size()) {
+				Action action = actions.get(a - 1);
+				if (action.doAction()) {
+					lastAction = action;
+					redo = false;
+				}
+			} else System.err.println("Opção inválida.");
 		}
 	}
 	
 	private static boolean addEmployee() {
-		backUpData();
+		copyData();
 		
 		Employee employee = new Employee();
 		editInfo(employee);
 		employees.put(employeeCount, employee);
 		
-		System.out.println("Empregado '" + (employeeCount++) + ": " + employee.name + "' adicionado.");
+		System.out.println(
+				"Empregado '" + (employeeCount++) +
+				": " + employee.name + "' adicionado."
+		);
 		return true;
 	}
 	
-	private static void backUpData() {
+	private static void copyData() {
 		for (int id : employees.keySet()) {
 			bkpEmployees.put(id, employees.get(id));
 		}
@@ -86,12 +100,14 @@ public class PaymentSheet {
 		int id = getEmployeeId();
 		if (id < 0) return false;
 		
-		backUpData();
+		copyData();
 		Employee employee = new Employee(employees.get(id));
 		editInfo(employee);
 		employees.put(id, employee);
 		
-		System.out.println("Empregado '" + id + ": " + employee.name + "' editado.");
+		System.out.println(
+				"Empregado '" + id + ": " + employee.name + "' editado."
+		);
 		return true;
 	}
 	
@@ -102,34 +118,34 @@ public class PaymentSheet {
 		System.out.print("Endereço: ");
 		employee.address = input.nextLine();
 		
-		System.out.print("---\nh - horista\na - assalariado\nc - comissionado\n---\n");
+		ArrayList<Employee.Type> types = new ArrayList<>();
+		for (Employee.Type type : Employee.Type.values()) types.add(type);
+		
+		System.out.println("---");
+		for (int t = 0; t < types.size(); t++) {
+			System.out.println(t + " - " + types.get(t));
+		}
+		System.out.println("---");
 		System.out.print("Tipo: ");
-		switch (input.nextLine()) {
-		case "h":
-			employee.type = Employee.Type.HOURLY;
-			break;
-		case "c":
-			employee.type = Employee.Type.COMMISSIONED;
+		int t = input.nextInt(); input.nextLine();
+		employee.type = types.get(t);
+		
+		if (employee.type == Employee.Type.COMMISSIONED) {
 			System.out.print("Comissão: ");
-			employee.commission = input.nextDouble();
-			input.nextLine();
-			break;
-		default:
-			employee.type = Employee.Type.SALARIED;
+			employee.commission = input.nextDouble(); input.nextLine();
 		}
 		
-		System.out.print("---\nc - cheque por correios\nm - cheque em mãos\nd - depósito em conta\n---\n");
-		System.out.print("Método de pagamento: ");
-		switch (input.nextLine()) {
-		case "c":
-			employee.paymentMethod = PaymentMethod.MAIL;
-			break;
-		case "m":
-			employee.paymentMethod = PaymentMethod.HANDS;
-			break;
-		default:
-			employee.paymentMethod = PaymentMethod.DEPOSIT;
+		ArrayList<PaymentMethod> methods = new ArrayList<>();
+		for (PaymentMethod method : PaymentMethod.values()) methods.add(method);
+		
+		System.out.println("---");
+		for (int m = 0; m < methods.size(); m++) {
+			System.out.println(m + " - " + methods.get(m));
 		}
+		System.out.println("---");
+		System.out.print("Método de pagamento: ");
+		int m = input.nextInt(); input.nextLine();
+		employee.paymentMethod = methods.get(m);
 		
 		System.out.print("Salário: ");
 		employee.salary = input.nextDouble(); input.nextLine();
@@ -167,7 +183,7 @@ public class PaymentSheet {
 			return false;
 		}
 		
-		backUpData();
+		copyData();
 		System.out.print("Horas trabalhadas: ");
 		int hours = input.nextInt(); input.nextLine();
 		employee.setPointCard(hours);
@@ -187,7 +203,7 @@ public class PaymentSheet {
 			return false;
 		}
 		
-		backUpData();
+		copyData();
 		SaleResult sale = new SaleResult();
 		
 		System.out.print("Data (DD MM YYYY): ");
@@ -211,7 +227,7 @@ public class PaymentSheet {
 		int id = getEmployeeId();
 		if (id < 0) return false;
 		
-		backUpData();
+		copyData();
 		Employee employee = employees.remove(id);
 		
 		System.out.println("Empregado '" + id + ": " + employee.name + "' removido.");
@@ -219,7 +235,7 @@ public class PaymentSheet {
 	}
 	
 	private static void undoLastAction() {
-		if (lastAction == 0) {
+		if (lastAction == null) {
 			System.err.println("Nenhuma ação para desfazer.");
 			return;
 		}
@@ -228,7 +244,7 @@ public class PaymentSheet {
 		employees = bkpEmployees;
 		bkpEmployees = swap;
 		
-		System.out.print("Ação '" + actions.get(lastAction));
+		System.out.print("Ação '" + lastAction);
 		if (redo) {
 			System.out.println("' refeita.");
 			redo = false;

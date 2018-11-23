@@ -3,7 +3,20 @@ package payment.model;
 import java.util.ArrayList;
 
 public class Employee {
-	public enum Type { COMMISSIONED, HOURLY, SALARIED }
+	public enum Type {
+		HOURLY, SALARIED, COMMISSIONED;
+		
+		@Override public String toString() {
+			switch (this) {
+			case HOURLY:
+				return "horista";
+			case SALARIED:
+				return "assalariado";
+			default:
+				return "comissionado";
+			}
+		}
+	}
 	
 	public String address;
 	private ArrayList<Integer> cards;
@@ -41,6 +54,7 @@ public class Employee {
 	}
 	
 	@Override public String toString() {
-		return this.name + " (" + this.type.toString().toLowerCase() + ")";
+		return this.name + ", " + this.type + ", " +
+				this.paymentMethod + ", " + this.salary;
 	}
 }
