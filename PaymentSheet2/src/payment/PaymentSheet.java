@@ -38,7 +38,6 @@ public class PaymentSheet {
 		}
 	}
 	
-	private static ArrayList<Action> actions;
 	private static HashMap<Integer, Employee> bkpEmployees, employees;
 	private static int employeeCount;
 	private static Scanner input;
@@ -46,7 +45,7 @@ public class PaymentSheet {
 	private static boolean redo;
 	
 	public static void main(String[] args) {
-		actions = new ArrayList<>();
+		ArrayList<Action> actions = new ArrayList<>();
 		for (Action action : Action.values()) {
 			actions.add(action);
 		}
