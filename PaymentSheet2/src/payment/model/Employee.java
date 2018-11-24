@@ -24,41 +24,46 @@ public class Employee {
 	public String name;
 	public PaymentMethod paymentMethod;
 	public double salary;
-	private ArrayList<SaleResult> sales;
+	public ArrayList<SaleResult> sales;
 	public double syndicateFee;
 	public String syndicateId;
 	public Type type;
 	
 	public Employee() {
+		super();
+		
 		this.cards = new ArrayList<>();
 		this.sales = new ArrayList<>();
 	}
 	
 	public Employee(Employee other) {
-		this();
+		super();
 		
 		this.address = other.address;
-		for (int hours : other.cards) this.setPointCard(hours);
+		this.cards = new ArrayList<>(other.cards);
 		this.commission = other.commission;
 		this.name = other.name;
 		this.paymentMethod = other.paymentMethod;
 		this.salary = other.salary;
-		for (SaleResult sale : other.sales) this.setSaleResult(sale);
+		this.sales = new ArrayList<>(other.sales);
 		this.syndicateFee = other.syndicateFee;
 		this.syndicateId = other.syndicateId;
 		this.type = other.type;
 	}
 	
-	public void setPointCard(int hours) {
-		this.cards.add(hours);
-	}
+	public void setPointCard(int hours) { this.cards.add(hours); }
 	
-	public void setSaleResult(SaleResult sale) {
-		if (!this.sales.contains(sale)) this.sales.add(sale);
-	}
+	public void setSaleResult(SaleResult sale) { this.sales.add(sale); }
 	
 	@Override public String toString() {
-		return this.name + ", " + this.type + ", " +
-				this.paymentMethod + ", " + this.salary;
+		String s = "---\nNome: " + this.name + "\nTipo: " + this.type;
+		
+		s += "\nCartões de ponto:";
+		for (int hour : this.cards) s += " " + hour;
+		
+		s += "\nResultados de venda:";
+		for (SaleResult sale : sales) s += "\n  " + sale;
+		s += "\n---";
+		return s;
 	}
 }

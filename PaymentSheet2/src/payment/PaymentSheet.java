@@ -5,7 +5,7 @@ import payment.model.*;
 
 public class PaymentSheet {
 	private enum Action {
-		ADD, REMOVE, EDIT, LAUNCH_CARD, LAUNCH_SALE, LAUNCH_FEE;
+		ADD, REMOVE, EDIT, SIGN_IN, LAUNCH_CARD, LAUNCH_SALE;
 		
 		public boolean doAction() {
 			switch (this) {
@@ -17,8 +17,8 @@ public class PaymentSheet {
 				return launchPointCard();
 			case LAUNCH_SALE:
 				return launchSaleResult();
-			case LAUNCH_FEE:
-				return launchServiceFee();
+			case SIGN_IN:
+				return signInSyndicate();
 			default:
 				return removeEmployee();
 			}
@@ -34,14 +34,16 @@ public class PaymentSheet {
 				return "lançar cartão de ponto";
 			case LAUNCH_SALE:
 				return "lançar resultado de venda";
+			case SIGN_IN:
+				return "entrar no sindicato";
 			default:
 				return "remover empregado";
 			}
 		}
 	}
 	
-	private static HashMap<Integer, Employee> bkpEmployees, employees;
 	private static int employeeCount;
+	private static HashMap<Integer, Employee> bkpEmployees, employees;
 	private static Scanner input;
 	private static Action lastAction;
 	private static boolean redo;
@@ -97,7 +99,21 @@ public class PaymentSheet {
 		for (int id : employees.keySet()) {
 			bkpEmployees.put(id, employees.get(id));
 		}
-		bkpSyndicate = syndicate;
+		bkpSyndicate = new Syndicate(syndicate);
+	}
+	
+	private static void debug() {
+		System.out.println("Empregados:");
+		for (int id : employees.keySet()) {
+			System.out.println("id " + id + ":");
+			System.out.println(employees.get(id));
+		}
+
+		System.out.println("Empregados (backup):");
+		for (int id : bkpEmployees.keySet()) {
+			System.out.println("id " + id + ":");
+			System.out.println(bkpEmployees.get(id));
+		}
 	}
 	
 	private static boolean editEmployee() {
@@ -155,34 +171,12 @@ public class PaymentSheet {
 		employee.salary = input.nextDouble(); input.nextLine();
 	}
 	
-	private static void debug() {
-		System.out.println("Empregados:");
-		for (int id : employees.keySet()) {
-			System.out.println("  " + id + ": " + employees.get(id));
-		}
-
-		System.out.println("Empregados (backup):");
-		for (int id : bkpEmployees.keySet()) {
-			System.out.println("  " + id + ": " + bkpEmployees.get(id));
-		}
-	}
-	
 	private static int getEmployeeId() {
 		System.out.print("Id do empregado: ");
 		int id = input.nextInt(); input.nextLine();
 		if (!employees.containsKey(id)) {
 			System.out.println("<Erro> Não encontrado.");
 			return -1;
-		}
-		return id;
-	}
-	
-	private static String getSyndicateMemberId() {
-		System.out.print("Id do membro do Sindicato: ");
-		String id = input.nextLine();
-		if (!syndicate.hasMember(id)) {
-			System.out.println("<Erro> Não encontrado.");
-			return null;
 		}
 		return id;
 	}
@@ -244,12 +238,6 @@ public class PaymentSheet {
 		return true;
 	}
 	
-	private static boolean launchServiceFee() {
-		String id = getSyndicateMemberId();
-		if (id == null) return false;
-		return true;
-	}
-	
 	private static boolean removeEmployee() {
 		int id = getEmployeeId();
 		if (id < 0) return false;
@@ -269,11 +257,20 @@ public class PaymentSheet {
 		
 		System.out.print("Id do membro do Sindicato: ");
 		String sid = input.nextLine();
+		if (syndicate.hasMember(sid)) {
+			System.out.println("<Erro> Membro já existente.");
+			return false;
+		}
 		
 		copyData();
 		Employee employee = new Employee(employees.get(id));
+		employee.syndicateId = sid;
+		
 		System.out.print("Taxa sindical: ");
 		employee.syndicateFee = input.nextDouble(); input.nextLine();
+		
+		employees.put(id, employee);
+		syndicate.setMember(sid, employee);
 		return true;
 	}
 	

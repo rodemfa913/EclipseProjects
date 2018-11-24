@@ -16,6 +16,8 @@ public class SimpleDate {
 	 * @param day 1 &lt;= day &lt;=28 for <strong>all</strong> months.
 	 */
 	public SimpleDate(int year, int month, int day) {
+		super();
+		
 		this.year = year;
 		
 		if (month <= 0) this.month = 1;
@@ -32,4 +34,8 @@ public class SimpleDate {
 	public int getMonth() { return this.month; }
 	
 	public int getYear() { return this.year; }
+	
+	@Override public String toString() {
+		return this.day + "/" + this.month + "/" + this.year;
+	}
 }
