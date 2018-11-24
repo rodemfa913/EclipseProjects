@@ -1,16 +1,16 @@
 package payment.model;
 
 public enum PaymentMethod {
-	DEPOSIT, HANDS, MAIL;
+	MAIL, HANDS, DEPOSIT;
 	
 	@Override public String toString() {
 		switch (this) {
-		case DEPOSIT:
-			return "depósito em conta";
+		case MAIL:
+			return "cheque por correios";
 		case HANDS:
 			return "cheque em mãos";
 		default:
-			return "cheque por correios";
+			return "depósito em conta";
 		}
 	}
 }

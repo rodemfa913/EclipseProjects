@@ -25,6 +25,8 @@ public class Employee {
 	public PaymentMethod paymentMethod;
 	public double salary;
 	private ArrayList<SaleResult> sales;
+	public double syndicateFee;
+	public String syndicateId;
 	public Type type;
 	
 	public Employee() {
@@ -42,6 +44,8 @@ public class Employee {
 		this.paymentMethod = other.paymentMethod;
 		this.salary = other.salary;
 		for (SaleResult sale : other.sales) this.setSaleResult(sale);
+		this.syndicateFee = other.syndicateFee;
+		this.syndicateId = other.syndicateId;
 		this.type = other.type;
 	}
 	
