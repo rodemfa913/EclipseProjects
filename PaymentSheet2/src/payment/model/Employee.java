@@ -21,10 +21,12 @@ public class Employee {
 	public String address;
 	private ArrayList<Integer> cards;
 	public double commission;
+	public int id;
 	public String name;
 	public PaymentMethod paymentMethod;
 	public double salary;
 	public ArrayList<SaleResult> sales;
+	public ArrayList<String> services;
 	public double syndicateFee;
 	public String syndicateId;
 	public Type type;
@@ -34,6 +36,7 @@ public class Employee {
 		
 		this.cards = new ArrayList<>();
 		this.sales = new ArrayList<>();
+		this.services = new ArrayList<>();
 	}
 	
 	public Employee(Employee other) {
@@ -42,10 +45,12 @@ public class Employee {
 		this.address = other.address;
 		this.cards = new ArrayList<>(other.cards);
 		this.commission = other.commission;
+		this.id = other.id;
 		this.name = other.name;
 		this.paymentMethod = other.paymentMethod;
 		this.salary = other.salary;
 		this.sales = new ArrayList<>(other.sales);
+		this.services = new ArrayList<>(other.services);
 		this.syndicateFee = other.syndicateFee;
 		this.syndicateId = other.syndicateId;
 		this.type = other.type;
@@ -55,6 +60,10 @@ public class Employee {
 	
 	public void setSaleResult(SaleResult sale) { this.sales.add(sale); }
 	
+	public void setService(String service) {
+		if (!this.services.contains(service)) this.services.add(service);
+	}
+	
 	@Override public String toString() {
 		String s = "---\nNome: " + this.name + "\nTipo: " + this.type;
 		
@@ -62,7 +71,8 @@ public class Employee {
 		for (int hour : this.cards) s += " " + hour;
 		
 		s += "\nResultados de venda:";
-		for (SaleResult sale : sales) s += "\n  " + sale;
+		for (SaleResult sale : this.sales) s += "\n  " + sale;
+		
 		s += "\n---";
 		return s;
 	}
