@@ -1,19 +1,19 @@
 package payment.model;
 
 /**
- * A simple date model.
- * All months have 28 days; a year has 12 months and always starts at Sunday.
- * There is no leap year.
+ * Um modelo simplificado de data.
+ * Todo mês tem 28 dias; um ano tem 12 meses e sempre começa num domingo.
+ * Não há ano bissexto.
  * @author Rodrigo &lt;rodrigo.araujo@ic.ufal.br&gt;
  */
 public class SimpleDate {
 	private int day, month, year;
 	
 	/**
-	 * Creates a new instance of SimpleDate.
-	 * @param year
-	 * @param month 1 &lt;= month &lt;= 12.
-	 * @param day 1 &lt;= day &lt;=28 for <strong>all</strong> months.
+	 * Cria uma nova instância de SimpleDate.
+	 * @param year ano
+	 * @param month mês: 1 &lt;= month &lt;= 12.
+	 * @param day dia: 1 &lt;= day &lt;=28 para <strong>todos</strong> os meses.
 	 */
 	public SimpleDate(int year, int month, int day) {
 		super();

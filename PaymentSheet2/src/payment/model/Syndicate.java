@@ -19,11 +19,13 @@ public class Syndicate {
 	}
 	
 	public Employee getMember(String id) { return this.members.get(id);	}
+	
 	public void setMember(String id, Employee member) {
 		this.members.put(id, member);
 	}
 	
 	public double getServiceFee(String id) { return this.services.get(id); }
+	
 	public void setService(String id, double fee) {
 		this.services.put(id, fee);
 	}

@@ -3,10 +3,10 @@ package payment;
 import java.util.*;
 import payment.model.*;
 
-public class PaymentSheet {
+public class PaymentSystem {
 	private enum Action {
 		ADD, REMOVE, EDIT, SIGN_IN, SIGN_OUT,
-		LAUNCH_CARD, LAUNCH_SALE, LAUNCH_FEE;
+		LAUNCH_CARD, LAUNCH_SALE, LAUNCH_FEE, ROLL;
 		
 		public boolean doAction() {
 			switch (this) {
@@ -24,6 +24,8 @@ public class PaymentSheet {
 				return launchSaleResult();
 			case LAUNCH_FEE:
 				return launchServiceFee();
+			case ROLL:
+				return rollPayment();
 			default:
 				return removeEmployee();
 			}
@@ -45,6 +47,8 @@ public class PaymentSheet {
 				return "lançar resultado de venda";
 			case LAUNCH_FEE:
 				return "lançar taxa de serviço";
+			case ROLL:
+				return "rodar folha de pagamento";
 			default:
 				return "remover empregado";
 			}
@@ -95,7 +99,7 @@ public class PaymentSheet {
 		Employee employee = new Employee();
 		editInfo(employee);
 		employee.id = employeeCount;
-		employees.put(employeeCount, employee);
+		setEmployee(employee);
 		
 		System.out.println(
 				"Empregado '" + (employeeCount++) +
@@ -136,7 +140,7 @@ public class PaymentSheet {
 		copyData();
 		Employee employee = new Employee(employees.get(id));
 		editInfo(employee);
-		employees.put(id, employee);
+		setEmployee(employee);
 		
 		System.out.println(
 				"Empregado '" + id + ": " + employee.name + "' editado."
@@ -220,7 +224,7 @@ public class PaymentSheet {
 		copyData();
 		employee = new Employee(employee);
 		employee.setPointCard(hours);
-		employees.put(id, employee);
+		setEmployee(employee);
 		
 		System.out.println(
 				"Cartão de ponto associado a '" + id +
@@ -252,7 +256,7 @@ public class PaymentSheet {
 		copyData();
 		employee = new Employee(employee);
 		employee.setSaleResult(new SaleResult(date, value));
-		employees.put(id, employee);
+		setEmployee(employee);
 		
 		System.out.println(
 				"Resultado de venda associado a '" + id +
@@ -304,26 +308,42 @@ public class PaymentSheet {
 		return true;
 	}
 	
+	private static boolean rollPayment() {
+		return false;
+	}
+	
+	private static void setEmployee(Employee employee) {
+		employees.put(employee.id, employee);
+		if (employee.syndicateId != null) {
+			syndicate.setMember(employee.syndicateId, employee);
+		}
+	}
+	
 	private static boolean signInSyndicate() {
 		int id = getEmployeeId();
 		if (id < 0) return false;
 		
+		Employee employee = employees.get(id);
+		if (employee.syndicateId != null) {
+			System.out.println("<Erro> Empregado já é membro do sindicato.");
+			return false;
+		}
+		
 		System.out.print("Id do membro do sindicato: ");
 		String sid = input.nextLine();
 		if (syndicate.hasMember(sid)) {
-			System.out.println("<Erro> Membro já existente.");
+			System.out.println("<Erro> Id já existente.");
 			return false;
 		}
 		
 		copyData();
-		Employee employee = new Employee(employees.get(id));
+		employee = new Employee(employee);
 		employee.syndicateId = sid;
 		
 		System.out.print("Taxa sindical: ");
 		employee.syndicateFee = input.nextDouble(); input.nextLine();
 		
-		employees.put(id, employee);
-		syndicate.setMember(sid, employee);
+		setEmployee(employee);
 		
 		System.out.println(
 				"Membro '" + sid + ": " + employee.name +
@@ -339,7 +359,7 @@ public class PaymentSheet {
 		copyData();
 		Employee member = new Employee(syndicate.removeMember(sid));
 		member.syndicateId = null;
-		employees.put(member.id, member);
+		setEmployee(member);
 		
 		System.out.println(
 				"Membro '" + sid + ": " + member.name +
