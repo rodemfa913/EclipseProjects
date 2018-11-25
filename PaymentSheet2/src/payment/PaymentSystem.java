@@ -183,7 +183,7 @@ public class PaymentSystem {
 	}
 	
 	private static SimpleDate getDate() {
-		System.out.print("Data (DD MM YYYY):");
+		System.out.print("Data (DD MM YYYY): ");
 		int day = input.nextInt();
 		int month = input.nextInt();
 		int year = input.nextInt(); input.nextLine();
