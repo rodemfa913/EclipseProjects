@@ -96,14 +96,12 @@ public class PaymentSystem {
 	private static boolean addEmployee() {
 		copyData();
 		
-		Employee employee = new Employee();
+		Employee employee = new Employee(employeeCount++);
 		editInfo(employee);
-		employee.id = employeeCount;
 		setEmployee(employee);
 		
 		System.out.println(
-				"Empregado '" + (employeeCount++) +
-				": " + employee.name + "' adicionado."
+				"Empregado " + employee.employeeInfo() + " adicionado."
 		);
 		return true;
 	}
@@ -115,14 +113,10 @@ public class PaymentSystem {
 	
 	private static void debug() {
 		System.out.println("Empregados:");
-		for (int id : employees.keySet()) {
-			System.out.println(id + ":");
-			System.out.println(employees.get(id));
-		}
+		for (int id : employees.keySet()) System.out.println(employees.get(id));
 
 		System.out.println("Empregados (backup):");
 		for (int id : bkpEmployees.keySet()) {
-			System.out.println("id " + id + ":");
 			System.out.println(bkpEmployees.get(id));
 		}
 		
@@ -143,7 +137,7 @@ public class PaymentSystem {
 		setEmployee(employee);
 		
 		System.out.println(
-				"Empregado '" + id + ": " + employee.name + "' editado."
+				"Empregado " + employee.employeeInfo() + " editado."
 		);
 		return true;
 	}
@@ -169,7 +163,7 @@ public class PaymentSystem {
 		
 		if (employee.type == Employee.Type.COMMISSIONED) {
 			System.out.print("Comissão: ");
-			employee.commission = input.nextDouble(); input.nextLine();
+			employee.setCommission(input.nextDouble()); input.nextLine();
 		}
 		
 		ArrayList<PaymentMethod> methods = new ArrayList<>();
@@ -186,6 +180,15 @@ public class PaymentSystem {
 		
 		System.out.print("Salário: ");
 		employee.salary = input.nextDouble(); input.nextLine();
+	}
+	
+	private static SimpleDate getDate() {
+		System.out.print("Data (DD MM YYYY):");
+		int day = input.nextInt();
+		int month = input.nextInt();
+		int year = input.nextInt(); input.nextLine();
+		
+		return new SimpleDate(year, month, day);
 	}
 	
 	private static int getEmployeeId() {
@@ -218,17 +221,19 @@ public class PaymentSystem {
 			return false;
 		}
 		
+		SimpleDate date = getDate();
+		
 		System.out.print("Horas trabalhadas: ");
 		int hours = input.nextInt(); input.nextLine();
 		
 		copyData();
 		employee = new Employee(employee);
-		employee.setPointCard(hours);
+		employee.getPointCards().add(new PointCard(date, hours));
 		setEmployee(employee);
 		
 		System.out.println(
-				"Cartão de ponto associado a '" + id +
-				": " + employee.name + "' lançado."
+				"Cartão de ponto associado a " +
+				employee.employeeInfo() + " lançado."
 		);
 		return true;
 	}
@@ -243,24 +248,19 @@ public class PaymentSystem {
 			return false;
 		}
 		
-		System.out.print("Data (DD MM YYYY): ");
-		int day = input.nextInt();
-		int month = input.nextInt();
-		int year = input.nextInt();
-		input.nextLine();
-		SimpleDate date = new SimpleDate(year, month, day);
+		SimpleDate date = getDate();
 		
 		System.out.print("Valor: ");
 		double value = input.nextDouble(); input.nextLine();
 		
 		copyData();
 		employee = new Employee(employee);
-		employee.setSaleResult(new SaleResult(date, value));
+		employee.getSaleResults().add(new SaleResult(date, value));
 		setEmployee(employee);
 		
 		System.out.println(
-				"Resultado de venda associado a '" + id +
-				": " + employee.name + "' lançado."
+				"Resultado de venda associado a " +
+				employee.employeeInfo() + " lançado."
 		);
 		return true;
 	}
@@ -284,12 +284,11 @@ public class PaymentSystem {
 			input.nextLine();
 		}
 		
-		employees.put(member.id, member);
-		syndicate.setMember(sid, member);
+		setEmployee(member);
 		
 		System.out.println(
-				"Taxa de serviço associada a '" +
-				sid + ": " + member + "' lançada."
+				"Taxa de serviço associada a " +
+				member.memberInfo() + " lançada."
 		);
 		return true;
 	}
@@ -303,17 +302,59 @@ public class PaymentSystem {
 		syndicate.removeMember(employee.syndicateId);
 		
 		System.out.println(
-				"Empregado '" + id + ": " +
-				employee.name + "' removido.");
+				"Empregado " + employee.employeeInfo() + " removido."
+		);
 		return true;
 	}
 	
 	private static boolean rollPayment() {
-		return false;
+		SimpleDate date = getDate();
+		ArrayList<Payment> payments = new ArrayList<>();
+		copyData();
+		for (int id : employees.keySet()) {
+			Employee employee = employees.get(id);
+			double value = 0.0;
+			switch (employee.type) {
+			case HOURLY:
+				if (date.getDayOfWeek() != SimpleDate.DayOfWeek.FRIDAY) break;
+				employee = new Employee(employee);
+				ArrayList<PointCard> cards = employee.getPointCards();
+				for (PointCard card : cards) {
+					int hours = card.getHours();
+					value += employee.salary + hours;
+					if (hours > 8) value += 0.5 * (hours - 8);
+				}
+				cards.clear();
+				setEmployee(employee);
+				break;
+			case COMMISSIONED:
+				if (
+						date.getDayOfWeek() != SimpleDate.DayOfWeek.FRIDAY ||
+						date.getWeekOfMonth() % 2 != 0
+				) break;
+				employee = new Employee(employee);
+				value = employee.salary / 2;
+				ArrayList<SaleResult> sales = employee.getSaleResults();
+				for (SaleResult sale : sales) {
+					value += employee.getCommission() * sale.getValue();
+				}
+				sales.clear();
+				setEmployee(employee);
+				break;
+			default:
+				if (date.isLastBusinessDay()) value = employee.salary;
+			}
+			if (value > 0.0) payments.add(new Payment(employee, value));
+		}
+		System.out.println("Folha de pagamento para " + date + ":");
+		for (Payment payment : payments) {
+			System.out.println(payment);
+		}
+		return true;
 	}
 	
 	private static void setEmployee(Employee employee) {
-		employees.put(employee.id, employee);
+		employees.put(employee.getId(), employee);
 		if (employee.syndicateId != null) {
 			syndicate.setMember(employee.syndicateId, employee);
 		}
@@ -323,8 +364,8 @@ public class PaymentSystem {
 		int id = getEmployeeId();
 		if (id < 0) return false;
 		
-		Employee employee = employees.get(id);
-		if (employee.syndicateId != null) {
+		Employee member = employees.get(id);
+		if (member.syndicateId != null) {
 			System.out.println("<Erro> Empregado já é membro do sindicato.");
 			return false;
 		}
@@ -337,17 +378,16 @@ public class PaymentSystem {
 		}
 		
 		copyData();
-		employee = new Employee(employee);
-		employee.syndicateId = sid;
+		member = new Employee(member);
+		member.syndicateId = sid;
 		
 		System.out.print("Taxa sindical: ");
-		employee.syndicateFee = input.nextDouble(); input.nextLine();
+		member.syndicateFee = input.nextDouble(); input.nextLine();
 		
-		setEmployee(employee);
+		setEmployee(member);
 		
 		System.out.println(
-				"Membro '" + sid + ": " + employee.name +
-				"' adicionado ao sindicato."
+				"Membro " + member.memberInfo() + " adicionado ao sindicato."
 		);
 		return true;
 	}
@@ -362,8 +402,7 @@ public class PaymentSystem {
 		setEmployee(member);
 		
 		System.out.println(
-				"Membro '" + sid + ": " + member.name +
-				"' removido do sindicato."
+				"Membro " + member.memberInfo() + " removido do sindicato."
 		);
 		return true;
 	}

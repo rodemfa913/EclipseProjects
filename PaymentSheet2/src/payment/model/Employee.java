@@ -19,21 +19,22 @@ public class Employee {
 	}
 	
 	public String address;
-	private ArrayList<Integer> cards;
-	public double commission;
-	public int id;
+	private ArrayList<PointCard> cards;
+	private double commission;
+	private int id;
 	public String name;
 	public PaymentMethod paymentMethod;
 	public double salary;
-	public ArrayList<SaleResult> sales;
-	public ArrayList<String> services;
+	private ArrayList<SaleResult> sales;
+	private ArrayList<String> services;
 	public double syndicateFee;
 	public String syndicateId;
 	public Type type;
 	
-	public Employee() {
+	public Employee(int id) {
 		super();
 		
+		this.id = id;
 		this.cards = new ArrayList<>();
 		this.sales = new ArrayList<>();
 		this.services = new ArrayList<>();
@@ -56,19 +57,42 @@ public class Employee {
 		this.type = other.type;
 	}
 	
-	public void setPointCard(int hours) { this.cards.add(hours); }
+	public double getCommission() { return this.commission; }
 	
-	public void setSaleResult(SaleResult sale) { this.sales.add(sale); }
+	public void setCommission(double commission) {
+		if (commission < 0.0) this.commission = 0.0;
+		else if (commission <= 1.0) this.commission = commission;
+		else this.commission = 1.0;
+	}
+	
+	public int getId() { return this.id; }
+	
+	public ArrayList<PointCard> getPointCards() {
+		return this.cards;
+	}
+	
+	public ArrayList<SaleResult> getSaleResults() { return this.sales; }
 	
 	public void setService(String service) {
 		if (!this.services.contains(service)) this.services.add(service);
 	}
 	
+	public String employeeInfo() {
+		return "'" + this.id + ": " + this.name + "'";
+	}
+	
+	public String memberInfo() {
+		return "'" + this.syndicateId + ": " + this.name + "'";
+	}
+	
 	@Override public String toString() {
-		String s = "---\nNome: " + this.name + "\nTipo: " + this.type;
+		String s =
+				"---\nId: " + this.id + "Nome: " +
+				this.name + "\nTipo: " + this.type
+		;
 		
 		s += "\nCartões de ponto:";
-		for (int hour : this.cards) s += " " + hour;
+		for (PointCard card : this.cards) s += "\n  " + card;
 		
 		s += "\nResultados de venda:";
 		for (SaleResult sale : this.sales) s += "\n  " + sale;

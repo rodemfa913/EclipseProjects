@@ -7,6 +7,10 @@ package payment.model;
  * @author Rodrigo &lt;rodrigo.araujo@ic.ufal.br&gt;
  */
 public class SimpleDate {
+	public enum DayOfWeek {
+		SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
+	}
+	
 	private int day, month, year;
 	
 	/**
@@ -31,9 +35,34 @@ public class SimpleDate {
 	
 	public int getDay() { return this.day; }
 	
+	public DayOfWeek getDayOfWeek() {
+		switch (this.day % 7) {
+		case 1:
+			return DayOfWeek.MONDAY;
+		case 2:
+			return DayOfWeek.TUESDAY;
+		case 3:
+			return DayOfWeek.WEDNESDAY;
+		case 4:
+			return DayOfWeek.THURSDAY;
+		case 5:
+			return DayOfWeek.FRIDAY;
+		case 6:
+			return DayOfWeek.SATURDAY;
+		default:
+			return DayOfWeek.SUNDAY;
+		}
+	}
+	
 	public int getMonth() { return this.month; }
 	
+	public int getWeekOfMonth() { return (this.day - 1) / 7 + 1; }
+	
 	public int getYear() { return this.year; }
+	
+	public boolean isLastBusinessDay() {
+		return this.day == 27;
+	}
 	
 	@Override public String toString() {
 		return this.day + "/" + this.month + "/" + this.year;
