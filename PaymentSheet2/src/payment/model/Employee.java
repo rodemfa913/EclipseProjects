@@ -23,7 +23,7 @@ public class Employee {
 	private double commission;
 	private int id;
 	public String name;
-	public PaymentMethod paymentMethod;
+	public Payment.Method paymentMethod;
 	public double salary;
 	private ArrayList<SaleResult> sales;
 	private ArrayList<String> services;
@@ -67,11 +67,13 @@ public class Employee {
 	
 	public int getId() { return this.id; }
 	
-	public ArrayList<PointCard> getPointCards() {
-		return this.cards;
-	}
+	public ArrayList<PointCard> getPointCards() { return this.cards; }
 	
 	public ArrayList<SaleResult> getSaleResults() { return this.sales; }
+	
+	public ArrayList<String> getServices() {
+		return new ArrayList<>(this.services);
+	}
 	
 	public void setService(String service) {
 		if (!this.services.contains(service)) this.services.add(service);
@@ -87,15 +89,21 @@ public class Employee {
 	
 	@Override public String toString() {
 		String s =
-				"---\nId: " + this.id + "Nome: " +
-				this.name + "\nTipo: " + this.type
+				"---\nId: " + this.id + "\nNome: " + this.name +
+				"\nTipo: " + this.type + "\nSalário: " + this.salary;
 		;
 		
-		s += "\nCartões de ponto:";
-		for (PointCard card : this.cards) s += "\n  " + card;
-		
-		s += "\nResultados de venda:";
-		for (SaleResult sale : this.sales) s += "\n  " + sale;
+		switch (this.type) {
+		case HOURLY:
+			s += "\nCartões de ponto:";
+			for (PointCard card : this.cards) s += "\n  " + card;
+			break;
+		case COMMISSIONED:
+			s += "\nResultados de venda:";
+			for (SaleResult sale : this.sales) s += "\n  " + sale;
+			break;
+		default:
+		}
 		
 		s += "\n---";
 		return s;

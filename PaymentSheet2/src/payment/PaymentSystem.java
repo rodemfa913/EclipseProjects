@@ -162,12 +162,14 @@ public class PaymentSystem {
 		employee.type = types.get(t);
 		
 		if (employee.type == Employee.Type.COMMISSIONED) {
-			System.out.print("Comissão: ");
+			System.out.print("Comissão (0,0 - 1,0): ");
 			employee.setCommission(input.nextDouble()); input.nextLine();
 		}
 		
-		ArrayList<PaymentMethod> methods = new ArrayList<>();
-		for (PaymentMethod method : PaymentMethod.values()) methods.add(method);
+		ArrayList<Payment.Method> methods = new ArrayList<>();
+		for (Payment.Method method : Payment.Method.values()) {
+			methods.add(method);
+		}
 		
 		System.out.println("---");
 		for (int m = 0; m < methods.size(); m++) {
@@ -204,7 +206,7 @@ public class PaymentSystem {
 	private static String getSyndicateMemberId() {
 		System.out.print("Id do membro do sindicato: ");
 		String sid = input.nextLine();
-		if (!syndicate.hasMember(sid)) {
+		if (!syndicate.getMembers().containsKey(sid)) {
 			System.out.println("<Erro> Não encontrado.");
 			return null;
 		}
@@ -273,15 +275,15 @@ public class PaymentSystem {
 		String service = input.nextLine();
 		
 		copyData();
-		Employee member = new Employee(syndicate.getMember(sid));
+		Employee member = new Employee(syndicate.getMembers().get(sid));
 		member.setService(service);
 		
 		System.out.print("Taxa: ");
-		if (syndicate.hasService(service)) {
-			System.out.println(syndicate.getServiceFee(service));
+		HashMap<String, Double> services = syndicate.getServices();
+		if (services.containsKey(service)) {
+			System.out.println(services.get(service));
 		} else {
-			syndicate.setService(service, input.nextDouble());
-			input.nextLine();
+			services.put(service, input.nextDouble()); input.nextLine();
 		}
 		
 		setEmployee(member);
@@ -299,7 +301,7 @@ public class PaymentSystem {
 		
 		copyData();
 		Employee employee = employees.remove(id);
-		syndicate.removeMember(employee.syndicateId);
+		syndicate.getMembers().remove(employee.syndicateId);
 		
 		System.out.println(
 				"Empregado " + employee.employeeInfo() + " removido."
@@ -311,12 +313,16 @@ public class PaymentSystem {
 		SimpleDate date = getDate();
 		ArrayList<Payment> payments = new ArrayList<>();
 		copyData();
+		
 		for (int id : employees.keySet()) {
 			Employee employee = employees.get(id);
 			double value = 0.0;
+			int feeFraction = 0;
+			
 			switch (employee.type) {
 			case HOURLY:
 				if (date.getDayOfWeek() != SimpleDate.DayOfWeek.FRIDAY) break;
+				
 				employee = new Employee(employee);
 				ArrayList<PointCard> cards = employee.getPointCards();
 				for (PointCard card : cards) {
@@ -324,6 +330,9 @@ public class PaymentSystem {
 					value += employee.salary + hours;
 					if (hours > 8) value += 0.5 * (hours - 8);
 				}
+				
+				if (employee.syndicateId != null) feeFraction = 4;
+				
 				cards.clear();
 				setEmployee(employee);
 				break;
@@ -332,20 +341,34 @@ public class PaymentSystem {
 						date.getDayOfWeek() != SimpleDate.DayOfWeek.FRIDAY ||
 						date.getWeekOfMonth() % 2 != 0
 				) break;
+				
 				employee = new Employee(employee);
 				value = employee.salary / 2;
 				ArrayList<SaleResult> sales = employee.getSaleResults();
 				for (SaleResult sale : sales) {
 					value += employee.getCommission() * sale.getValue();
 				}
+				
+				if (employee.syndicateId != null) feeFraction = 2;
+				
 				sales.clear();
 				setEmployee(employee);
 				break;
 			default:
 				if (date.isLastBusinessDay()) value = employee.salary;
+				if (employee.syndicateId != null) feeFraction = 1;
 			}
+			
+			if (feeFraction != 0) {
+				value -= employee.syndicateFee / feeFraction;
+				for (String service : employee.getServices()) {
+					value -= syndicate.getServices().get(service) / feeFraction;
+				}
+			}
+			
 			if (value > 0.0) payments.add(new Payment(employee, value));
 		}
+		
 		System.out.println("Folha de pagamento para " + date + ":");
 		for (Payment payment : payments) {
 			System.out.println(payment);
@@ -356,7 +379,7 @@ public class PaymentSystem {
 	private static void setEmployee(Employee employee) {
 		employees.put(employee.getId(), employee);
 		if (employee.syndicateId != null) {
-			syndicate.setMember(employee.syndicateId, employee);
+			syndicate.getMembers().put(employee.syndicateId, employee);
 		}
 	}
 	
@@ -372,7 +395,7 @@ public class PaymentSystem {
 		
 		System.out.print("Id do membro do sindicato: ");
 		String sid = input.nextLine();
-		if (syndicate.hasMember(sid)) {
+		if (syndicate.getMembers().containsKey(sid)) {
 			System.out.println("<Erro> Id já existente.");
 			return false;
 		}
@@ -397,7 +420,7 @@ public class PaymentSystem {
 		if (sid == null) return false;
 		
 		copyData();
-		Employee member = new Employee(syndicate.removeMember(sid));
+		Employee member = new Employee(syndicate.getMembers().remove(sid));
 		member.syndicateId = null;
 		setEmployee(member);
 		

@@ -38,19 +38,19 @@ public class SimpleDate {
 	public DayOfWeek getDayOfWeek() {
 		switch (this.day % 7) {
 		case 1:
-			return DayOfWeek.MONDAY;
-		case 2:
-			return DayOfWeek.TUESDAY;
-		case 3:
-			return DayOfWeek.WEDNESDAY;
-		case 4:
-			return DayOfWeek.THURSDAY;
-		case 5:
-			return DayOfWeek.FRIDAY;
-		case 6:
-			return DayOfWeek.SATURDAY;
-		default:
 			return DayOfWeek.SUNDAY;
+		case 2:
+			return DayOfWeek.MONDAY;
+		case 3:
+			return DayOfWeek.TUESDAY;
+		case 4:
+			return DayOfWeek.WEDNESDAY;
+		case 5:
+			return DayOfWeek.THURSDAY;
+		case 6:
+			return DayOfWeek.FRIDAY;
+		default:
+			return DayOfWeek.SATURDAY;
 		}
 	}
 	

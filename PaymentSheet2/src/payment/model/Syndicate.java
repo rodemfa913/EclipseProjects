@@ -18,34 +18,27 @@ public class Syndicate {
 		this.services = new HashMap<>(other.services);
 	}
 	
-	public Employee getMember(String id) { return this.members.get(id);	}
+	public HashMap<String, Employee> getMembers() { return this.members; }
 	
-	public void setMember(String id, Employee member) {
-		this.members.put(id, member);
-	}
-	
-	public double getServiceFee(String id) { return this.services.get(id); }
-	
-	public void setService(String id, double fee) {
-		this.services.put(id, fee);
-	}
-	
-	public boolean hasMember(String id) { return this.members.containsKey(id); }
-	
-	public boolean hasService(String id) {
-		return this.services.containsKey(id);
-	}
-	
-	public Employee removeMember(String id) {
-		return this.members.remove(id);
-	}
+	public HashMap<String, Double> getServices() { return this.services; }
 	
 	@Override public String toString() {
-		String s = "---\nMembros:";
+		String s = "---";
 		
-		for (String id : this.members.keySet()) {
-			Employee member = this.members.get(id);
-			s += "\n  " + id + ": " + member.name;
+		if (!this.members.isEmpty()) {
+			s += "\nMembros:";
+			for (String id : this.members.keySet()) {
+				Employee member = this.members.get(id);
+				s += "\n  " + id + ": " + member.name;
+			}
+		}
+		
+		if (!this.services.isEmpty()) {
+			s += "\nServiços: ";
+			for (String service : this.services.keySet()) {
+				double fee = this.services.get(service);
+				s += "\n  " + service + ": " + fee;
+			}
 		}
 		
 		s += "\n---";
