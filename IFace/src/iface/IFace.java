@@ -5,12 +5,18 @@ import iface.model.User;
 
 public class IFace {
 	private enum Action {
-		SIGN_UP, SIGN_OUT;
+		SIGN_UP, SIGN_OUT, EDIT_PROFILE, ADD_FRIEND;
 		
 		public void doAction() {
 			switch (this) {
 			case SIGN_OUT:
 				signOut();
+				break;
+			case EDIT_PROFILE:
+				editProfile();
+				break;
+			case ADD_FRIEND:
+				addFriend();
 				break;
 			default:
 				signUp();
@@ -21,6 +27,10 @@ public class IFace {
 			switch (this) {
 			case SIGN_OUT:
 				return "remover conta";
+			case EDIT_PROFILE:
+				return "editar perfil";
+			case ADD_FRIEND:
+				return "adicionar amigo";
 			default:
 				return "criar conta";
 			}
@@ -42,7 +52,7 @@ public class IFace {
 		}
 		
 		while (true) {
-			System.out.print("---\n 0 - sair\n");
+			System.out.println("---\n 0 - sair");
 			int a;
 			for (a = 1; a <= actions.size(); a++) {
 				System.out.printf("%2d - %s\n", a, actions.get(a - 1));
@@ -51,8 +61,70 @@ public class IFace {
 			a = input.nextInt(); input.nextLine();
 			
 			if (a == 0) break;
-			if (a >= 1 && a <= actions.size()) actions.get(a - 1).doAction();
-			else System.out.println("<Erro> Opção inválida.");
+			
+			if (a == -1) debug();
+			else if (a >= 1 && a <= actions.size()) {
+				actions.get(a - 1).doAction();
+			} else System.out.println("<Erro> Opção inválida.");
+		}
+	}
+	
+	private static void addFriend() {
+		User user = signIn();
+		if (user == null) return;
+		
+		HashMap<String, User> friendRequests = user.getFriendRequests();
+		User friend;
+		if (!friendRequests.isEmpty()) {
+			System.out.println("Solicitações de amizade pendentes:");
+			for (String requestLogin : friendRequests.keySet()) {
+				friend = friendRequests.get(requestLogin);
+				System.out.println("Usuário: " + friend.getName());
+				System.out.print("Aceitar? (s/n): ");
+				if (input.nextLine().equals("s")) {
+					user.getFriends().put(requestLogin, friend);
+					friend.getFriends().put(user.getLogin(), user);
+				}
+			}
+			friendRequests.clear();
+			return;
+		}
+		
+		System.out.print("Login do amigo: ");
+		String friendLogin = input.nextLine();
+		if (!users.containsKey(friendLogin)) {
+			System.out.println("<Erro> Login não encontrado.");
+			return;
+		}
+		
+		friend = users.get(friendLogin);
+		friend.getFriendRequests().put(user.getLogin(), user);
+		
+		System.out.println(
+				"Solicitação de amizade enviada para " + friend.getName() + "."
+		);
+	}
+	
+	private static void debug() {
+		System.out.println("Usuários:\n---");
+		for (String login : users.keySet()) {
+			System.out.println(users.get(login));
+			System.out.println("Senha: " + passwords.get(login) + "\n---");
+		}
+	}
+	
+	private static void editProfile() {
+		User user = signIn();
+		if (user == null) return;
+		
+		HashMap<String, String> profile = user.getProfile();
+		while (true) {
+			System.out.print("Atributo ('0' para encerrar): ");
+			String attribute = input.nextLine();
+			if (attribute.isEmpty() || attribute.equals("0")) break;
+			
+			System.out.print("Valor: ");
+			profile.put(attribute, input.nextLine());
 		}
 	}
 	
