@@ -3,22 +3,28 @@ package iface.model;
 import java.util.*;
 
 public class User {
+   private HashMap<String, Community> communities, ownCommunities;
    private HashMap<String, User> friendRequests, friends;
-   private String login;
-   private String name;
+   private String login, name;
    private HashMap<String, String> profile;
    private HashMap<String, ArrayList<Message>> receivedMessages, sentMessages;
 
    public User(String login) {
       super();
       
+      this.communities = new HashMap<>();
       this.friendRequests = new HashMap<>();
       this.friends = new HashMap<>();
       this.login = login;
+      this.ownCommunities = new HashMap<>();
       this.profile = new HashMap<>();
       this.receivedMessages = new HashMap<>();
       this.sentMessages = new HashMap<>();
       this.setName(null);
+   }
+
+   public HashMap<String, Community> getCommunities() {
+      return this.communities;
    }
 
    public HashMap<String, User> getFriendRequests() {
@@ -34,6 +40,10 @@ public class User {
    public void setName(String name) {
       if (name == null || name.isEmpty()) this.name = "nenhum";
       else this.name = name;
+   }
+
+   public HashMap<String, Community> getOwnCommunities() {
+      return this.ownCommunities;
    }
 
    public HashMap<String, String> getProfile() { return this.profile; }

@@ -5,21 +5,24 @@ import iface.model.*;
 
 public class IFace {
    private enum Action {
-      SIGN_UP, SIGN_OUT, EDIT_PROFILE, ADD_FRIEND, SEND_MESSAGE;
+      SIGN_UP, SIGN_OUT, EDIT_PROFILE, ADD_FRIEND, SEND_MESSAGE, ADD_COMMUNITY;
 
       public void doAction() {
          switch (this) {
-         case SIGN_OUT:
-            signOut();
-            break;
-         case EDIT_PROFILE:
-            editProfile();
+         case ADD_COMMUNITY:
+            addCommunity();
             break;
          case ADD_FRIEND:
             addFriend();
             break;
+         case EDIT_PROFILE:
+            editProfile();
+            break;
          case SEND_MESSAGE:
             sendMessage();
+            break;
+         case SIGN_OUT:
+            signOut();
             break;
          default:
             signUp();
@@ -28,25 +31,29 @@ public class IFace {
 
       @Override public String toString() {
          switch (this) {
-         case SIGN_OUT:
-            return "remover conta";
-         case EDIT_PROFILE:
-            return "editar perfil";
+         case ADD_COMMUNITY:
+            return "criar comunidade";
          case ADD_FRIEND:
             return "adicionar amigo";
+         case EDIT_PROFILE:
+            return "editar perfil";
          case SEND_MESSAGE:
             return "enviar mensagem";
+         case SIGN_OUT:
+            return "remover conta";
          default:
             return "criar conta";
          }
       }
    }
 
+   private static HashMap<String, Community> communities;
    private static Scanner input;
    private static HashMap<String, String> passwords;
    private static HashMap<String, User> users;
 
    public static void main(String[] args) {
+      communities = new HashMap<>();
       input = new Scanner(System.in);
       passwords = new HashMap<>();
       users = new HashMap<>();
@@ -72,6 +79,29 @@ public class IFace {
       }
    }
 
+   private static void addCommunity() {
+      User owner = signIn();
+      if (owner == null) return;
+
+      System.out.print("Nome da comunidade: ");
+      String name = input.nextLine();
+      if (name.isEmpty()) name = "0";
+      if (communities.containsKey(name)) {
+         System.out.println("<Erro> Comunidade já existente.");
+         return;
+      }
+
+      Community community = new Community(name, owner);
+      owner.getOwnCommunities().put(name, community);
+      community.getMembers().put(owner.getLogin(), owner);
+      owner.getCommunities().put(name, community);
+
+      System.out.print("Descrição: ");
+      community.setDescription(input.nextLine());
+
+      communities.put(name, community);
+   }
+
    private static void addFriend() {
       User user = signIn();
       if (user == null) return;
@@ -88,6 +118,7 @@ public class IFace {
             if (input.nextLine().equals("s")) {
                user.getFriends().put(requestLogin, friend);
                friend.getFriends().put(user.getLogin(), user);
+               System.out.println("Amigo " + friend.getName() + " adicionado.");
             }
          }
 
@@ -164,6 +195,8 @@ public class IFace {
          to.getReceivedMessages().put(from.getLogin(), messages);
       }
       messages.add(message);
+      
+      System.out.println("Mensagem enviada para " + to.getName() + ".");
    }
 
    private static User signIn() {
@@ -213,10 +246,12 @@ public class IFace {
    private static void signUp() {
       System.out.print("Login: ");
       String login = input.nextLine();
+      if (login.isEmpty()) login = "0";
       if (users.containsKey(login)) {
          System.out.println("<Erro> Login já existente.");
          return;
       }
+
       User user = new User(login);
 
       System.out.print("Senha: ");
