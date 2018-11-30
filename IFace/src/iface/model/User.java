@@ -6,8 +6,8 @@ public class User {
    private HashMap<String, Community> communities, ownCommunities;
    private HashMap<String, User> friendRequests, friends;
    private String login, name;
+   private HashMap<String, ArrayList<Message>> messages;
    private HashMap<String, String> profile;
-   private HashMap<String, ArrayList<Message>> receivedMessages, sentMessages;
 
    public User(String login) {
       super();
@@ -16,10 +16,9 @@ public class User {
       this.friendRequests = new HashMap<>();
       this.friends = new HashMap<>();
       this.login = login;
+      this.messages = new HashMap<>();
       this.ownCommunities = new HashMap<>();
       this.profile = new HashMap<>();
-      this.receivedMessages = new HashMap<>();
-      this.sentMessages = new HashMap<>();
       this.setName(null);
    }
 
@@ -48,19 +47,23 @@ public class User {
 
    public HashMap<String, String> getProfile() { return this.profile; }
 
-   public HashMap<String, ArrayList<Message>> getReceivedMessages() {
-      return this.receivedMessages;
+   public HashMap<String, ArrayList<Message>> getMessages() {
+      return this.messages;
    }
 
-   public HashMap<String, ArrayList<Message>> getSentMessages() {
-      return this.sentMessages;
+   public String printProfile() {
+      String p = "";
+      boolean first = true;
+      for (String attribute : this.profile.keySet()) {
+         if (first) first = false;
+         else p += "\n";
+         p += attribute + ": " + profile.get(attribute);
+      }
+      return p;
    }
 
    @Override public String toString() {
-      String s = "Login: " + this.login + "\nNome: " + this.name;
-      for (String attribute : profile.keySet()) {
-         s += "\n" + attribute + ": " + profile.get(attribute);
-      }
-      return s;
+      return "Login: " + this.login + "\nNome: " +
+            this.name + "\n" + this.printProfile();
    }
 }

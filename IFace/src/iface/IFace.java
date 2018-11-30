@@ -6,7 +6,7 @@ import iface.model.*;
 public class IFace {
    private enum Action {
       SIGN_UP, SIGN_OUT, EDIT_PROFILE, ADD_FRIEND, SEND_MESSAGE,
-      ADD_COMMUNITY, ENTER_COMMUNITY, ADD_MEMBERS;
+      ADD_COMMUNITY, ENTER_COMMUNITY, ADD_MEMBERS, VIEW_INFO;
 
       public void doAction() {
          switch (this) {
@@ -24,6 +24,8 @@ public class IFace {
             sendMessage(); break;
          case SIGN_OUT:
             signOut(); break;
+         case VIEW_INFO:
+            viewInfo(); break;
          default:
             signUp();
          }
@@ -45,6 +47,8 @@ public class IFace {
             return "enviar mensagem";
          case SIGN_OUT:
             return "remover conta";
+         case VIEW_INFO:
+            return "visualizar informações";
          default:
             return "criar conta";
          }
@@ -271,13 +275,12 @@ public class IFace {
          Message message = new Message(from, to);
          message.setContent(content);
 
-         HashMap<String, ArrayList<Message>> sentMessages =
-               from.getSentMessages();
-         ArrayList<Message> messages = sentMessages.get(toLogin);
+         HashMap<String, ArrayList<Message>> messageLists = from.getMessages();
+         ArrayList<Message> messages = messageLists.get(toLogin);
          if (messages == null) {
             messages = new ArrayList<>();
-            sentMessages.put(toLogin, messages);
-            to.getReceivedMessages().put(fromLogin, messages);
+            messageLists.put(toLogin, messages);
+            to.getMessages().put(fromLogin, messages);
          }
          messages.add(message);
       }
@@ -310,18 +313,11 @@ public class IFace {
          friend.getFriends().remove(login);
       }
 
-      HashMap<String, ArrayList<Message>> messages = user.getSentMessages();
+      HashMap<String, ArrayList<Message>> messages = user.getMessages();
       for (String toLogin : messages.keySet()) {
          Message message = messages.get(toLogin).get(0);
          User to = message.getTo();
-         to.getReceivedMessages().remove(login);
-      }
-
-      messages = user.getReceivedMessages();
-      for (String fromLogin : messages.keySet()) {
-         Message message = messages.get(fromLogin).get(0);
-         User from = message.getFrom();
-         from.getSentMessages().remove(login);
+         to.getMessages().remove(login);
       }
 
       users.remove(login);
@@ -348,5 +344,25 @@ public class IFace {
 
       users.put(login, user);
       System.out.println("Conta de usuário " + user.getName() + " criada.");
+   }
+
+   private static void viewInfo() {
+      User user = signIn();
+      if (user == null) return;
+
+      System.out.println(
+            "0 - perfil\n1 - comunidades\n2 - amigos\n3 - mensagens"
+      );
+      System.out.print("Informação: ");
+      int info = input.nextInt(); input.nextLine();
+      switch (info) {
+      case 1:
+      case 2:
+      case 3:
+         System.out.println("Em desenvolvimento...");
+         break;
+      default:
+         user.printProfile();
+      }
    }
 }
