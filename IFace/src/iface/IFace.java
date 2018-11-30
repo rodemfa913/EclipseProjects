@@ -5,25 +5,25 @@ import iface.model.*;
 
 public class IFace {
    private enum Action {
-      SIGN_UP, SIGN_OUT, EDIT_PROFILE, ADD_FRIEND, SEND_MESSAGE, ADD_COMMUNITY;
+      SIGN_UP, SIGN_OUT, EDIT_PROFILE, ADD_FRIEND, SEND_MESSAGE,
+      ADD_COMMUNITY, ENTER_COMMUNITY, ADD_MEMBERS;
 
       public void doAction() {
          switch (this) {
          case ADD_COMMUNITY:
-            addCommunity();
-            break;
+            addCommunity(); break;
          case ADD_FRIEND:
-            addFriend();
-            break;
+            addFriend(); break;
+         case ADD_MEMBERS:
+            addMembers(); break;
          case EDIT_PROFILE:
-            editProfile();
-            break;
+            editProfile(); break;
+         case ENTER_COMMUNITY:
+            enterCommunity(); break;
          case SEND_MESSAGE:
-            sendMessage();
-            break;
+            sendMessage(); break;
          case SIGN_OUT:
-            signOut();
-            break;
+            signOut(); break;
          default:
             signUp();
          }
@@ -35,8 +35,12 @@ public class IFace {
             return "criar comunidade";
          case ADD_FRIEND:
             return "adicionar amigo";
+         case ADD_MEMBERS:
+            return "adicionar membro";
          case EDIT_PROFILE:
             return "editar perfil";
+         case ENTER_COMMUNITY:
+            return "entrar em comunidade";
          case SEND_MESSAGE:
             return "enviar mensagem";
          case SIGN_OUT:
@@ -100,6 +104,7 @@ public class IFace {
       community.setDescription(input.nextLine());
 
       communities.put(name, community);
+      System.out.println("Comunidade " + name + " criada.");
    }
 
    private static void addFriend() {
@@ -110,15 +115,16 @@ public class IFace {
       User friend;
       if (!friendRequests.isEmpty()) {
          System.out.println("Solicitações de amizade pendentes:");
-
-         for (String requestLogin : friendRequests.keySet()) {
-            friend = friendRequests.get(requestLogin);
-            System.out.println("Usuário: " + friend.getName());
+         for (String login : friendRequests.keySet()) {
+            friend = friendRequests.get(login);
+            String name = friend.getName();
+            System.out.println("Usuário: " + name);
             System.out.print("Aceitar? (s/n): ");
+            
             if (input.nextLine().equals("s")) {
-               user.getFriends().put(requestLogin, friend);
+               user.getFriends().put(login, friend);
                friend.getFriends().put(user.getLogin(), user);
-               System.out.println("Amigo " + friend.getName() + " adicionado.");
+               System.out.println("Amigo " + name + " adicionado.");
             }
          }
 
@@ -134,12 +140,46 @@ public class IFace {
             "Solicitação de amizade enviada para " + friend.getName() + "."
       );
    }
+   
+   private static void addMembers() {
+      User owner = signIn();
+      if (owner == null) return;
+
+      HashMap<String, Community> communities = owner.getOwnCommunities();
+      for (String communityName : communities.keySet()) {
+         Community community = communities.get(communityName);
+         HashMap<String, User> memberRequests = community.getMemberRequests();
+         if (memberRequests.isEmpty()) continue;
+
+         System.out.println(
+               "Solicitações de participação pendentes para " +
+               communityName + ":"
+         );
+         for (String login : memberRequests.keySet()) {
+            User member = memberRequests.get(login);
+            String memberName = member.getName();
+            System.out.println("Membro: " + memberName);
+            System.out.print("Aceitar? (s/n): ");
+            if (input.nextLine().equals("s")) {
+               community.getMembers().put(login, member);
+               System.out.println("Membro " + memberName + " adicionado.");
+            }
+         }
+
+         memberRequests.clear();
+      }
+   }
 
    private static void debug() {
       System.out.println("Usuários:\n---");
       for (String login : users.keySet()) {
          System.out.println(users.get(login));
          System.out.println("Senha: " + passwords.get(login) + "\n---");
+      }
+
+      System.out.println("Comunidades:\n---");
+      for (String name : communities.keySet()) {
+         System.out.println(communities.get(name));
       }
    }
 
@@ -157,6 +197,18 @@ public class IFace {
          profile.put(attribute, input.nextLine());
       }
    }
+   
+   private static void enterCommunity() {
+      User member = signIn();
+      if (member == null) return;
+
+      Community community = getCommunity();
+      community.getMemberRequests().put(member.getLogin(), member);
+
+      System.out.println(
+            "Solicitação de participação enviada para " + community.getName()
+      );
+   }
 
    private static User getUser(String prompt) {
       System.out.print(prompt);
@@ -167,13 +219,42 @@ public class IFace {
       }
       return users.get(login);
    }
+   
+   private static Community getCommunity() {
+      System.out.print("Nome da comunidade: ");
+      String name = input.nextLine();
+      if (!communities.containsKey(name)) {
+         System.out.println("<Erro> Comunidade não encontrada.");
+         return null;
+      }
+      return communities.get(name);
+   }
 
    private static void sendMessage() {
       User from = signIn();
       if (from == null) return;
 
-      User to = getUser("Login do destinatário: ");
-      if (to == null) return;
+      System.out.println("---\n0 - usuário\n1 - comunidade\n---");
+      System.out.print("Enviar mensagem para: ");
+      int t = input.nextInt(); input.nextLine();
+
+      HashMap<String, User> toUsers;
+      String fromLogin = from.getLogin(), toName;
+      if (t == 1) {
+         Community to = getCommunity();
+         if (to == null) return;
+         if (!to.getMembers().containsKey(fromLogin)) {
+            System.out.println("<Erro> É necessário ser membro da comunidade.");
+         }
+         toUsers = to.getMembers();
+         toName = to.getName();
+      } else {
+         User to = getUser("Login do destinatário: ");
+         if (to == null) return;
+         toUsers = new HashMap<>();
+         toUsers.put(to.getLogin(), to);
+         toName = to.getName();
+      }
 
       System.out.println("Conteúdo da mensagem ('.' para encerrar):");
       String content = "";
@@ -182,21 +263,26 @@ public class IFace {
          if (line.isEmpty() || line.equals(".")) break;
          content += line + "\n";
       }
-      
-      Message message = new Message(from, to);
-      message.setContent(content);
-      
-      HashMap<String, ArrayList<Message>> sentMessages = from.getSentMessages();
-      String toLogin = to.getLogin();
-      ArrayList<Message> messages = sentMessages.get(toLogin);
-      if (messages == null) {
-         messages = new ArrayList<>();
-         sentMessages.put(toLogin, messages);
-         to.getReceivedMessages().put(from.getLogin(), messages);
+
+      for (String toLogin : toUsers.keySet()) {
+         if (toLogin == fromLogin) continue;
+
+         User to = toUsers.get(toLogin);
+         Message message = new Message(from, to);
+         message.setContent(content);
+
+         HashMap<String, ArrayList<Message>> sentMessages =
+               from.getSentMessages();
+         ArrayList<Message> messages = sentMessages.get(toLogin);
+         if (messages == null) {
+            messages = new ArrayList<>();
+            sentMessages.put(toLogin, messages);
+            to.getReceivedMessages().put(fromLogin, messages);
+         }
+         messages.add(message);
       }
-      messages.add(message);
-      
-      System.out.println("Mensagem enviada para " + to.getName() + ".");
+
+      System.out.println("Mensagem enviada para " + toName + ".");
    }
 
    private static User signIn() {
