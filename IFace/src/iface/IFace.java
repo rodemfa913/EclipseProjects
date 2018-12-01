@@ -198,7 +198,10 @@ public class IFace {
          if (attribute.isEmpty() || attribute.equals("-")) break;
 
          System.out.print("Valor: ");
-         profile.put(attribute, input.nextLine());
+         String value = input.nextLine();
+
+         if (attribute.toLowerCase().equals("nome")) user.setName(value);
+         else profile.put(attribute, value);
       }
    }
    
@@ -307,6 +310,22 @@ public class IFace {
 
       String login = user.getLogin();
 
+      HashMap<String, Community> communities = user.getOwnCommunities();
+      for (String name : communities.keySet()) {
+         Community community = communities.get(name);
+         HashMap<String, User> members = community.getMembers();
+         for (String memberLogin : members.keySet()) {
+            User member = members.get(memberLogin);
+            member.getCommunities().remove(name);
+         }
+      }
+
+      communities = user.getCommunities();
+      for (String name : communities.keySet()) {
+         Community community = communities.get(name);
+         community.getMembers().remove(login);
+      }
+
       HashMap<String, User> friends = user.getFriends();
       for (String friendLogin : friends.keySet()) {
          User friend = friends.get(friendLogin);
@@ -314,10 +333,9 @@ public class IFace {
       }
 
       HashMap<String, ArrayList<Message>> messages = user.getMessages();
-      for (String toLogin : messages.keySet()) {
-         Message message = messages.get(toLogin).get(0);
-         User to = message.getTo();
-         to.getMessages().remove(login);
+      for (String fromToLogin : messages.keySet()) {
+         User fromTo = users.get(fromToLogin);
+         fromTo.getMessages().remove(login);
       }
 
       users.remove(login);
@@ -357,9 +375,32 @@ public class IFace {
       int info = input.nextInt(); input.nextLine();
       switch (info) {
       case 1:
+         System.out.println("Comunidades:\n---");
+         HashMap<String, Community> communities = user.getCommunities();
+         for (String name : communities.keySet()) {
+            Community community = communities.get(name);
+            System.out.println(community + "\n---");
+         }
+         break;
       case 2:
+         System.out.println("Amigos:\n---");
+         HashMap<String, User> friends = user.getFriends();
+         for (String friendLogin : friends.keySet()) {
+            User friend = friends.get(friendLogin);
+            System.out.println(friend + "\n---");
+         }
+         break;
       case 3:
-         System.out.println("Em desenvolvimento...");
+         HashMap<String, ArrayList<Message>> messages = user.getMessages();
+         for (String login : messages.keySet()) {
+            User fromTo = users.get(login);
+            System.out.println(
+                  "Mensagens de/para " + fromTo.getName() + ":\n---"
+            );
+            for (Message message : messages.get(login)) {
+               System.out.println(message + "\n---");
+            }
+         }
          break;
       default:
          user.printProfile();

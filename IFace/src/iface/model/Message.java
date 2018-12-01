@@ -22,4 +22,9 @@ public class Message {
    public User getFrom() { return this.from; }
 
    public User getTo() { return this.to; }
+   
+   @Override public String toString() {
+      return "De: " + this.from.getName() + "\nPara: " +
+            this.to.getName() + "\n" + this.content;
+   }
 }

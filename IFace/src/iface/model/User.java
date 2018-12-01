@@ -52,18 +52,14 @@ public class User {
    }
 
    public String printProfile() {
-      String p = "";
-      boolean first = true;
+      String p = "Nome: " + this.name;
       for (String attribute : this.profile.keySet()) {
-         if (first) first = false;
-         else p += "\n";
-         p += attribute + ": " + profile.get(attribute);
+         p += "\n" + attribute + ": " + profile.get(attribute);
       }
       return p;
    }
 
    @Override public String toString() {
-      return "Login: " + this.login + "\nNome: " +
-            this.name + "\n" + this.printProfile();
+      return "Login: " + this.login + "\n" + this.printProfile();
    }
 }
