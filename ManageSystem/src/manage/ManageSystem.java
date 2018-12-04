@@ -1,38 +1,41 @@
 package manage;
 
 import java.util.*;
-//import manage.model.Project;
+import manage.model.*;
 
 public class ManageSystem {
    private enum Action {
-      ADD_PROJECT, EDIT_PROJECT;
+      ADD_COLLAB, ADD_PROJECT;
 
       public void doAction() {
          switch (this) {
-         case EDIT_PROJECT:
-            System.out.println("Em desenvolvimento...");
+         case ADD_PROJECT:
+            addProject();
             break;
          default:
-            addProject();
+            addCollaborator();
          }
       }
 
       @Override public String toString() {
          switch (this) {
-         case EDIT_PROJECT:
-            return "editar projeto";
-         default:
+         case ADD_PROJECT:
             return "adicionar projeto";
+         default:
+            return "adicionar colaborador";
          }
       }
    }
 
+   private static int collabCount;
+   private static HashMap<Integer, Collaborator> collaborators;
+   private static HashMap<String, Project> projects;
    private static Scanner input;
-   //private static HashMap<String, Project> projects;
 
    public static void main(String[] args) {
       input = new Scanner(System.in);
-      //projects = new HashMap<>();
+      collaborators = new HashMap<>();
+      projects = new HashMap<>();
 
       ArrayList<Action> actions = new ArrayList<>();
       for (Action action : Action.values()) {
@@ -40,10 +43,10 @@ public class ManageSystem {
       }
 
       while (true) {
-         System.out.println("---\n0: sair");
+         System.out.println("---\n0 - sair");
          int a;
          for (a = 1; a <= actions.size(); a++) {
-            System.out.println(a + ": " + actions.get(a - 1));
+            System.out.println(a + " - " + actions.get(a - 1));
          }
          System.out.print("---\nAção: ");
          a = input.nextInt(); input.nextLine();
@@ -57,7 +60,37 @@ public class ManageSystem {
       }
    }
 
+   private static void addCollaborator() {
+      System.out.print("Nome: ");
+      String name = input.nextLine();
+
+      System.out.print("E-mail: ");
+      String email = input.nextLine();
+
+      System.out.println("---");
+      int t = 0;
+      ArrayList<Collaborator.Type> types = new ArrayList<>();
+      for (Collaborator.Type type : Collaborator.Type.values()) {
+         System.out.println((t++) + " - " + type);
+         types.add(type);
+      }
+      System.out.print("---\nTipo: ");
+      t = input.nextInt(); input.nextLine();
+
+      Collaborator collaborator = new Collaborator(types.get(t), collabCount);
+      collaborator.email = email;
+      collaborator.name = name;
+      collaborators.put(collabCount++, collaborator);
+
+      System.out.println("Colaborador '" + collaborator + "' adicionado.");
+   }
+
    private static void addProject() {
-      System.out.println("Em desenvolvimento...");
+      System.out.print("Título: ");
+      String title = input.nextLine();
+
+      Project project = new Project(title);
+
+      projects.put(title, project);
    }
 }
