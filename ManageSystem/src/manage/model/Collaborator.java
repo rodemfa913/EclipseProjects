@@ -1,5 +1,7 @@
 package manage.model;
 
+import java.util.HashMap;
+
 public class Collaborator {
    public enum Type {
       GRADER, MASTER, DOCTORATE, TEACHER, RESEARCHER;
@@ -20,18 +22,32 @@ public class Collaborator {
       }
    }
 
-   public String email, name;
-   private int id;
+   public String email;
+   private String name;
+   private HashMap<String, Project> loadingProjects, projects;
    private Type type;
 
-   public Collaborator(Type type, int id) {
-      this.id = id;
-      this.type = type;
+   public Collaborator(Type type, String name) {
+      super();
+
+      this.loadingProjects = new HashMap<>();
+
+      if (name == null) this.name = "";
+      else this.name = name;
+
+      this.projects = new HashMap<>();
+
+      if (type == null) this.type = Type.GRADER;
+      else this.type = type;
    }
 
-   public int getId() { return this.id; }
+   public String getName() { return this.name; }
+
+   public HashMap<String, Project> getLoadingProjects() {
+      return this.loadingProjects;
+   }
+
+   public HashMap<String, Project> getProjects() { return this.projects; }
 
    public Type getType() { return this.type; }
-   
-   @Override public String toString() { return this.id + ": " + this.name; }
 }
