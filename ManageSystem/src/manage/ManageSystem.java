@@ -5,7 +5,7 @@ import manage.model.*;
 
 public class ManageSystem {
    private enum Action {
-      ADD_COLLAB, ADD_PROJECT, EDIT_PROJECT, ALLOCATE;
+      ADD_COLLAB, ADD_PROJECT, EDIT, ALLOCATE, RUN;
 
       public void doAction() {
          switch (this) {
@@ -15,8 +15,11 @@ public class ManageSystem {
          case ALLOCATE:
             allocate();
             break;
-         case EDIT_PROJECT:
+         case EDIT:
             editProject();
+            break;
+         case RUN:
+            runProject();
             break;
          default:
             addCollaborator();
@@ -29,8 +32,10 @@ public class ManageSystem {
             return "adicionar projeto";
          case ALLOCATE:
             return "alocar participante";
-         case EDIT_PROJECT:
+         case EDIT:
             return "editar projeto";
+         case RUN:
+            return "iniciar projeto";
          default:
             return "adicionar colaborador";
          }
@@ -60,12 +65,11 @@ public class ManageSystem {
          System.out.print("---\nAção: ");
          a = input.nextInt(); input.nextLine();
 
-         if (a == 0) {
+         if (a <= 0 || a > actions.size()) {
             System.out.println("Fim.");
             break;
          }
-         if (a >= 1 && a <= actions.size()) actions.get(a - 1).doAction();
-         else System.out.println("<Erro> Entrada inválida.");
+         actions.get(a - 1).doAction();
       }
    }
 
@@ -89,6 +93,7 @@ public class ManageSystem {
 
       Collaborator collaborator = new Collaborator(types.get(t), name);
       collaborator.email = email;
+      name = collaborator.getName();
       collaborators.put(name, collaborator);
 
       System.out.println(
@@ -101,6 +106,7 @@ public class ManageSystem {
       String title = input.nextLine();
 
       Project project = new Project(title);
+      title = project.getTitle();
       projects.put(title, project);
 
       System.out.println("Projeto '" + title + "' adicionado.");
@@ -118,11 +124,7 @@ public class ManageSystem {
          return;
       }
 
-      if (participant.getType() == Collaborator.Type.TEACHER) {
-         project.getTeachers().put(name, participant);
-      } else project.getParticipants().put(name, participant);
-
-      participant.getLoadingProjects().put(project.getTitle(), project);
+      project.getParticipants().put(name, participant);
 
       System.out.println(
             "Participante " + name + " alocado ao projeto '" +
@@ -170,5 +172,34 @@ public class ManageSystem {
       }
 
       return project;
+   }
+
+   private static void runProject() {
+      Project project = getProject(Project.Status.LOADING);
+      if (project == null) return;
+
+      if (!project.hasBasicInfo()) {
+         System.out.println("<Erro> Informações básicas incompletas.");
+         return;
+      }
+
+      String title = project.getTitle();
+      HashMap<String, Collaborator> participants = project.getParticipants();
+      for (String name : participants.keySet()) {
+         Collaborator participant = participants.get(name);
+         if (
+               participant.getType() == Collaborator.Type.GRADER &&
+               participant.hasRunningProject()
+         ) {
+            System.out.println(
+                  "<Aviso> Aluno " + name + " já participa de outro projeto."
+            );
+            continue;
+         }
+         participant.getProjects().put(title, project);
+      }
+
+      project.setStatus(Project.Status.RUNNING);
+      System.out.println("Projeto '" + title + "' em andamento.");
    }
 }

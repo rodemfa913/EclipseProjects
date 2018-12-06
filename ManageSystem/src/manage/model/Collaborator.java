@@ -24,15 +24,13 @@ public class Collaborator {
 
    public String email;
    private String name;
-   private HashMap<String, Project> loadingProjects, projects;
+   private HashMap<String, Project> projects;
    private Type type;
 
    public Collaborator(Type type, String name) {
       super();
 
-      this.loadingProjects = new HashMap<>();
-
-      if (name == null) this.name = "";
+      if (name == null || name.isEmpty()) this.name = "-";
       else this.name = name;
 
       this.projects = new HashMap<>();
@@ -43,11 +41,17 @@ public class Collaborator {
 
    public String getName() { return this.name; }
 
-   public HashMap<String, Project> getLoadingProjects() {
-      return this.loadingProjects;
+   public HashMap<String, Project> getProjects() {
+      return this.projects;
    }
 
-   public HashMap<String, Project> getProjects() { return this.projects; }
-
    public Type getType() { return this.type; }
+
+   public boolean hasRunningProject() {
+      for (String title : this.projects.keySet()) {
+         Project project = this.projects.get(title);
+         if (project.getStatus() == Project.Status.RUNNING) return true;
+      }
+      return false;
+   }
 }

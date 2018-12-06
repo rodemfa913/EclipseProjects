@@ -21,7 +21,7 @@ public class Project {
    public String agency, description, goal;
    public int endYear, startYear;
    public double funding;
-   private HashMap<String, Collaborator> participants, teachers;
+   private HashMap<String, Collaborator> participants;
    private String title;
    private Status status;
 
@@ -30,8 +30,9 @@ public class Project {
 
       this.participants = new HashMap<>();
       this.setStatus(null);
-      this.teachers = new HashMap<>();
-      this.title = title;
+
+      if (title == null || title.isEmpty()) this.title = "-";
+      else this.title = title;
    }
 
    public HashMap<String, Collaborator> getParticipants() {
@@ -45,7 +46,21 @@ public class Project {
       else this.status = status;
    }
 
-   public HashMap<String, Collaborator> getTeachers() { return this.teachers; }
-
    public String getTitle() { return this.title; }
+
+   public boolean hasTeacher() {
+      for (String name : this.participants.keySet()) {
+         Collaborator participant = this.participants.get(name);
+         if (participant.getType() == Collaborator.Type.TEACHER) return true;
+      }
+      return false;
+   }
+
+   public boolean hasBasicInfo() {
+      return this.agency != null && !this.agency.isEmpty() &&
+             this.description != null && !this.description.isEmpty() &&
+             this.goal != null && !this.goal.isEmpty() &&
+             this.startYear > 0 && this.endYear >= this.startYear &&
+             this.funding > 0.0 && this.hasTeacher();
+   }
 }
