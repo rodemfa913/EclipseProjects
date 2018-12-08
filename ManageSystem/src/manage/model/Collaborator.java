@@ -24,6 +24,7 @@ public class Collaborator {
 
    public String email;
    private String name;
+   private HashMap<Integer, Production> productions;
    private HashMap<String, Project> projects;
    private Type type;
 
@@ -33,6 +34,7 @@ public class Collaborator {
       if (name == null || name.isEmpty()) this.name = "-";
       else this.name = name;
 
+      this.productions = new HashMap<>();
       this.projects = new HashMap<>();
 
       if (type == null) this.type = Type.GRADER;
@@ -40,6 +42,10 @@ public class Collaborator {
    }
 
    public String getName() { return this.name; }
+
+   public HashMap<Integer, Production> getProductions() {
+      return this.productions;
+   }
 
    public HashMap<String, Project> getProjects() {
       return this.projects;

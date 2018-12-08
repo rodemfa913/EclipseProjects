@@ -22,6 +22,7 @@ public class Project {
    public int endYear, startYear;
    public double funding;
    private HashMap<String, Collaborator> participants;
+   private HashMap<Integer, Production> productions;
    private String title;
    private Status status;
 
@@ -29,6 +30,7 @@ public class Project {
       super();
 
       this.participants = new HashMap<>();
+      this.productions = new HashMap<>();
       this.setStatus(null);
 
       if (title == null || title.isEmpty()) this.title = "-";
@@ -37,6 +39,10 @@ public class Project {
 
    public HashMap<String, Collaborator> getParticipants() {
       return this.participants;
+   }
+
+   public HashMap<Integer, Production> getProductions() {
+      return this.productions;
    }
 
    public Status getStatus() { return this.status; }
