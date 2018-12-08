@@ -116,20 +116,23 @@ public class ManageSystem {
       Project project = getProject(Project.Status.LOADING);
       if (project == null) return;
 
-      System.out.print("Nome do participante: ");
-      String name = input.nextLine();
-      Collaborator participant = collaborators.get(name);
-      if (participant == null) {
-         System.out.println("<Erro> Não encontrado.");
-         return;
+      while (true) {
+         System.out.print("Nome do participante ('-' para encerrar): ");
+         String name = input.nextLine();
+         if (name.isEmpty() || name.equals("-")) break;
+
+         Collaborator participant = collaborators.get(name);
+         if (participant == null) {
+            System.out.println("<Erro> Não encontrado.");
+            break;
+         }
+
+         project.getParticipants().put(name, participant);
+         System.out.println(
+               "Participante " + name + " alocado ao projeto '" +
+               project.getTitle() + "'."
+         );
       }
-
-      project.getParticipants().put(name, participant);
-
-      System.out.println(
-            "Participante " + name + " alocado ao projeto '" +
-            project.getTitle() + "'."
-      );
    }
 
    private static void editProject() {
