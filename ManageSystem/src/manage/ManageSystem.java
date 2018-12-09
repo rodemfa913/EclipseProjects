@@ -5,10 +5,13 @@ import manage.model.*;
 
 public class ManageSystem {
    private enum Action {
-      ADD_COLLAB, ADD_PROJECT, EDIT, ALLOCATE, RUN;
+      ADD_COLLABORATOR, ADD_PROJECT, EDIT, ALLOCATE, RUN, ADD_ORIENTATION;
 
       public void doAction() {
          switch (this) {
+         case ADD_ORIENTATION:
+            addOrientation();
+            break;
          case ADD_PROJECT:
             addProject();
             break;
@@ -28,6 +31,8 @@ public class ManageSystem {
 
       @Override public String toString() {
          switch (this) {
+         case ADD_ORIENTATION:
+            return "adicionar orientação";
          case ADD_PROJECT:
             return "adicionar projeto";
          case ALLOCATE:
@@ -43,6 +48,7 @@ public class ManageSystem {
    }
 
    private static HashMap<String, Collaborator> collaborators;
+   //private static int orientationCount;
    private static HashMap<String, Project> projects;
    private static Scanner input;
 
@@ -52,16 +58,13 @@ public class ManageSystem {
       projects = new HashMap<>();
 
       ArrayList<Action> actions = new ArrayList<>();
-      for (Action action : Action.values()) {
-         actions.add(action);
-      }
+      for (Action action : Action.values()) actions.add(action);
 
       while (true) {
          System.out.println("---\n0 - sair");
          int a;
-         for (a = 1; a <= actions.size(); a++) {
+         for (a = 1; a <= actions.size(); a++)
             System.out.println(a + " - " + actions.get(a - 1));
-         }
          System.out.print("---\nAção: ");
          a = input.nextInt(); input.nextLine();
 
@@ -96,9 +99,48 @@ public class ManageSystem {
       name = collaborator.getName();
       collaborators.put(name, collaborator);
 
-      System.out.println(
-            "Colaborador " + name + " adicionado."
-      );
+      System.out.println("Colaborador " + name + " adicionado.");
+   }
+
+   private static void addOrientation() {
+      System.out.print("Data (ano): ");
+      int year = input.nextInt(); input.nextLine();
+
+      System.out.print("Nome do professor: ");
+      Collaborator teacher = collaborators.get(input.nextLine());
+      if (teacher == null) {
+         System.out.println("<Erro> Não encontrado.");
+         return;
+      }
+
+      String teacherName = teacher.getName();
+      if (teacher.getType() != Collaborator.Type.TEACHER) {
+         System.out.println("<Erro> " + teacherName + " não é professor.");
+         return;
+      }
+
+      Production orientation = new Production(
+            Production.Type.ORIENTATION, year);
+      orientation.teacher = teacher;
+      teacher.getProductions().put(year, orientation);
+
+      ArrayList<Collaborator> studentList =
+            getCollaborators("Nome do aluno");
+      HashMap<String, Collaborator> students = orientation.getStudents();
+      for (Collaborator student : studentList) {
+         String studentName = student.getName();
+         Collaborator.Type type = student.getType();
+         if (type == Collaborator.Type.TEACHER ||
+               type == Collaborator.Type.RESEARCHER) {
+            System.out.println("<Alerta> " + studentName + " não é aluno.");
+            continue;
+         }
+
+         students.put(studentName, student);
+      }
+
+      //orientationCount++;
+      System.out.println("Orientação adicionada.");
    }
 
    private static void addProject() {
@@ -116,22 +158,13 @@ public class ManageSystem {
       Project project = getProject(Project.Status.LOADING);
       if (project == null) return;
 
-      while (true) {
-         System.out.print("Nome do participante ('-' para encerrar): ");
-         String name = input.nextLine();
-         if (name.isEmpty() || name.equals("-")) break;
-
-         Collaborator participant = collaborators.get(name);
-         if (participant == null) {
-            System.out.println("<Erro> Não encontrado.");
-            break;
-         }
-
+      ArrayList<Collaborator> participants =
+            getCollaborators("Nome do participante");
+      for (Collaborator participant : participants) {
+         String name = participant.getName();
          project.getParticipants().put(name, participant);
-         System.out.println(
-               "Participante " + name + " alocado ao projeto '" +
-               project.getTitle() + "'."
-         );
+         System.out.println("Participante " + name + " alocado ao projeto '" +
+               project.getTitle() + "'.");
       }
    }
 
@@ -158,6 +191,26 @@ public class ManageSystem {
       project.description = input.nextLine();
 
       System.out.println("Projeto '" + project.getTitle() + "' editado.");
+   }
+
+   private static ArrayList<Collaborator> getCollaborators(String prompt) {
+      ArrayList<Collaborator> collabList = new ArrayList<>();
+
+      while (true) {
+         System.out.print(prompt + " ('-' para encerrar): ");
+         String name = input.nextLine();
+         if (name.isEmpty() || name.equals("-")) break;
+
+         Collaborator collaborator = collaborators.get(name);
+         if (collaborator == null) {
+            System.out.println("<Alerta> Não encontrado.");
+            continue;
+         }
+
+         collabList.add(collaborator);
+      }
+
+      return collabList;
    }
 
    private static Project getProject(Project.Status status) {
@@ -190,13 +243,10 @@ public class ManageSystem {
       HashMap<String, Collaborator> participants = project.getParticipants();
       for (String name : participants.keySet()) {
          Collaborator participant = participants.get(name);
-         if (
-               participant.getType() == Collaborator.Type.GRADER &&
-               participant.hasRunningProject()
-         ) {
-            System.out.println(
-                  "<Aviso> Aluno " + name + " já participa de outro projeto."
-            );
+         if (participant.getType() == Collaborator.Type.GRADER &&
+               participant.hasRunningProject()) {
+            System.out.println("<Alerta> Aluno " + name +
+                  " já participa de outro projeto.");
             continue;
          }
          participant.getProjects().put(title, project);

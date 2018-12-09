@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Production implements Comparable<Production> {
    public enum Type {
-      ORIENTATION, PUBLICATION;
+      PUBLICATION, ORIENTATION;
 
       @Override public String toString() {
          if (this == ORIENTATION) return "orientação";
@@ -12,15 +12,15 @@ public class Production implements Comparable<Production> {
       }
    }
 
-   public Collaborator advisor;
+   public Collaborator teacher;
    public String conference, title;
-   private HashMap<String, Collaborator> advStudents, authors;
+   private HashMap<String, Collaborator> students, authors;
    private Type type;
    private int year;
 
    public Production(Type type, int year) {
       if (type == Type.ORIENTATION) {
-         this.advStudents = new HashMap<>();
+         this.students = new HashMap<>();
       } else {
          this.authors = new HashMap<>();
       }
@@ -29,8 +29,8 @@ public class Production implements Comparable<Production> {
       this.year = year;
    }
 
-   public HashMap<String, Collaborator> getAdvStudents() {
-      return this.advStudents;
+   public HashMap<String, Collaborator> getStudents() {
+      return this.students;
    }
 
    public HashMap<String, Collaborator> getAuthors() { return this.authors; }
