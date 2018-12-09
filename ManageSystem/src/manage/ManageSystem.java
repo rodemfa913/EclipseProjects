@@ -5,12 +5,16 @@ import manage.model.*;
 
 public class ManageSystem {
    private enum Action {
-      ADD_COLLABORATOR, ADD_PROJECT, EDIT, ALLOCATE, RUN, ADD_ORIENTATION;
+      ADD_COLLABORATOR, ADD_PROJECT, EDIT, ALLOCATE,
+      RUN, ADD_PUBLICATION, ADD_ORIENTATION;
 
       public void doAction() {
          switch (this) {
          case ADD_ORIENTATION:
             addOrientation();
+            break;
+         case ADD_PUBLICATION:
+            addPublication();
             break;
          case ADD_PROJECT:
             addProject();
@@ -33,6 +37,8 @@ public class ManageSystem {
          switch (this) {
          case ADD_ORIENTATION:
             return "adicionar orientação";
+         case ADD_PUBLICATION:
+            return "adicionar publicação";
          case ADD_PROJECT:
             return "adicionar projeto";
          case ALLOCATE:
@@ -48,7 +54,7 @@ public class ManageSystem {
    }
 
    private static HashMap<String, Collaborator> collaborators;
-   //private static int orientationCount;
+   //private static int orientationCount, publicationCount;
    private static HashMap<String, Project> projects;
    private static Scanner input;
 
@@ -106,6 +112,9 @@ public class ManageSystem {
       System.out.print("Data (ano): ");
       int year = input.nextInt(); input.nextLine();
 
+      Production orientation = new Production(
+            Production.Type.ORIENTATION, year);
+
       System.out.print("Nome do professor: ");
       Collaborator teacher = collaborators.get(input.nextLine());
       if (teacher == null) {
@@ -119,13 +128,13 @@ public class ManageSystem {
          return;
       }
 
-      Production orientation = new Production(
-            Production.Type.ORIENTATION, year);
+      ArrayList<Collaborator> studentList =
+            getCollaborators("Nome do aluno");
+      if (studentList.isEmpty()) return;
+
       orientation.teacher = teacher;
       teacher.getProductions().put(year, orientation);
 
-      ArrayList<Collaborator> studentList =
-            getCollaborators("Nome do aluno");
       HashMap<String, Collaborator> students = orientation.getStudents();
       for (Collaborator student : studentList) {
          String studentName = student.getName();
@@ -141,6 +150,40 @@ public class ManageSystem {
 
       //orientationCount++;
       System.out.println("Orientação adicionada.");
+   }
+
+   private static void addPublication() {
+      System.out.print("Data (ano): ");
+      int year = input.nextInt(); input.nextLine();
+
+      Production publication = new Production(
+            Production.Type.PUBLICATION, year);
+
+      System.out.print("Título da publicação: ");
+      publication.title = input.nextLine();
+
+      System.out.print("Conferência: ");
+      publication.conference = input.nextLine();
+
+      System.out.print("Associar a projeto? (s/n): ");
+      if (input.nextLine().equals("s")) {
+         Project project = getProject(Project.Status.RUNNING);
+         if (project == null) return;
+
+         publication.setProject(project);
+         project.getProductions().put(year, publication);
+      } else {
+         ArrayList<Collaborator> authors = getCollaborators("Nome do autor");
+         if (authors.isEmpty()) return;
+
+         for (Collaborator author : authors) {
+            publication.setAuthor(author);
+            author.getProductions().put(year, publication);
+         }
+      }
+
+      //publicationCount++;
+      System.out.println("Publicação '" + publication.title + "' adicionada.");
    }
 
    private static void addProject() {
@@ -160,6 +203,8 @@ public class ManageSystem {
 
       ArrayList<Collaborator> participants =
             getCollaborators("Nome do participante");
+      if (participants.isEmpty()) return;
+
       for (Collaborator participant : participants) {
          String name = participant.getName();
          project.getParticipants().put(name, participant);
