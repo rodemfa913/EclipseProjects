@@ -2,7 +2,7 @@ package manage.model;
 
 import java.util.HashMap;
 
-public class Project {
+public class Project implements Comparable<Project> {
    public enum Status {
       LOADING, RUNNING, DONE;
       
@@ -22,7 +22,7 @@ public class Project {
    public int endYear, startYear;
    public double funding;
    private HashMap<String, Collaborator> participants;
-   private HashMap<Integer, Production> productions;
+   private HashMap<Integer, Production> publications;
    private String title;
    private Status status;
 
@@ -30,7 +30,7 @@ public class Project {
       super();
 
       this.participants = new HashMap<>();
-      this.productions = new HashMap<>();
+      this.publications = new HashMap<>();
       this.setStatus(null);
 
       if (title == null || title.isEmpty()) this.title = "-";
@@ -41,8 +41,8 @@ public class Project {
       return this.participants;
    }
 
-   public HashMap<Integer, Production> getProductions() {
-      return this.productions;
+   public HashMap<Integer, Production> getPublications() {
+      return this.publications;
    }
 
    public Status getStatus() { return this.status; }
@@ -54,6 +54,14 @@ public class Project {
 
    public String getTitle() { return this.title; }
 
+   public boolean hasBasicInfo() {
+      return this.agency != null && !this.agency.isEmpty() &&
+             this.description != null && !this.description.isEmpty() &&
+             this.goal != null && !this.goal.isEmpty() &&
+             this.startYear > 0 && this.endYear >= this.startYear &&
+             this.funding > 0.0 && this.hasTeacher();
+   }
+
    public boolean hasTeacher() {
       for (String name : this.participants.keySet()) {
          Collaborator participant = this.participants.get(name);
@@ -62,11 +70,10 @@ public class Project {
       return false;
    }
 
-   public boolean hasBasicInfo() {
-      return this.agency != null && !this.agency.isEmpty() &&
-             this.description != null && !this.description.isEmpty() &&
-             this.goal != null && !this.goal.isEmpty() &&
-             this.startYear > 0 && this.endYear >= this.startYear &&
-             this.funding > 0.0 && this.hasTeacher();
+   @Override public int compareTo(Project other) {
+      if (this.endYear != other.endYear) return other.endYear - this.endYear;
+      if (this.startYear != other.startYear)
+         return other.startYear - this.startYear;
+      return this.title.compareTo(other.title);
    }
 }

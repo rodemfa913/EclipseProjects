@@ -5,8 +5,8 @@ import manage.model.*;
 
 public class ManageSystem {
    private enum Action {
-      ADD_COLLABORATOR, ADD_PROJECT, EDIT, ALLOCATE,
-      RUN, ADD_PUBLICATION, ADD_ORIENTATION;
+      ADD_COLLABORATOR, ADD_PROJECT, EDIT, ALLOCATE, RUN,
+      ADD_PUBLICATION, ADD_ORIENTATION, FINISH, VIEW_COLLABORATOR;
 
       public void doAction() {
          switch (this) {
@@ -25,8 +25,14 @@ public class ManageSystem {
          case EDIT:
             editProject();
             break;
+         case FINISH:
+            finishProject();
+            break;
          case RUN:
             runProject();
+            break;
+         case VIEW_COLLABORATOR:
+            viewCollaborator();
             break;
          default:
             addCollaborator();
@@ -45,8 +51,12 @@ public class ManageSystem {
             return "alocar participante";
          case EDIT:
             return "editar projeto";
+         case FINISH:
+            return "finalizar projeto";
          case RUN:
             return "iniciar projeto";
+         case VIEW_COLLABORATOR:
+            return "consultar colaborador";
          default:
             return "adicionar colaborador";
          }
@@ -115,12 +125,8 @@ public class ManageSystem {
       Production orientation = new Production(
             Production.Type.ORIENTATION, year);
 
-      System.out.print("Nome do professor: ");
-      Collaborator teacher = collaborators.get(input.nextLine());
-      if (teacher == null) {
-         System.out.println("<Erro> Não encontrado.");
-         return;
-      }
+      Collaborator teacher = getCollaborator("Nome do professor");
+      if (teacher == null) return;
 
       String teacherName = teacher.getName();
       if (teacher.getType() != Collaborator.Type.TEACHER) {
@@ -129,7 +135,7 @@ public class ManageSystem {
       }
 
       ArrayList<Collaborator> studentList =
-            getCollaborators("Nome do aluno");
+            getCollaborators("Nome dos alunos");
       if (studentList.isEmpty()) return;
 
       orientation.teacher = teacher;
@@ -170,14 +176,18 @@ public class ManageSystem {
          Project project = getProject(Project.Status.RUNNING);
          if (project == null) return;
 
-         publication.setProject(project);
-         project.getProductions().put(year, publication);
-      } else {
-         ArrayList<Collaborator> authors = getCollaborators("Nome do autor");
-         if (authors.isEmpty()) return;
+         publication.project = project;
+         project.getPublications().put(year, publication);
 
+         HashMap<String, Collaborator> participants = project.getParticipants();
+         for (String name : participants.keySet()) {
+            Collaborator participant = participants.get(name);
+            participant.getProductions().put(year, publication);
+         }
+      } else {
+         ArrayList<Collaborator> authors = getCollaborators("Nome dos autores");
          for (Collaborator author : authors) {
-            publication.setAuthor(author);
+            publication.getAuthors().put(author.getName(), author);
             author.getProductions().put(year, publication);
          }
       }
@@ -202,7 +212,7 @@ public class ManageSystem {
       if (project == null) return;
 
       ArrayList<Collaborator> participants =
-            getCollaborators("Nome do participante");
+            getCollaborators("Nome dos participantes");
       if (participants.isEmpty()) return;
 
       for (Collaborator participant : participants) {
@@ -238,11 +248,35 @@ public class ManageSystem {
       System.out.println("Projeto '" + project.getTitle() + "' editado.");
    }
 
+   private static void finishProject() {
+      Project project = getProject(Project.Status.RUNNING);
+      if (project == null) return;
+
+      if (project.getPublications().isEmpty()) {
+         System.out.println("<Erro> Não há publicações associadas ao projeto.");
+         return;
+      }
+
+      project.setStatus(Project.Status.DONE);
+   }
+   
+   private static Collaborator getCollaborator(String prompt) {
+      System.out.print(prompt + ": ");
+      Collaborator collaborator = collaborators.get(input.nextLine());
+
+      if (collaborator == null) {
+         System.out.println("<Erro> Não encontrado.");
+         return null;
+      }
+
+      return collaborator;
+   }
+
    private static ArrayList<Collaborator> getCollaborators(String prompt) {
       ArrayList<Collaborator> collabList = new ArrayList<>();
+      System.out.println(prompt + " ('-' para encerrar):");
 
       while (true) {
-         System.out.print(prompt + " ('-' para encerrar): ");
          String name = input.nextLine();
          if (name.isEmpty() || name.equals("-")) break;
 
@@ -284,8 +318,8 @@ public class ManageSystem {
          return;
       }
 
-      String title = project.getTitle();
       HashMap<String, Collaborator> participants = project.getParticipants();
+      String title = project.getTitle();
       for (String name : participants.keySet()) {
          Collaborator participant = participants.get(name);
          if (participant.getType() == Collaborator.Type.GRADER &&
@@ -299,5 +333,11 @@ public class ManageSystem {
 
       project.setStatus(Project.Status.RUNNING);
       System.out.println("Projeto '" + title + "' em andamento.");
+   }
+
+   private static void viewCollaborator() {
+      Collaborator collaborator = getCollaborator("Nome do colaborador");
+      if (collaborator == null) return;
+      System.out.println(collaborator);
    }
 }

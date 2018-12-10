@@ -1,6 +1,6 @@
 package manage.model;
 
-import java.util.HashMap;
+import java.util.*;
 
 public class Collaborator {
    public enum Type {
@@ -59,5 +59,36 @@ public class Collaborator {
          if (project.getStatus() == Project.Status.RUNNING) return true;
       }
       return false;
+   }
+
+   @Override public String toString() {
+      String c = "Nome: " + this.name + "\nTipo: " +
+            this.type + "\nE-mail: " + this.email;
+
+      ArrayList<Project> orderedProjects = new ArrayList<>();
+      for (String title : this.projects.keySet())
+         orderedProjects.add(this.projects.get(title));
+      orderedProjects.sort(null);
+
+      c += "\nProjetos:\n---";
+      for (Project project : orderedProjects)
+         c += "\nData de término (ano): " + project.endYear +
+               "\nTítulo: " + project.getTitle() + "\n---";
+
+      ArrayList<Production> orderedProductions = new ArrayList<>();
+      for (int year : this.productions.keySet())
+         orderedProductions.add(this.productions.get(year));
+      orderedProductions.sort(null);
+      
+      c += "\nProduções:\n---";
+      for (Production production : orderedProductions) {
+         Production.Type type = production.getType();
+         c += "\nTipo: " + type + "\nData (ano): " + production.getYear();
+         if (type == Production.Type.PUBLICATION)
+            c += "\nTítulo: " + production.title;
+         c += "\n---";
+      }
+
+      return c;
    }
 }
