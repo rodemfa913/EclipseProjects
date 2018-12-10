@@ -45,4 +45,16 @@ public class Production implements Comparable<Production> {
       if (this.year != other.year) return other.year - this.year;
       return this.id - other.id;
    }
+
+   @Override public String toString() {
+      String p = "Tipo: " + this.type + "\nData (ano): " + this.year;
+      if (this.type == Type.PUBLICATION) {
+         p += "\nTítulo: " + this.title + "\nAutores:";
+         for (String name : this.authors.keySet()) p += "\n  " + name;
+      } else {
+         p += "\nOrientador: " + this.teacher.getName() + "\nOrientandos:";
+         for (String name : this.students.keySet()) p += "\n  " + name;
+      }
+      return p;
+   }
 }

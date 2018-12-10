@@ -54,10 +54,8 @@ public class Collaborator {
    public Type getType() { return this.type; }
 
    public boolean hasRunningProject() {
-      for (String title : this.projects.keySet()) {
-         Project project = this.projects.get(title);
+      for (Project project : this.projects.values())
          if (project.getStatus() == Project.Status.RUNNING) return true;
-      }
       return false;
    }
 
@@ -65,29 +63,20 @@ public class Collaborator {
       String c = "Nome: " + this.name + "\nTipo: " +
             this.type + "\nE-mail: " + this.email;
 
-      ArrayList<Project> orderedProjects = new ArrayList<>();
-      for (String title : this.projects.keySet())
-         orderedProjects.add(this.projects.get(title));
+      ArrayList<Project> orderedProjects =
+            new ArrayList<>(this.projects.values());
       orderedProjects.sort(null);
-
       c += "\nProjetos:\n---";
       for (Project project : orderedProjects)
          c += "\nData de término (ano): " + project.endYear +
                "\nTítulo: " + project.getTitle() + "\n---";
 
-      ArrayList<Production> orderedProductions = new ArrayList<>();
-      for (int year : this.productions.keySet())
-         orderedProductions.add(this.productions.get(year));
+      ArrayList<Production> orderedProductions =
+            new ArrayList<>(this.productions.values());
       orderedProductions.sort(null);
-      
       c += "\nProduções:\n---";
-      for (Production production : orderedProductions) {
-         Production.Type type = production.getType();
-         c += "\nTipo: " + type + "\nData (ano): " + production.getYear();
-         if (type == Production.Type.PUBLICATION)
-            c += "\nTítulo: " + production.title;
-         c += "\n---";
-      }
+      for (Production production : orderedProductions)
+         c += "\n" + production + "\n---";
 
       return c;
    }

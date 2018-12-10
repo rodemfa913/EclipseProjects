@@ -1,6 +1,6 @@
 package manage.model;
 
-import java.util.HashMap;
+import java.util.*;
 
 public class Project implements Comparable<Project> {
    public enum Status {
@@ -75,5 +75,28 @@ public class Project implements Comparable<Project> {
       if (this.startYear != other.startYear)
          return other.startYear - this.startYear;
       return this.title.compareTo(other.title);
+   }
+
+   @Override public String toString() {
+      String p =
+            "Título: " + this.title +
+            "\nStatus: " + this.status +
+            "\nData de início (ano): " + this.startYear +
+            "\nData de término (ano): " + this.endYear +
+            "\nAgência financiadora: " + this.agency +
+            "\nFinanciamento: " + this.funding +
+            "\nObjetivo:\n  " + this.goal +
+            "\nDescrição:\n  " + this.description;
+
+      p += "\nParticipantes:";
+      for (String name : this.participants.keySet()) p += "\n  " + name;
+
+      ArrayList<Production> orderedPublications =
+            new ArrayList<>(this.publications.values());
+      orderedPublications.sort(null);
+      p += "\nPublicações:\n---";
+      for (Production publication : orderedPublications)
+         p += "\n" + publication + "\n---";
+      return p;
    }
 }
