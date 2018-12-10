@@ -6,7 +6,7 @@ import manage.model.*;
 public class ManageSystem {
    private enum Action {
       ADD_COLLABORATOR, ADD_PROJECT, EDIT, ALLOCATE, RUN, ADD_PUBLICATION,
-      ADD_ORIENTATION, FINISH, VIEW_COLLABORATOR, VIEW_PROJECT;
+      ADD_ORIENTATION, FINISH, VIEW_COLLABORATOR, VIEW_PROJECT, REPORT;
 
       public void doAction() {
          switch (this) {
@@ -27,6 +27,9 @@ public class ManageSystem {
             break;
          case FINISH:
             finishProject();
+            break;
+         case REPORT:
+            report();
             break;
          case RUN:
             runProject();
@@ -56,6 +59,8 @@ public class ManageSystem {
             return "editar projeto";
          case FINISH:
             return "finalizar projeto";
+         case REPORT:
+            return "relatório";
          case RUN:
             return "iniciar projeto";
          case VIEW_COLLABORATOR:
@@ -69,7 +74,7 @@ public class ManageSystem {
    }
 
    private static HashMap<String, Collaborator> collaborators;
-   //private static int orientationCount, publicationCount;
+   private static int nOrientation, nPublication;
    private static HashMap<String, Project> projects;
    private static Scanner input;
 
@@ -159,7 +164,7 @@ public class ManageSystem {
          students.put(studentName, student);
       }
 
-      //orientationCount++;
+      nOrientation++;
       System.out.println("Orientação adicionada.");
    }
 
@@ -198,7 +203,7 @@ public class ManageSystem {
          }
       }
 
-      //publicationCount++;
+      nPublication++;
       System.out.println("Publicação '" + publication.title + "' adicionada.");
    }
 
@@ -316,6 +321,33 @@ public class ManageSystem {
       }
 
       return project;
+   }
+
+   private static void report() {
+      System.out.println("Número de colaboradores: " + collaborators.size());
+
+      int nLoadingProject = 0, nRunningProject = 0, nDoneProject = 0;
+      for (Project project : projects.values()) {
+         switch (project.getStatus()) {
+         case RUNNING:
+            nRunningProject++;
+            break;
+         case DONE:
+            nDoneProject++;
+            break;
+         default:
+            nLoadingProject++;
+         }
+      }
+      System.out.println("Numero de projetos:");
+      System.out.println("  em elaboração: " + nLoadingProject);
+      System.out.println("  em andamento: " + nRunningProject);
+      System.out.println("  concluídos: " + nDoneProject);
+      System.out.println("  total: " + projects.size());
+
+      System.out.println("Número de produções acadêmicas:");
+      System.out.println("  orientações: " + nOrientation);
+      System.out.println("  publicações: " + nPublication);
    }
 
    private static void runProject() {
