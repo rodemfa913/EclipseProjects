@@ -33,7 +33,7 @@ public class Commissioned extends Employee {
       return this.sales;
    }
 
-   public static String getType() {
+   @Override public String getType() {
       return "comissionado";
    }
 

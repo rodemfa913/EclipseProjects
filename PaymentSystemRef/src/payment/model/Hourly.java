@@ -28,7 +28,7 @@ public class Hourly extends Employee {
       return this.cards;
    }
 
-   public static String getType() {
+   @Override public String getType() {
       return "horista";
    }
 

@@ -50,9 +50,7 @@ public abstract class Employee implements Cloneable {
       return this.syndicateFee;
    }
 
-   public static String getType() {
-      return null;
-   }
+   public abstract String getType();
 
    public abstract boolean isPaymentDay(SimpleDate date);
 
@@ -86,6 +84,6 @@ public abstract class Employee implements Cloneable {
 
    @Override public String toString() {
       return "Id: " + this.id + "\nNome: " + this.name +
-            "\nTipo: " + getType() + "\nSalário: " + this.salary;
+            "\nTipo: " + this.getType() + "\nSalário: " + this.salary;
    }
 }

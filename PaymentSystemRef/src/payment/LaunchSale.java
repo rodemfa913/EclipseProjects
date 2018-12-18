@@ -8,7 +8,9 @@ class LaunchSale implements Action {
       if (employee == null)
          return false;
       if (!(employee instanceof Commissioned)) {
-         System.out.println("<!> Não é " + Commissioned.getType() + ".");
+         System.out.println("<!> Não é " +
+               (new Commissioned()).getType() + ".");
+         return false;
       }
 
       SimpleDate date = PaymentSystem.getDate();

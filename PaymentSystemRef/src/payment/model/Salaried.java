@@ -13,7 +13,7 @@ public class Salaried extends Employee {
       return new Salaried(id);
    }
 
-   public static String getType() {
+   @Override public String getType() {
       return "assalariado";
    }
 

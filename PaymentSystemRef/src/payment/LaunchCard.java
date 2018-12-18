@@ -8,7 +8,7 @@ class LaunchCard implements Action {
       if (employee == null)
          return false;
       if (!(employee instanceof Hourly)) {
-         System.out.println("<!> Não é " + Hourly.getType() + ".");
+         System.out.println("<!> Não é " + (new Hourly()).getType() + ".");
          return false;
       }
 

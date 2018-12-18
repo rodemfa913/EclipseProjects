@@ -68,25 +68,22 @@ public class PaymentSystem {
       System.out.println("---\nSindicato:\n---\n" + syndicate);
 
       if (bkpSyndicate != null)
-         System.out.println("Sindicato (backup):\n---\n" + bkpSyndicate);
+         System.out.println("---\nSindicato (backup):\n---\n" + bkpSyndicate);
    }
 
    static Employee editInfo(int id) {
       Employee[] creators = new Employee[] {
          new Hourly(), new Salaried(), new Commissioned()
       };
-      String[] types = new String[] {
-            Hourly.getType(), Salaried.getType(), Commissioned.getType()
-      };
 
       System.out.println("---");
       int t;
-      for (t = 0; t < types.length; t++)
-         System.out.println(t + " - " + types[t]);
+      for (t = 0; t < creators.length; t++)
+         System.out.println(t + " - " + creators[t].getType());
       System.out.print("---\nTipo: ");
       t = input.nextInt();
       input.nextLine();
-      if (t < 0 || t >= types.length)
+      if (t < 0 || t >= creators.length)
          t = 0;
 
       Employee employee = creators[t].create(id);
