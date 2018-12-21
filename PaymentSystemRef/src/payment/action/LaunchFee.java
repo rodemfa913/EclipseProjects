@@ -1,8 +1,9 @@
-package payment;
+package payment.action;
 
-import payment.model.Employee;
+import payment.PaymentSystem;
+import payment.model.*;
 
-class LaunchFee implements Action {
+public class LaunchFee implements Action {
    @Override public boolean doAction() {
       Employee member = PaymentSystem.getMember();
       if (member == null)
@@ -18,8 +19,9 @@ class LaunchFee implements Action {
       double fee = PaymentSystem.input.nextDouble();
       PaymentSystem.input.nextLine();
 
-      PaymentSystem.syndicate.setService(service, fee);
-      for (Employee mb : PaymentSystem.syndicate.getMembers().values())
+      Syndicate syndicate = PaymentSystem.getSyndicate();
+      syndicate.setService(service, fee);
+      for (Employee mb : syndicate.getMembers().values())
          if (mb.getServices().containsKey(service))
             mb.setService(service, fee);
       member.setService(service, fee);

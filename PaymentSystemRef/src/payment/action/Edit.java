@@ -1,8 +1,9 @@
-package payment;
+package payment.action;
 
+import payment.PaymentSystem;
 import payment.model.Employee;
 
-class Edit implements Action {
+public class Edit implements Action {
    @Override public boolean doAction() {
       Employee employee = PaymentSystem.getEmployee();
       if (employee == null)

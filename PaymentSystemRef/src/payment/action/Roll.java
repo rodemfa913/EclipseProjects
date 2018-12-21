@@ -1,15 +1,16 @@
-package payment;
+package payment.action;
 
 import java.util.ArrayList;
+import payment.PaymentSystem;
 import payment.model.*;
 
-class Roll implements Action {
+public class Roll implements Action {
    @Override public boolean doAction() {
       SimpleDate date = PaymentSystem.getDate();
       ArrayList<Payment> payments = new ArrayList<>();
       PaymentSystem.copyData();
 
-      for (Employee employee : PaymentSystem.employees.values()) {
+      for (Employee employee : PaymentSystem.getEmployees().values()) {
          if (!employee.isPaymentDay(date))
             continue;
 

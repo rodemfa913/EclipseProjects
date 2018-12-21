@@ -1,20 +1,18 @@
 package payment;
 
 import java.util.*;
+import payment.action.*;
 import payment.model.*;
 
 public class PaymentSystem {
-   private static HashMap<Integer, Employee> bkpEmployees;
-   private static Syndicate bkpSyndicate;
-   static HashMap<Integer, Employee> employees;
-   static Scanner input;
+   private static HashMap<Integer, Employee> bkpEmployees, employees;
+   private static Syndicate bkpSyndicate, syndicate;
+   public static final Scanner input = new Scanner(System.in);
    private static Action lastAction;
    private static boolean redo;
-   static Syndicate syndicate;
 
    public static void main(String[] args) {
       employees = new HashMap<>();
-      input = new Scanner(System.in);
       syndicate = new Syndicate();
 
       Action[] actions = new Action[] {
@@ -49,7 +47,7 @@ public class PaymentSystem {
       }
    }
 
-   static void copyData() {
+   public static void copyData() {
       bkpEmployees = new HashMap<>(employees);
       bkpSyndicate = syndicate.clone();
    }
@@ -71,7 +69,7 @@ public class PaymentSystem {
          System.out.println("---\nSindicato (backup):\n---\n" + bkpSyndicate);
    }
 
-   static Employee editInfo(int id) {
+   public static Employee editInfo(int id) {
       Employee[] creators = new Employee[] {
          new Hourly(), new Salaried(), new Commissioned()
       };
@@ -120,7 +118,7 @@ public class PaymentSystem {
       return employee;
    }
 
-   static SimpleDate getDate() {
+   public static SimpleDate getDate() {
       System.out.print("Data (DD MM YYYY): ");
       int day = input.nextInt();
       int month = input.nextInt();
@@ -129,7 +127,7 @@ public class PaymentSystem {
       return new SimpleDate(year, month, day);
    }
 
-   static Employee getEmployee() {
+   public static Employee getEmployee() {
       System.out.print("Id do empregado: ");
       Employee employee = employees.get(input.nextInt());
       input.nextLine();
@@ -142,7 +140,11 @@ public class PaymentSystem {
       return employee;
    }
 
-   static Employee getMember() {
+   public static HashMap<Integer, Employee> getEmployees() {
+      return employees;
+   }
+
+   public static Employee getMember() {
       System.out.print("Id do membro do sindicato: ");
       Employee member = syndicate.getMembers().get(input.nextLine());
 
@@ -152,7 +154,11 @@ public class PaymentSystem {
       return member;
    }
 
-   static void setEmployee(Employee employee) {
+   public static Syndicate getSyndicate() {
+      return syndicate;
+   }
+
+   public static void setEmployee(Employee employee) {
       employees.put(employee.getId(), employee);
       if (employee.syndicateId != null)
          syndicate.getMembers().put(employee.syndicateId, employee);

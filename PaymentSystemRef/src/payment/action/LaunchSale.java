@@ -1,8 +1,9 @@
-package payment;
+package payment.action;
 
+import payment.PaymentSystem;
 import payment.model.*;
 
-class LaunchSale implements Action {
+public class LaunchSale implements Action {
    @Override public boolean doAction() {
       Employee employee = PaymentSystem.getEmployee();
       if (employee == null)

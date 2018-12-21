@@ -1,15 +1,16 @@
-package payment;
+package payment.action;
 
+import payment.PaymentSystem;
 import payment.model.Employee;
 
-class SignOut implements Action {
+public class SignOut implements Action {
    @Override public boolean doAction() {
       Employee member = PaymentSystem.getEmployee();
       if (member == null)
          return false;
 
       PaymentSystem.copyData();
-      PaymentSystem.syndicate.getMembers().remove(member.syndicateId);
+      PaymentSystem.getSyndicate().getMembers().remove(member.syndicateId);
       member = member.clone();
       member.syndicateId = null;
       PaymentSystem.setEmployee(member);

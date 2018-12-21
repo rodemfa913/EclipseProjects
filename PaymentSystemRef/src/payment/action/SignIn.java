@@ -1,8 +1,9 @@
-package payment;
+package payment.action;
 
+import payment.PaymentSystem;
 import payment.model.Employee;
 
-class SignIn implements Action {
+public class SignIn implements Action {
    @Override public boolean doAction() {
       Employee member = PaymentSystem.getEmployee();
       if (member == null)
@@ -14,7 +15,7 @@ class SignIn implements Action {
 
       System.out.print("Id do membro do sindicato: ");
       String sid = PaymentSystem.input.nextLine();
-      if (PaymentSystem.syndicate.getMembers().containsKey(sid)) {
+      if (PaymentSystem.getSyndicate().getMembers().containsKey(sid)) {
          System.out.println("<!> Id já existente.");
          return false;
       }

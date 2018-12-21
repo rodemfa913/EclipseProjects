@@ -1,8 +1,9 @@
-package payment;
+package payment.action;
 
+import payment.PaymentSystem;
 import payment.model.Employee;
 
-class Add implements Action {
+public class Add implements Action {
    private static int nEmployee;
 
    @Override public boolean doAction() {
