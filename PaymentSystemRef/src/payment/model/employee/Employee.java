@@ -1,6 +1,7 @@
-package payment.model;
+package payment.model.employee;
 
 import java.util.HashMap;
+import payment.model.*;
 
 public abstract class Employee implements Cloneable {
    public String address, name, syndicateId;

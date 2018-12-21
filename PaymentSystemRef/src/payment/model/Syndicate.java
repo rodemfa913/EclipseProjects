@@ -1,6 +1,7 @@
 package payment.model;
 
 import java.util.*;
+import payment.model.employee.Employee;
 
 public class Syndicate implements Cloneable {
    private HashMap<String, Employee> members;

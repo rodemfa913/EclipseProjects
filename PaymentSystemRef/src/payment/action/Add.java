@@ -1,7 +1,7 @@
 package payment.action;
 
 import payment.PaymentSystem;
-import payment.model.Employee;
+import payment.model.employee.Employee;
 
 public class Add implements Action {
    private static int nEmployee;

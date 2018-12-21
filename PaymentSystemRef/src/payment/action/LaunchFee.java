@@ -1,7 +1,8 @@
 package payment.action;
 
 import payment.PaymentSystem;
-import payment.model.*;
+import payment.model.Syndicate;
+import payment.model.employee.Employee;
 
 public class LaunchFee implements Action {
    @Override public boolean doAction() {

@@ -1,4 +1,6 @@
-package payment.model;
+package payment.model.employee;
+
+import payment.model.SimpleDate;
 
 public class Salaried extends Employee {
    public Salaried() {

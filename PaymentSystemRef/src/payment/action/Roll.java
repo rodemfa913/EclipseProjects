@@ -3,6 +3,7 @@ package payment.action;
 import java.util.ArrayList;
 import payment.PaymentSystem;
 import payment.model.*;
+import payment.model.employee.Employee;
 
 public class Roll implements Action {
    @Override public boolean doAction() {

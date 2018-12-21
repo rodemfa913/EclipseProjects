@@ -2,6 +2,7 @@ package payment.action;
 
 import payment.PaymentSystem;
 import payment.model.*;
+import payment.model.employee.*;
 
 public class LaunchSale implements Action {
    @Override public boolean doAction() {

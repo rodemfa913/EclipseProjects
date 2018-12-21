@@ -1,6 +1,7 @@
-package payment.model;
+package payment.model.employee;
 
 import java.util.ArrayList;
+import payment.model.*;
 
 public class Commissioned extends Employee {
    private double commission;

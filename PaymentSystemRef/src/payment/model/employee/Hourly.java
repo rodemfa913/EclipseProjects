@@ -1,6 +1,7 @@
-package payment.model;
+package payment.model.employee;
 
 import java.util.ArrayList;
+import payment.model.*;
 
 public class Hourly extends Employee {
    private ArrayList<PointCard> cards;

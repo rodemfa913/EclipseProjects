@@ -1,5 +1,7 @@
 package payment.model;
 
+import payment.model.employee.Employee;
+
 public class Payment {
    public enum Method {
       MAIL, HANDS, DEPOSIT;
