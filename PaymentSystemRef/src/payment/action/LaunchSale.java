@@ -1,8 +1,8 @@
 package payment.action;
 
-import payment.PaymentSystem;
 import payment.model.*;
 import payment.model.employee.*;
+import payment.PaymentSystem;
 
 public class LaunchSale implements Action {
    @Override public boolean doAction() {
@@ -21,10 +21,9 @@ public class LaunchSale implements Action {
       double value = PaymentSystem.input.nextDouble();
       PaymentSystem.input.nextLine();
 
-      PaymentSystem.copyData();
+      PaymentSystem.save();
       Commissioned commissioned = ((Commissioned) employee).clone();
       commissioned.getSaleResults().add(new SaleResult(date, value));
-      PaymentSystem.setEmployee(commissioned);
 
       System.out.println("Resultado de venda associado a '" +
             commissioned.employeeInfo() + "' lançado.");

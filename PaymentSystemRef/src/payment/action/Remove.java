@@ -1,7 +1,7 @@
 package payment.action;
 
-import payment.PaymentSystem;
 import payment.model.employee.Employee;
+import payment.PaymentSystem;
 
 public class Remove implements Action {
    @Override public boolean doAction() {
@@ -9,9 +9,8 @@ public class Remove implements Action {
       if (employee == null)
          return false;
 
-      PaymentSystem.copyData();
-      PaymentSystem.getEmployees().remove(employee.getId());
-      PaymentSystem.getSyndicate().getMembers().remove(employee.syndicateId);
+      PaymentSystem.save();
+      PaymentSystem.state.removeEmployee(employee);
 
       System.out.println("Empregado '" +
             employee.employeeInfo() + "' removido.");

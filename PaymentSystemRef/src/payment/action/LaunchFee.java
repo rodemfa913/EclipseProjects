@@ -1,8 +1,7 @@
 package payment.action;
 
-import payment.PaymentSystem;
-import payment.model.Syndicate;
 import payment.model.employee.Employee;
+import payment.PaymentSystem;
 
 public class LaunchFee implements Action {
    @Override public boolean doAction() {
@@ -13,21 +12,15 @@ public class LaunchFee implements Action {
       System.out.print("Serviço: ");
       String service = PaymentSystem.input.nextLine();
 
-      PaymentSystem.copyData();
-      member = member.clone();
+      PaymentSystem.save();
+      member = PaymentSystem.state.getMembers().get(member.syndicateId);
 
       System.out.print("Taxa: ");
       double fee = PaymentSystem.input.nextDouble();
       PaymentSystem.input.nextLine();
 
-      Syndicate syndicate = PaymentSystem.getSyndicate();
-      syndicate.setService(service, fee);
-      for (Employee mb : syndicate.getMembers().values())
-         if (mb.getServices().containsKey(service))
-            mb.setService(service, fee);
+      PaymentSystem.state.setService(service, fee);
       member.setService(service, fee);
-
-      PaymentSystem.setEmployee(member);
 
       System.out.println("Taxa de serviço associada a '" +
             member.memberInfo() + "' lançada");

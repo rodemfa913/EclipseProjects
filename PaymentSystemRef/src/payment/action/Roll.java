@@ -1,21 +1,20 @@
 package payment.action;
 
 import java.util.ArrayList;
-import payment.PaymentSystem;
 import payment.model.*;
 import payment.model.employee.Employee;
+import payment.PaymentSystem;
 
 public class Roll implements Action {
    @Override public boolean doAction() {
       SimpleDate date = PaymentSystem.getDate();
       ArrayList<Payment> payments = new ArrayList<>();
-      PaymentSystem.copyData();
+      PaymentSystem.save();
 
-      for (Employee employee : PaymentSystem.getEmployees().values()) {
+      for (Employee employee : PaymentSystem.state.getEmployees().values()) {
          if (!employee.isPaymentDay(date))
             continue;
 
-         employee = employee.clone();
          double value = employee.receivePayment();
 
          if (employee.syndicateId != null) {

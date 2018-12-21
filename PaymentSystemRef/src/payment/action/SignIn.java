@@ -1,7 +1,7 @@
 package payment.action;
 
-import payment.PaymentSystem;
 import payment.model.employee.Employee;
+import payment.PaymentSystem;
 
 public class SignIn implements Action {
    @Override public boolean doAction() {
@@ -15,20 +15,19 @@ public class SignIn implements Action {
 
       System.out.print("Id do membro do sindicato: ");
       String sid = PaymentSystem.input.nextLine();
-      if (PaymentSystem.getSyndicate().getMembers().containsKey(sid)) {
+      if (PaymentSystem.state.getMembers().containsKey(sid)) {
          System.out.println("<!> Id já existente.");
          return false;
       }
 
-      PaymentSystem.copyData();
-      member = member.clone();
+      PaymentSystem.save();
+      member = PaymentSystem.state.getEmployees().get(member.getId());
       member.syndicateId = sid;
+      PaymentSystem.state.setEmployee(member);
 
       System.out.print("Taxa sindical: ");
       member.setSyndicateFee(PaymentSystem.input.nextDouble());
       PaymentSystem.input.nextLine();
-
-      PaymentSystem.setEmployee(member);
 
       System.out.println("Membro '" + member.memberInfo() +
             "' adicionado ao sindicato.");

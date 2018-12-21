@@ -1,21 +1,19 @@
 package payment;
 
-import java.util.*;
+import java.util.Scanner;
 import payment.action.*;
 import payment.model.*;
 import payment.model.employee.*;
+import payment.state.*;
 
 public class PaymentSystem {
-   private static HashMap<Integer, Employee> bkpEmployees, employees;
-   private static Syndicate bkpSyndicate, syndicate;
    public static final Scanner input = new Scanner(System.in);
    private static Action lastAction;
+   private static Memento lastState;
+   public static final Originator state = new Originator();
    private static boolean redo;
 
    public static void main(String[] args) {
-      employees = new HashMap<>();
-      syndicate = new Syndicate();
-
       Action[] actions = new Action[] {
          new Add(), new Remove(), new Edit(), new SignIn(), new SignOut(),
          new LaunchCard(), new LaunchSale(), new LaunchFee(), new Roll()
@@ -34,7 +32,8 @@ public class PaymentSystem {
          if (a == -1)
             debug();
          else if (a == 99)
-            undoLastAction();
+            //undoLastAction();
+            restore();
          else if (a >= 1 && a <= actions.length) {
             Action action = actions[a - 1];
             if (action.doAction()) {
@@ -48,26 +47,9 @@ public class PaymentSystem {
       }
    }
 
-   public static void copyData() {
-      bkpEmployees = new HashMap<>(employees);
-      bkpSyndicate = syndicate.clone();
-   }
-
    private static void debug() {
-      System.out.println("Empregados:");
-      for (Employee employee : employees.values())
-         System.out.println("---\n" + employee);
-
-      if (bkpEmployees != null) {
-         System.out.println("---\nEmpregados (backup):");
-         for (Employee employee : bkpEmployees.values())
-            System.out.println("---\n" + employee);
-      }
-
-      System.out.println("---\nSindicato:\n---\n" + syndicate);
-
-      if (bkpSyndicate != null)
-         System.out.println("---\nSindicato (backup):\n---\n" + bkpSyndicate);
+      System.out.println("Original:\n" + state);
+      System.out.println("Cópia:\n" + lastState);
    }
 
    public static Employee editInfo(int id) {
@@ -116,6 +98,8 @@ public class PaymentSystem {
          input.nextLine();
       }
 
+      state.setEmployee(employee);
+
       return employee;
    }
 
@@ -130,24 +114,18 @@ public class PaymentSystem {
 
    public static Employee getEmployee() {
       System.out.print("Id do empregado: ");
-      Employee employee = employees.get(input.nextInt());
+      Employee employee = state.getEmployees().get(input.nextInt());
       input.nextLine();
 
-      if (employee == null) {
+      if (employee == null)
          System.out.println("<!> Não encontrado.");
-         return null;
-      }
 
       return employee;
    }
 
-   public static HashMap<Integer, Employee> getEmployees() {
-      return employees;
-   }
-
    public static Employee getMember() {
       System.out.print("Id do membro do sindicato: ");
-      Employee member = syndicate.getMembers().get(input.nextLine());
+      Employee member = state.getMembers().get(input.nextLine());
 
       if (member == null)
          System.out.println("<!> Não encontrado.");
@@ -155,29 +133,16 @@ public class PaymentSystem {
       return member;
    }
 
-   public static Syndicate getSyndicate() {
-      return syndicate;
-   }
-
-   public static void setEmployee(Employee employee) {
-      employees.put(employee.getId(), employee);
-      if (employee.syndicateId != null)
-         syndicate.getMembers().put(employee.syndicateId, employee);
-   }
-
-   private static void undoLastAction() {
+   private static void restore() {
       if (lastAction == null) {
          System.out.println("<!> Nenhuma ação para desfazer.");
          return;
       }
 
-      HashMap<Integer, Employee> eSwap = employees;
-      Syndicate sSwap = syndicate;
-      employees = bkpEmployees;
-      syndicate = bkpSyndicate;
-      bkpEmployees = eSwap;
-      bkpSyndicate = sSwap;
-      
+      Memento swap = state.save();
+      state.restore(lastState);
+      lastState = swap;
+
       System.out.print("Ação '" + lastAction + "' ");
       if (redo) {
          System.out.println("refeita.");
@@ -186,5 +151,9 @@ public class PaymentSystem {
          System.out.println("desfeita.");
          redo = true;
       }
+   }
+
+   public static void save() {
+      lastState = state.save();
    }
 }

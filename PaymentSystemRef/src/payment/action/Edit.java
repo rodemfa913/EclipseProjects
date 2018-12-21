@@ -1,7 +1,7 @@
 package payment.action;
 
-import payment.PaymentSystem;
 import payment.model.employee.Employee;
+import payment.PaymentSystem;
 
 public class Edit implements Action {
    @Override public boolean doAction() {
@@ -9,9 +9,8 @@ public class Edit implements Action {
       if (employee == null)
          return false;
 
-      PaymentSystem.copyData();
+      PaymentSystem.save();
       employee = PaymentSystem.editInfo(employee.getId());
-      PaymentSystem.setEmployee(employee);
 
       System.out.println("Empregado '" + employee.employeeInfo() + "' editado");
       return true;

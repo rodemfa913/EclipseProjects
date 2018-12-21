@@ -1,16 +1,15 @@
 package payment.action;
 
-import payment.PaymentSystem;
 import payment.model.employee.Employee;
+import payment.PaymentSystem;
 
 public class Add implements Action {
    private static int nEmployee;
 
    @Override public boolean doAction() {
-      PaymentSystem.copyData();
+      PaymentSystem.save();
 
       Employee employee = PaymentSystem.editInfo(nEmployee++);
-      PaymentSystem.setEmployee(employee);
 
       System.out.println("Empregado '" +
             employee.employeeInfo() + "' adicionado.");

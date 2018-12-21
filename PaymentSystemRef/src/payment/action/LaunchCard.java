@@ -1,8 +1,8 @@
 package payment.action;
 
-import payment.PaymentSystem;
 import payment.model.*;
 import payment.model.employee.*;
+import payment.PaymentSystem;
 
 public class LaunchCard implements Action {
    @Override public boolean doAction() {
@@ -20,10 +20,10 @@ public class LaunchCard implements Action {
       int hours = PaymentSystem.input.nextInt();
       PaymentSystem.input.nextLine();
 
-      PaymentSystem.copyData();
-      Hourly hourly = ((Hourly) employee).clone();
+      PaymentSystem.save();
+      Hourly hourly = (Hourly) PaymentSystem.state.
+            getEmployees().get(employee.getId());
       hourly.getPointCards().add(new PointCard(date, hours));
-      PaymentSystem.setEmployee(hourly);
 
       System.out.println("Cartão de ponto associado a '" +
             hourly.employeeInfo() + "' lançado.");

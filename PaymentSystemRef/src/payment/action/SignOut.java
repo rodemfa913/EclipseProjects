@@ -1,7 +1,7 @@
 package payment.action;
 
-import payment.PaymentSystem;
 import payment.model.employee.Employee;
+import payment.PaymentSystem;
 
 public class SignOut implements Action {
    @Override public boolean doAction() {
@@ -9,11 +9,11 @@ public class SignOut implements Action {
       if (member == null)
          return false;
 
-      PaymentSystem.copyData();
-      PaymentSystem.getSyndicate().getMembers().remove(member.syndicateId);
-      member = member.clone();
+      PaymentSystem.save();
+      member = PaymentSystem.state.getMembers().get(member.syndicateId);
+      PaymentSystem.state.removeEmployee(member);
       member.syndicateId = null;
-      PaymentSystem.setEmployee(member);
+      PaymentSystem.state.setEmployee(member);
 
       System.out.println("Membro '" + member.memberInfo() +
             "' removido do sindicato.");
