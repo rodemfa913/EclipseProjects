@@ -47,8 +47,8 @@ public class PaymentSystem {
    }
 
    private static void debug() {
-      System.out.println("Original:\n" + state);
-      System.out.println("Cópia:\n" + lastState);
+      System.out.println("Original:\n---\n" + state);
+      System.out.println("---\nCópia:\n---\n" + lastState);
    }
 
    public static Employee editInfo(int id) {

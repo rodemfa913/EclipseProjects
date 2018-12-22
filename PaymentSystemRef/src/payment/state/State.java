@@ -15,7 +15,7 @@ abstract class State {
 
       o += "\n---\nMembros:";
       for (Employee member : this.members.values())
-         o += "\n---\n" + member;
+         o += "\n  " + member.memberInfo();
 
       o += "\n---\nServiços:";
       for (Map.Entry<String, Double> service : this.services.entrySet())
