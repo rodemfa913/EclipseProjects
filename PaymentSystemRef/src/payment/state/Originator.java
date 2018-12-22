@@ -42,7 +42,7 @@ public class Originator extends State {
       HashMap<String, Employee> bkpMembers = new HashMap<>(this.members);
       HashMap<String, Double> bkpServices = new HashMap<>(this.services);
 
-      for (Employee employee : this.employees.values())
+      for (Employee employee : bkpEmployees.values())
          this.setEmployee(employee.clone());
 
       return new Memento(bkpEmployees, bkpMembers, bkpServices);
