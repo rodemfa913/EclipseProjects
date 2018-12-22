@@ -32,7 +32,6 @@ public class PaymentSystem {
          if (a == -1)
             debug();
          else if (a == 99)
-            //undoLastAction();
             restore();
          else if (a >= 1 && a <= actions.length) {
             Action action = actions[a - 1];
