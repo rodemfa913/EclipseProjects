@@ -11,7 +11,7 @@ public class Roll implements Action {
       ArrayList<Payment> payments = new ArrayList<>();
       PaymentSystem.save();
 
-      for (Employee employee : PaymentSystem.state.getEmployees().values()) {
+      for (Employee employee : PaymentSystem.state.getEmployees()) {
          if (!employee.isPaymentDay(date))
             continue;
 

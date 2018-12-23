@@ -13,7 +13,7 @@ public class LaunchFee implements Action {
       String service = PaymentSystem.input.nextLine();
 
       PaymentSystem.save();
-      member = PaymentSystem.state.getMembers().get(member.syndicateId);
+      member = PaymentSystem.state.getMember(member.syndicateId);
 
       System.out.print("Taxa: ");
       double fee = PaymentSystem.input.nextDouble();

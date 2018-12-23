@@ -21,8 +21,8 @@ public class LaunchCard implements Action {
       PaymentSystem.input.nextLine();
 
       PaymentSystem.save();
-      Hourly hourly = (Hourly) PaymentSystem.state.
-            getEmployees().get(employee.getId());
+      Hourly hourly = (Hourly) PaymentSystem.
+            state.getEmployee(employee.getId());
       hourly.getPointCards().add(new PointCard(date, hours));
 
       System.out.println("Cartão de ponto associado a '" +

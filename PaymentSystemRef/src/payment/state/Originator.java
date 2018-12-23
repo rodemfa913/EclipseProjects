@@ -1,6 +1,6 @@
 package payment.state;
 
-import java.util.HashMap;
+import java.util.*;
 import payment.model.employee.Employee;
 
 public class Originator extends State {
@@ -10,25 +10,43 @@ public class Originator extends State {
       this.services = new HashMap<>();
    }
 
-   public HashMap<Integer, Employee> getEmployees() {
-      return new HashMap<>(this.employees);
+   public Employee getEmployee(int id) {
+      return this.employees.get(id);
    }
 
-   public HashMap<String, Employee> getMembers() {
-      return new HashMap<>(this.members);
+   public Collection<Employee> getEmployees() {
+      return this.employees.values();
+   }
+
+   public Employee getMember(String id) {
+      return this.members.get(id);
+   }
+
+   public Collection<Employee> getMembers() {
+      return this.members.values();
    }
 
    public HashMap<String, Double> getServices() {
       return new HashMap<>(this.services);
    }
 
-   public void removeEmployee(Employee employee) {
-      this.employees.remove(employee.getId());
-      this.members.remove(employee.syndicateId);
+   public boolean hasEmployee(int id) {
+      return this.employees.containsKey(id);
    }
 
-   public void removeService(String service) {
-      this.services.remove(service);
+   public boolean hasMember(String id) {
+      return this.members.containsKey(id);
+   }
+
+   public Employee removeEmployee(Employee employee) {
+      this.members.remove(employee.syndicateId);
+      return this.employees.remove(employee.getId());
+   }
+
+   public double removeService(String service) {
+      for (Employee member : this.getMembers())
+         member.getServices().remove(service);
+      return this.services.remove(service);
    }
 
    public void restore(Memento memento) {
@@ -48,18 +66,18 @@ public class Originator extends State {
       return new Memento(bkpEmployees, bkpMembers, bkpServices);
    }
 
-   public void setEmployee(Employee employee) {
-      this.employees.put(employee.getId(), employee);
+   public Employee setEmployee(Employee employee) {
       if (employee.syndicateId != null)
          this.members.put(employee.syndicateId, employee);
+      return this.employees.put(employee.getId(), employee);
    }
 
-   public void setService(String service, double fee) {
+   public double setService(String service, double fee) {
       if (fee < 0.0)
          fee = 0.0;
-      this.services.put(service, fee);
-      for (Employee member : this.members.values())
+      for (Employee member : this.getMembers())
          if (member.getServices().containsKey(service))
             member.setService(service, fee);
+      return this.services.put(service, fee);
    }
 }

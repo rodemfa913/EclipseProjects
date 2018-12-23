@@ -113,7 +113,7 @@ public class PaymentSystem {
 
    public static Employee getEmployee() {
       System.out.print("Id do empregado: ");
-      Employee employee = state.getEmployees().get(input.nextInt());
+      Employee employee = state.getEmployee(input.nextInt());
       input.nextLine();
 
       if (employee == null)
@@ -124,7 +124,7 @@ public class PaymentSystem {
 
    public static Employee getMember() {
       System.out.print("Id do membro do sindicato: ");
-      Employee member = state.getMembers().get(input.nextLine());
+      Employee member = state.getMember(input.nextLine());
 
       if (member == null)
          System.out.println("<!> Não encontrado.");

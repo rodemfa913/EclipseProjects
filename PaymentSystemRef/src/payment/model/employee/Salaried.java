@@ -11,7 +11,7 @@ public class Salaried extends Employee {
       super(id);
    }
 
-   public Salaried create(int id) {
+   @Override public Salaried create(int id) {
       return new Salaried(id);
    }
 
@@ -19,11 +19,11 @@ public class Salaried extends Employee {
       return "assalariado";
    }
 
-   public boolean isPaymentDay(SimpleDate date) {
+   @Override public boolean isPaymentDay(SimpleDate date) {
       return date.isLastBusinessDay();
    }
 
-   public double receivePayment() {
+   @Override public double receivePayment() {
       return this.getSalary();
    }
 }

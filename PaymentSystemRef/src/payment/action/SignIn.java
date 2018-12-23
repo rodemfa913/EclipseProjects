@@ -14,15 +14,15 @@ public class SignIn implements Action {
       }
 
       System.out.print("Id do membro do sindicato: ");
-      String sid = PaymentSystem.input.nextLine();
-      if (PaymentSystem.state.getMembers().containsKey(sid)) {
+      String id = PaymentSystem.input.nextLine();
+      if (PaymentSystem.state.hasMember(id)) {
          System.out.println("<!> Id já existente.");
          return false;
       }
 
       PaymentSystem.save();
-      member = PaymentSystem.state.getEmployees().get(member.getId());
-      member.syndicateId = sid;
+      member = PaymentSystem.state.getEmployee(member.getId());
+      member.syndicateId = id;
       PaymentSystem.state.setEmployee(member);
 
       System.out.print("Taxa sindical: ");

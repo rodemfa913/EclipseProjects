@@ -5,13 +5,12 @@ import payment.PaymentSystem;
 
 public class SignOut implements Action {
    @Override public boolean doAction() {
-      Employee member = PaymentSystem.getEmployee();
+      Employee member = PaymentSystem.getMember();
       if (member == null)
          return false;
 
       PaymentSystem.save();
-      member = PaymentSystem.state.getMembers().get(member.syndicateId);
-      PaymentSystem.state.removeEmployee(member);
+      member = PaymentSystem.state.removeEmployee(member);
       member.syndicateId = null;
       PaymentSystem.state.setEmployee(member);
 
