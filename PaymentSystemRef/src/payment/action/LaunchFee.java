@@ -3,9 +3,9 @@ package payment.action;
 import payment.model.employee.Employee;
 import payment.PaymentSystem;
 
-public class LaunchFee implements Action {
+public class LaunchFee extends Action {
    @Override public boolean doAction() {
-      Employee member = PaymentSystem.getMember();
+      Employee member = getMember();
       if (member == null)
          return false;
 

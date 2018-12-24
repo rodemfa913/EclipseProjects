@@ -2,8 +2,6 @@ package payment;
 
 import java.util.Scanner;
 import payment.action.*;
-import payment.model.*;
-import payment.model.employee.*;
 import payment.state.*;
 
 public class PaymentSystem {
@@ -49,87 +47,6 @@ public class PaymentSystem {
    private static void debug() {
       System.out.println("Original:\n---\n" + state);
       System.out.println("---\nCópia:\n---\n" + lastState);
-   }
-
-   public static Employee editInfo(int id) {
-      Employee[] creators = new Employee[] {
-         new Hourly(), new Salaried(), new Commissioned()
-      };
-
-      System.out.println("---");
-      int t;
-      for (t = 0; t < creators.length; t++)
-         System.out.println(t + " - " + creators[t].getType());
-      System.out.print("---\nTipo: ");
-      t = input.nextInt();
-      input.nextLine();
-      if (t < 0 || t >= creators.length)
-         t = 0;
-
-      Employee employee = creators[t].create(id);
-
-      System.out.print("Nome: ");
-      employee.name = input.nextLine();
-
-      System.out.print("Endereço: ");
-      employee.address = input.nextLine();
-
-      Payment.Method[] methods = Payment.Method.values();
-
-      System.out.println("---");
-      int m;
-      for (m = 0; m < methods.length; m++)
-         System.out.println(m + " - " + methods[m]);
-      System.out.print("---\nMétodo de pagamento: ");
-      m = input.nextInt();
-      input.nextLine();
-      if (m < 0 || m >= methods.length)
-         m = 0;
-      employee.paymentMethod = methods[m];
-
-      System.out.print("Salário: ");
-      employee.setSalary(input.nextDouble());
-      input.nextLine();
-
-      if (employee instanceof Commissioned) {
-         System.out.print("Comissão: ");
-         ((Commissioned) employee).setCommission(input.nextDouble());
-         input.nextLine();
-      }
-
-      state.setEmployee(employee);
-
-      return employee;
-   }
-
-   public static SimpleDate getDate() {
-      System.out.print("Data (DD MM YYYY): ");
-      int day = input.nextInt();
-      int month = input.nextInt();
-      int year = input.nextInt(); input.nextLine();
-
-      return new SimpleDate(year, month, day);
-   }
-
-   public static Employee getEmployee() {
-      System.out.print("Id do empregado: ");
-      Employee employee = state.getEmployee(input.nextInt());
-      input.nextLine();
-
-      if (employee == null)
-         System.out.println("<!> Não encontrado.");
-
-      return employee;
-   }
-
-   public static Employee getMember() {
-      System.out.print("Id do membro do sindicato: ");
-      Employee member = state.getMember(input.nextLine());
-
-      if (member == null)
-         System.out.println("<!> Não encontrado.");
-
-      return member;
    }
 
    private static void restore() {

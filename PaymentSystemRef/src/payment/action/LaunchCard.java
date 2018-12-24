@@ -4,9 +4,9 @@ import payment.model.*;
 import payment.model.employee.*;
 import payment.PaymentSystem;
 
-public class LaunchCard implements Action {
+public class LaunchCard extends Action {
    @Override public boolean doAction() {
-      Employee employee = PaymentSystem.getEmployee();
+      Employee employee = getEmployee();
       if (employee == null)
          return false;
       if (!(employee instanceof Hourly)) {
@@ -14,7 +14,7 @@ public class LaunchCard implements Action {
          return false;
       }
 
-      SimpleDate date = PaymentSystem.getDate();
+      SimpleDate date = getDate();
 
       System.out.print("Horas trabalhadas: ");
       int hours = PaymentSystem.input.nextInt();

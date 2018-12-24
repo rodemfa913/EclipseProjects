@@ -3,14 +3,14 @@ package payment.action;
 import payment.model.employee.Employee;
 import payment.PaymentSystem;
 
-public class Edit implements Action {
+public class Edit extends Action {
    @Override public boolean doAction() {
-      Employee employee = PaymentSystem.getEmployee();
+      Employee employee = getEmployee();
       if (employee == null)
          return false;
 
       PaymentSystem.save();
-      employee = PaymentSystem.editInfo(employee.getId());
+      employee = editInfo(employee.getId());
 
       System.out.println("Empregado '" + employee.employeeInfo() + "' editado");
       return true;

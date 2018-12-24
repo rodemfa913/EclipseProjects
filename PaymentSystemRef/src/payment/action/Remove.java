@@ -3,9 +3,9 @@ package payment.action;
 import payment.model.employee.Employee;
 import payment.PaymentSystem;
 
-public class Remove implements Action {
+public class Remove extends Action {
    @Override public boolean doAction() {
-      Employee employee = PaymentSystem.getEmployee();
+      Employee employee = getEmployee();
       if (employee == null)
          return false;
 

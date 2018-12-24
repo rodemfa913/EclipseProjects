@@ -5,9 +5,9 @@ import payment.model.*;
 import payment.model.employee.Employee;
 import payment.PaymentSystem;
 
-public class Roll implements Action {
+public class Roll extends Action {
    @Override public boolean doAction() {
-      SimpleDate date = PaymentSystem.getDate();
+      SimpleDate date = getDate();
       ArrayList<Payment> payments = new ArrayList<>();
       PaymentSystem.save();
 

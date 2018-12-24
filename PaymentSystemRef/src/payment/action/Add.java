@@ -3,13 +3,13 @@ package payment.action;
 import payment.model.employee.Employee;
 import payment.PaymentSystem;
 
-public class Add implements Action {
+public class Add extends Action {
    private static int nEmployee;
 
    @Override public boolean doAction() {
       PaymentSystem.save();
 
-      Employee employee = PaymentSystem.editInfo(nEmployee++);
+      Employee employee = editInfo(nEmployee++);
 
       System.out.println("Empregado '" +
             employee.employeeInfo() + "' adicionado.");

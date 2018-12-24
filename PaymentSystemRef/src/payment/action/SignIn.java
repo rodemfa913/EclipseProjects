@@ -3,9 +3,9 @@ package payment.action;
 import payment.model.employee.Employee;
 import payment.PaymentSystem;
 
-public class SignIn implements Action {
+public class SignIn extends Action {
    @Override public boolean doAction() {
-      Employee member = PaymentSystem.getEmployee();
+      Employee member = getEmployee();
       if (member == null)
          return false;
       if (member.syndicateId != null) {
