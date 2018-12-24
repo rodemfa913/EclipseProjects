@@ -5,7 +5,7 @@ import payment.PaymentSystem;
 
 public class SignIn extends Action {
    @Override public boolean doAction() {
-      Employee member = getEmployee();
+      Employee member = this.getEmployee();
       if (member == null)
          return false;
       if (member.syndicateId != null) {

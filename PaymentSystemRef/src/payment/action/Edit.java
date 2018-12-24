@@ -5,12 +5,12 @@ import payment.PaymentSystem;
 
 public class Edit extends Action {
    @Override public boolean doAction() {
-      Employee employee = getEmployee();
+      Employee employee = this.getEmployee();
       if (employee == null)
          return false;
 
       PaymentSystem.save();
-      employee = editInfo(employee.getId());
+      employee = this.editInfo(employee.getId());
 
       System.out.println("Empregado '" + employee.employeeInfo() + "' editado");
       return true;

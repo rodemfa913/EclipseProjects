@@ -7,7 +7,7 @@ import payment.PaymentSystem;
 
 public class Roll extends Action {
    @Override public boolean doAction() {
-      SimpleDate date = getDate();
+      SimpleDate date = this.getDate();
       ArrayList<Payment> payments = new ArrayList<>();
       PaymentSystem.save();
 

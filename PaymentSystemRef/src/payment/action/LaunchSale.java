@@ -6,7 +6,7 @@ import payment.PaymentSystem;
 
 public class LaunchSale extends Action {
    @Override public boolean doAction() {
-      Employee employee = getEmployee();
+      Employee employee = this.getEmployee();
       if (employee == null)
          return false;
       if (!(employee instanceof Commissioned)) {
@@ -15,7 +15,7 @@ public class LaunchSale extends Action {
          return false;
       }
 
-      SimpleDate date = getDate();
+      SimpleDate date = this.getDate();
 
       System.out.print("Valor: ");
       double value = PaymentSystem.input.nextDouble();

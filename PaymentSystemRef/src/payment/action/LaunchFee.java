@@ -5,7 +5,7 @@ import payment.PaymentSystem;
 
 public class LaunchFee extends Action {
    @Override public boolean doAction() {
-      Employee member = getMember();
+      Employee member = this.getMember();
       if (member == null)
          return false;
 

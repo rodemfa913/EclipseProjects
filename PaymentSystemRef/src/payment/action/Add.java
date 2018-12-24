@@ -9,7 +9,7 @@ public class Add extends Action {
    @Override public boolean doAction() {
       PaymentSystem.save();
 
-      Employee employee = editInfo(nEmployee++);
+      Employee employee = this.editInfo(nEmployee++);
 
       System.out.println("Empregado '" +
             employee.employeeInfo() + "' adicionado.");

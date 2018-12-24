@@ -5,7 +5,7 @@ import payment.PaymentSystem;
 
 public class Remove extends Action {
    @Override public boolean doAction() {
-      Employee employee = getEmployee();
+      Employee employee = this.getEmployee();
       if (employee == null)
          return false;
 

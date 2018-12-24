@@ -7,7 +7,7 @@ import payment.PaymentSystem;
 public abstract class Action {
    public abstract boolean doAction();
 
-   protected static Employee editInfo(int id) {
+   protected Employee editInfo(int id) {
       Employee[] creators = new Employee[] {
          new Hourly(), new Salaried(), new Commissioned()
       };
@@ -58,7 +58,7 @@ public abstract class Action {
       return employee;
    }
 
-   protected static SimpleDate getDate() {
+   protected SimpleDate getDate() {
       System.out.print("Data (DD MM YYYY): ");
       int day = PaymentSystem.input.nextInt();
       int month = PaymentSystem.input.nextInt();
@@ -68,7 +68,7 @@ public abstract class Action {
       return new SimpleDate(year, month, day);
    }
 
-   protected static Employee getEmployee() {
+   protected Employee getEmployee() {
       System.out.print("Id do empregado: ");
       Employee employee = PaymentSystem.state.getEmployee(
             PaymentSystem.input.nextInt());
@@ -80,7 +80,7 @@ public abstract class Action {
       return employee;
    }
 
-   protected static Employee getMember() {
+   protected Employee getMember() {
       System.out.print("Id do membro do sindicato: ");
       Employee member = PaymentSystem.state.getMember(
             PaymentSystem.input.nextLine());
