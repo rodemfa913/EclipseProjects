@@ -4,7 +4,7 @@ import isoccer.ISoccer;
 import isoccer.model.staff.*;
 
 public class AddMember extends Action {
-   private int memberCount;
+   private int nMember;
 
    @Override
    public void doAction() throws Exception {
@@ -33,11 +33,11 @@ public class AddMember extends Action {
          System.out.print("---\nPosição: ");
          f = Integer.parseInt(ISoccer.input.nextLine());
 
-         member = (Player) pCreators[f].create(memberCount++);
+         member = (Player) pCreators[f].create(nMember++);
       } else {
-         member = (Member) mCreators[f].create(memberCount++);
+         member = (Member) mCreators[f].create(nMember++);
       }
-      this.editInfo(member);
+      this.editMemberInfo(member);
       ISoccer.members.put(member.id, member);
 
       System.out.println("Funcionário '" + member.id +

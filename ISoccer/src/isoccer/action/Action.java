@@ -1,12 +1,16 @@
 package isoccer.action;
 
 import isoccer.ISoccer;
-import isoccer.model.staff.*;
+import isoccer.model.partner.FanPartner;
+import isoccer.model.staff.Doctor;
+import isoccer.model.staff.Driver;
+import isoccer.model.staff.Member;
+import isoccer.model.staff.Player;
 
 public abstract class Action {
    public abstract void doAction() throws Exception;
 
-   protected void editInfo(Member member) throws Exception {
+   protected void editMemberInfo(Member member) throws Exception {
       System.out.print("Nome\n  atual: " + member.getName() + "\n   novo: ");
       member.setName(ISoccer.input.nextLine());
 
@@ -32,9 +36,39 @@ public abstract class Action {
          System.out.print("CNH\n atual: " + driver.cnh + "\n   novo: ");
          driver.cnh = Long.parseLong(ISoccer.input.nextLine());
       } else if (member instanceof Player) {
-         System.out.print("Inapto? (s/n): ");
-         ((Player) member).unable = ISoccer.input.
-               nextLine().toLowerCase().equals("s");
+         Player player = (Player) member;
+         String unable = player.unable ? "s" : "n";
+         System.out.print("Inapto? (s/n)\n  atual: " + unable + "\n   novo: ");
+         unable = ISoccer.input.nextLine().toLowerCase();
+         player.unable = unable.equals("s");
       }
+   }
+
+   protected void editPartnerInfo(FanPartner partner) throws Exception {
+      System.out.print("Nome\n  atual: " + partner.getName() + "\n   novo: ");
+      partner.setName(ISoccer.input.nextLine());
+
+      System.out.print("E-mail\n  atual: " + partner.getEmail() + "\n   novo: ");
+      partner.setEmail(ISoccer.input.nextLine());
+
+      System.out.print("CPF\n  atual: " + partner.getCPF() + "\n   novo: ");
+      partner.setCPF(ISoccer.input.nextLine());
+
+      System.out.print("Telefone\n  atual: " + partner.phone + "\n   novo: ");
+      partner.phone = Long.parseLong(ISoccer.input.nextLine());
+
+      System.out.print("Endereço\n  atual: " +
+            partner.getAddress() + "\n   novo: ");
+      partner.setAddress(ISoccer.input.nextLine());
+
+      System.out.print("Valor de contribuição (" + partner.getType() +
+            ")\n  atual: " + partner.getContribution() + "\n   novo: ");
+      partner.setContribution(Double.parseDouble(ISoccer.input.nextLine()));
+
+      String defaulting = partner.defaulting ? "s" : "n";
+      System.out.print("Inadiplente? (s/n)\n  atual: " +
+            defaulting + "\n   novo: ");
+      defaulting = ISoccer.input.nextLine().toLowerCase();
+      partner.defaulting = defaulting.equals("s");
    }
 }

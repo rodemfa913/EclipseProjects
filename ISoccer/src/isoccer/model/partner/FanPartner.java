@@ -4,10 +4,10 @@ import isoccer.RegEx;
 import isoccer.model.Creator;
 
 public abstract class FanPartner implements Creator {
-   public String address, name;
-   private double contribution;
-   private String cpf, email;
+   private String address, cpf, email, name;
    public boolean defaulting;
+   private static final Exception formatException =
+         new Exception("Formato incorreto");
    public final int id;
    public long phone;
 
@@ -19,9 +19,11 @@ public abstract class FanPartner implements Creator {
       this.id = id;
    }
 
-   public double getContribution() {
-      return this.contribution;
+   public String getAddress() {
+      return this.address;
    }
+
+   public abstract double getContribution();
 
    public String getCPF() {
       return this.cpf;
@@ -31,23 +33,33 @@ public abstract class FanPartner implements Creator {
       return this.email;
    }
 
-   public void setContribution(double contribution) {
-      if (contribution < 0.0)
-         contribution = 0.0;
-      this.contribution = contribution;
+   public String getName() {
+      return this.name;
    }
 
-   public boolean setCPF(String cpf) {
+   public void setAddress(String address) {
+      if (address.isEmpty())
+         address = "-";
+      this.address = address;
+   }
+
+   public abstract void setContribution(double contribution);
+
+   public void setCPF(String cpf) throws Exception {
       if (!cpf.matches(RegEx.cpf))
-         return false;
+         throw formatException;
       this.cpf = cpf;
-      return true;
    }
 
-   public boolean setEmail(String email) {
+   public void setEmail(String email) throws Exception {
       if (!email.matches(RegEx.email))
-         return false;
+         throw formatException;
       this.email = email;
-      return true;
+   }
+
+   public void setName(String name) {
+      if (name.isEmpty())
+         name = "-";
+      this.name = name;
    }
 }

@@ -5,8 +5,8 @@ import isoccer.model.Creator;
 
 public abstract class Member implements Creator {
    private String cpf, email, name;
-   protected static final Exception
-         formatException = new Exception("Formato incorreto");
+   protected static final Exception formatException =
+         new Exception("Formato incorreto");
    public final int id;
    public long phone;
    private double salary;
@@ -49,7 +49,7 @@ public abstract class Member implements Creator {
    }
 
    public void setName(String name) {
-      if (name == null || name.isEmpty())
+      if (name.isEmpty())
          name = "-";
       this.name = name;
    }

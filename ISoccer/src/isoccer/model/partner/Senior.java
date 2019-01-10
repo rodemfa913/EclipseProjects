@@ -1,6 +1,8 @@
 package isoccer.model.partner;
 
 public class Senior extends FanPartner {
+   private static double contribution;
+
    public Senior() {}
 
    public Senior(int id) {
@@ -13,7 +15,19 @@ public class Senior extends FanPartner {
    }
 
    @Override
+   public double getContribution() {
+      return Senior.contribution;
+   }
+
+   @Override
    public String getType() {
       return "sênior";
+   }
+
+   @Override
+   public void setContribution(double contribution) {
+      if (contribution < 0.0)
+         contribution = 0.0;
+      Senior.contribution = contribution;
    }
 }

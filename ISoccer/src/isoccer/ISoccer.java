@@ -1,12 +1,15 @@
 package isoccer;
 
 import isoccer.action.*;
+import isoccer.model.partner.FanPartner;
 import isoccer.model.staff.Member;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Scanner;
 
 public class ISoccer {
    public static final Scanner input = new Scanner(System.in);
    public static final HashMap<Integer, Member> members = new HashMap<>();
+   public static final HashMap<Integer, FanPartner> partners = new HashMap<>();
 
    public static void main(String[] args) {
       System.out.print("Login: ");
@@ -21,7 +24,9 @@ public class ISoccer {
          System.exit(2);
       }
 
-      Action[] actions = new Action[] {new AddMember()};
+      Action[] actions = new Action[] {
+            new AddMember(), new AddPartner()
+      };
 
       while (true) {
          System.out.println("---\n 0 - sair");
