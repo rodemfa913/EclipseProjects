@@ -1,6 +1,6 @@
 package isoccer.model.staff;
 
-import isoccer.RegEx;
+import isoccer.model.RegEx;
 
 public class Doctor extends Member {
    private String crm;

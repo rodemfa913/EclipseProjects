@@ -25,7 +25,8 @@ public class ISoccer {
       }
 
       Action[] actions = new Action[] {
-            new AddMember(), new AddPartner()
+            new AddMember(), new EditMember(), new AddPartner(),
+            new EditPartner()
       };
 
       while (true) {
@@ -47,7 +48,7 @@ public class ISoccer {
             System.out.println("<!> Entrada inválida.");
          }
          catch (Exception ex) {
-            System.out.println("<!> " + ex.getMessage() + ".");
+            System.out.println("<!> " + ex.getMessage());
          }
       }
    }

@@ -1,4 +1,4 @@
-package isoccer;
+package isoccer.model;
 
 public final class RegEx {
    public static final String

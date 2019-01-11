@@ -1,12 +1,12 @@
 package isoccer.model.staff;
 
-import isoccer.RegEx;
 import isoccer.model.Creator;
+import isoccer.model.RegEx;
 
 public abstract class Member implements Creator {
    private String cpf, email, name;
    protected static final Exception formatException =
-         new Exception("Formato incorreto");
+         new Exception("Formato incorreto.");
    public final int id;
    public long phone;
    private double salary;

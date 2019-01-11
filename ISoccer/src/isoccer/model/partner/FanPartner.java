@@ -1,13 +1,13 @@
 package isoccer.model.partner;
 
-import isoccer.RegEx;
 import isoccer.model.Creator;
+import isoccer.model.RegEx;
 
 public abstract class FanPartner implements Creator {
    private String address, cpf, email, name;
    public boolean defaulting;
    private static final Exception formatException =
-         new Exception("Formato incorreto");
+         new Exception("Formato incorreto.");
    public final int id;
    public long phone;
 
@@ -16,6 +16,7 @@ public abstract class FanPartner implements Creator {
    }
 
    public FanPartner(int id) {
+      this.address = this.cpf = this.email = this.name = "-";
       this.id = id;
    }
 

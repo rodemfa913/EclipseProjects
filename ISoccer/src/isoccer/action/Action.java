@@ -8,6 +8,9 @@ import isoccer.model.staff.Member;
 import isoccer.model.staff.Player;
 
 public abstract class Action {
+   private static final Exception notFoundException =
+         new Exception("Não encontrado.");
+
    public abstract void doAction() throws Exception;
 
    protected void editMemberInfo(Member member) throws Exception {
@@ -70,5 +73,27 @@ public abstract class Action {
             defaulting + "\n   novo: ");
       defaulting = ISoccer.input.nextLine().toLowerCase();
       partner.defaulting = defaulting.equals("s");
+   }
+
+   protected Member getMember() throws Exception {
+      System.out.print("Id do funcionário: ");
+      int id = Integer.parseInt(ISoccer.input.nextLine());
+
+      Member member = ISoccer.members.get(id);
+      if (member == null)
+         throw notFoundException;
+
+      return member;
+   }
+
+   protected FanPartner getPartner() throws Exception {
+      System.out.print("Id do sócio-torcedor: ");
+      int id = Integer.parseInt(ISoccer.input.nextLine());
+
+      FanPartner partner = ISoccer.partners.get(id);
+      if (partner == null)
+         throw notFoundException;
+
+      return partner;
    }
 }
