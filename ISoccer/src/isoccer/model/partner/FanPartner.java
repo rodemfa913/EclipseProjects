@@ -11,31 +11,27 @@ public abstract class FanPartner implements Creator {
    public final int id;
    public long phone;
 
-   public FanPartner() {
-      this(-1);
-   }
-
-   public FanPartner(int id) {
-      this.address = this.cpf = this.email = this.name = "-";
+   protected FanPartner(int id) {
+      address = cpf = email = name = "-";
       this.id = id;
    }
 
    public String getAddress() {
-      return this.address;
+      return address;
    }
 
    public abstract double getContribution();
 
    public String getCPF() {
-      return this.cpf;
+      return cpf;
    }
 
    public String getEmail() {
-      return this.email;
+      return email;
    }
 
    public String getName() {
-      return this.name;
+      return name;
    }
 
    public void setAddress(String address) {

@@ -2,18 +2,19 @@ package isoccer.action;
 
 import isoccer.ISoccer;
 import isoccer.model.partner.FanPartner;
+import isoccer.model.resource.Resource;
 import isoccer.model.staff.Doctor;
 import isoccer.model.staff.Driver;
 import isoccer.model.staff.Member;
 import isoccer.model.staff.Player;
 
 public abstract class Action {
-   private static final Exception notFoundException =
+   protected static final Exception notFoundException =
          new Exception("Não encontrado.");
 
    public abstract void doAction() throws Exception;
 
-   protected void editMemberInfo(Member member) throws Exception {
+   protected void memberInfo(Member member) throws Exception {
       System.out.print("Nome\n  atual: " + member.getName() + "\n   novo: ");
       member.setName(ISoccer.input.nextLine());
 
@@ -47,7 +48,7 @@ public abstract class Action {
       }
    }
 
-   protected void editPartnerInfo(FanPartner partner) throws Exception {
+   protected void partnerInfo(FanPartner partner) throws Exception {
       System.out.print("Nome\n  atual: " + partner.getName() + "\n   novo: ");
       partner.setName(ISoccer.input.nextLine());
 
@@ -75,25 +76,5 @@ public abstract class Action {
       partner.defaulting = defaulting.equals("s");
    }
 
-   protected Member getMember() throws Exception {
-      System.out.print("Id do funcionário: ");
-      int id = Integer.parseInt(ISoccer.input.nextLine());
-
-      Member member = ISoccer.members.get(id);
-      if (member == null)
-         throw notFoundException;
-
-      return member;
-   }
-
-   protected FanPartner getPartner() throws Exception {
-      System.out.print("Id do sócio-torcedor: ");
-      int id = Integer.parseInt(ISoccer.input.nextLine());
-
-      FanPartner partner = ISoccer.partners.get(id);
-      if (partner == null)
-         throw notFoundException;
-
-      return partner;
-   }
+   protected void resourceInfo(Resource resource) {}
 }

@@ -1,7 +1,9 @@
 package isoccer.model.staff;
 
 public class LeftMid extends Player {
-   public LeftMid() {}
+   public LeftMid() {
+      super(-1);
+   }
 
    public LeftMid(int id) {
       super(id);

@@ -1,7 +1,9 @@
 package isoccer.model.staff;
 
 public class Defender extends Player {
-   public Defender() {}
+   public Defender() {
+      super(-1);
+   }
 
    public Defender(int id) {
       super(id);

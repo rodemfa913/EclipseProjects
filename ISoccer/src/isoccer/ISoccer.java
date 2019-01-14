@@ -2,6 +2,7 @@ package isoccer;
 
 import isoccer.action.*;
 import isoccer.model.partner.FanPartner;
+import isoccer.model.resource.Resource;
 import isoccer.model.staff.Member;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -10,6 +11,7 @@ public class ISoccer {
    public static final Scanner input = new Scanner(System.in);
    public static final HashMap<Integer, Member> members = new HashMap<>();
    public static final HashMap<Integer, FanPartner> partners = new HashMap<>();
+   public static final HashMap<Integer, Resource> resources = new HashMap<>();
 
    public static void main(String[] args) {
       System.out.print("Login: ");
@@ -26,7 +28,7 @@ public class ISoccer {
 
       Action[] actions = new Action[] {
             new AddMember(), new EditMember(), new AddPartner(),
-            new EditPartner()
+            new EditPartner(), new AddResource()
       };
 
       while (true) {

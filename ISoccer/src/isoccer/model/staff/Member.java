@@ -11,29 +11,25 @@ public abstract class Member implements Creator {
    public long phone;
    private double salary;
 
-   public Member() {
-      this(-1);
-   }
-
-   public Member(int id) {
-      this.cpf = this.email = this.name = "-";
+   protected Member(int id) {
+      cpf = email = name = "-";
       this.id = id;
    }
 
    public String getCPF() {
-      return this.cpf;
+      return cpf;
    }
 
    public String getEmail() {
-      return this.email;
+      return email;
    }
 
    public String getName() {
-      return this.name;
+      return name;
    }
 
    public double getSalary() {
-      return this.salary;
+      return salary;
    }
 
    public void setCPF(String cpf) throws Exception {

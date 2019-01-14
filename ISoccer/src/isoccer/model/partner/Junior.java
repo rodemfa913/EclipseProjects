@@ -3,7 +3,9 @@ package isoccer.model.partner;
 public class Junior extends FanPartner {
    private static double contribution;
 
-   public Junior() {}
+   public Junior() {
+      super(-1);
+   }
 
    public Junior(int id) {
       super(id);
@@ -16,7 +18,7 @@ public class Junior extends FanPartner {
 
    @Override
    public double getContribution() {
-      return Junior.contribution;
+      return contribution;
    }
 
    @Override

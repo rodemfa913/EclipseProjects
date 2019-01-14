@@ -37,7 +37,7 @@ public class AddMember extends Action {
       } else {
          member = (Member) mCreators[f].create(nMember++);
       }
-      this.editMemberInfo(member);
+      memberInfo(member);
       ISoccer.members.put(member.id, member);
 
       System.out.println("Funcionário '" + member.id +

@@ -1,7 +1,9 @@
 package isoccer.model.staff;
 
 public class DefensiveMid extends Player {
-   public DefensiveMid() {}
+   public DefensiveMid() {
+      super(-1);
+   }
 
    public DefensiveMid(int id) {
       super(id);

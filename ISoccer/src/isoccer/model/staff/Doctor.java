@@ -11,7 +11,7 @@ public class Doctor extends Member {
 
    public Doctor(int id) {
       super(id);
-      this.crm = "-";
+      crm = "-";
    }
 
    @Override
@@ -20,7 +20,7 @@ public class Doctor extends Member {
    }
 
    public String getCRM() {
-      return this.crm;
+      return crm;
    }
 
    @Override

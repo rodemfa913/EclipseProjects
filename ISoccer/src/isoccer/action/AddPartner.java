@@ -4,7 +4,7 @@ import isoccer.ISoccer;
 import isoccer.model.partner.*;
 
 public class AddPartner extends Action {
-   private static int nPartner;
+   private int nPartner;
 
    @Override
    public void doAction() throws Exception {
@@ -20,7 +20,7 @@ public class AddPartner extends Action {
       t = Integer.parseInt(ISoccer.input.nextLine());
 
       FanPartner partner = (FanPartner) creators[t].create(nPartner++);
-      this.editPartnerInfo(partner);
+      partnerInfo(partner);
       ISoccer.partners.put(partner.id, partner);
 
       System.out.println("Sócio-torcedor '" + partner.id +

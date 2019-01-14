@@ -1,7 +1,9 @@
 package isoccer.model.staff;
 
 public class GoalKeeper extends Player {
-   public GoalKeeper() {}
+   public GoalKeeper() {
+      super(-1);
+   }
 
    public GoalKeeper(int id) {
       super(id);

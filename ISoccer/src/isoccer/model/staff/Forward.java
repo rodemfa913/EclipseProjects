@@ -1,7 +1,9 @@
 package isoccer.model.staff;
 
 public class Forward extends Player {
-   public Forward() {}
+   public Forward() {
+      super(-1);
+   }
 
    public Forward(int id) {
       super(id);

@@ -3,7 +3,9 @@ package isoccer.model.partner;
 public class Elite extends FanPartner {
    private static double contribution;
 
-   public Elite() {}
+   public Elite() {
+      super(-1);
+   }
 
    public Elite(int id) {
       super(id);
@@ -16,7 +18,7 @@ public class Elite extends FanPartner {
 
    @Override
    public double getContribution() {
-      return Elite.contribution;
+      return contribution;
    }
 
    @Override
