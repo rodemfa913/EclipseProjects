@@ -1,4 +1,4 @@
-package isoccer.model.staff;
+package isoccer.model.staff.player;
 
 public class LeftMid extends Player {
    public LeftMid() {

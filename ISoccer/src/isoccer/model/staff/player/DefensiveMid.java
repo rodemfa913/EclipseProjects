@@ -1,4 +1,4 @@
-package isoccer.model.staff;
+package isoccer.model.staff.player;
 
 public class DefensiveMid extends Player {
    public DefensiveMid() {

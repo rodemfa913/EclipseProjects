@@ -1,4 +1,6 @@
-package isoccer.model.staff;
+package isoccer.model.staff.player;
+
+import isoccer.model.staff.Member;
 
 public abstract class Player extends Member {
    public boolean unable;

@@ -1,44 +1,43 @@
 package isoccer.action;
 
 import isoccer.ISoccer;
-import isoccer.model.staff.*;
+import isoccer.model.staff.Cook;
+import isoccer.model.staff.Doctor;
+import isoccer.model.staff.Driver;
+import isoccer.model.staff.Lawyer;
+import isoccer.model.staff.Member;
+import isoccer.model.staff.PhysicalTrainer;
+import isoccer.model.staff.President;
 
 public class AddMember extends Action {
-   private int nMember;
-
    @Override
    public void doAction() throws Exception {
-      Member[] mCreators = new Member[] {
-            new President(), new Doctor(), new Coach(),
-            new PhysicalTrainer(), new Driver(), new Cook(), new Lawyer()
+      Member[] creators = new Member[] {
+         new President(), new Doctor(), new PhysicalTrainer(),
+         new Driver(), new Cook(), new Lawyer()
       };
 
       System.out.println("---");
-      int f;
-      for (f = 0; f < mCreators.length; f++)
-         System.out.println(f + " - " + mCreators[f].getType());
-      System.out.print(mCreators.length + " - jogador\n---\nFunção: ");
-      f = Integer.parseInt(ISoccer.input.nextLine());
+      int m;
+      for (m = 0; m < creators.length; m++)
+         System.out.println(m + " - " + creators[m].getType());
+      System.out.print("---\nFunção: ");
+      m = Integer.parseInt(ISoccer.input.nextLine());
 
-      Member member;
-      if (f == mCreators.length) {
-         Player[] pCreators = new Player[] {
-               new GoalKeeper(), new Defender(), new DefensiveMid(),
-               new CentreMid(), new LeftMid(), new RightMid(), new Forward()
-         };
+      Member member = (Member) creators[m].create(ISoccer.members.size());
 
-         System.out.println("---");
-         for (f = 0; f < pCreators.length; f++)
-            System.out.println(f + " - " + pCreators[f].getType());
-         System.out.print("---\nPosição: ");
-         f = Integer.parseInt(ISoccer.input.nextLine());
-
-         member = (Player) pCreators[f].create(nMember++);
-      } else {
-         member = (Member) mCreators[f].create(nMember++);
+      setMemberInfo(member);
+      if (member instanceof Doctor) {
+         Doctor doctor = (Doctor) member;
+         System.out.print("CRM\n  atual: " + doctor.getCRM() + "\n   novo: ");
+         doctor.setCRM(ISoccer.input.nextLine());
+      } else if (member instanceof Driver) {
+         Driver driver = (Driver) member;
+         System.out.print("CNH\n atual: " + driver.cnh + "\n   novo: ");
+         driver.cnh = Long.parseLong(ISoccer.input.nextLine());
       }
-      memberInfo(member);
-      ISoccer.members.put(member.id, member);
+
+      ISoccer.members.add(member);
 
       System.out.println("Funcionário '" + member.id +
             ": " + member.getName() + "' adicionado.");

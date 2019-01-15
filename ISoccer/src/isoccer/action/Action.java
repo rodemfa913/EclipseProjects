@@ -3,10 +3,7 @@ package isoccer.action;
 import isoccer.ISoccer;
 import isoccer.model.partner.FanPartner;
 import isoccer.model.resource.Resource;
-import isoccer.model.staff.Doctor;
-import isoccer.model.staff.Driver;
 import isoccer.model.staff.Member;
-import isoccer.model.staff.Player;
 
 public abstract class Action {
    protected static final Exception notFoundException =
@@ -14,7 +11,7 @@ public abstract class Action {
 
    public abstract void doAction() throws Exception;
 
-   protected void memberInfo(Member member) throws Exception {
+   protected void setMemberInfo(Member member) throws Exception {
       System.out.print("Nome\n  atual: " + member.getName() + "\n   novo: ");
       member.setName(ISoccer.input.nextLine());
 
@@ -30,25 +27,9 @@ public abstract class Action {
 
       System.out.print("Telefone\n  atual: " + member.phone + "\n   novo: ");
       member.phone = Long.parseLong(ISoccer.input.nextLine());
-
-      if (member instanceof Doctor) {
-         Doctor doctor = (Doctor) member;
-         System.out.print("CRM\n  atual: " + doctor.getCRM() + "\n   novo: ");
-         doctor.setCRM(ISoccer.input.nextLine());
-      } else if (member instanceof Driver) {
-         Driver driver = (Driver) member;
-         System.out.print("CNH\n atual: " + driver.cnh + "\n   novo: ");
-         driver.cnh = Long.parseLong(ISoccer.input.nextLine());
-      } else if (member instanceof Player) {
-         Player player = (Player) member;
-         String unable = player.unable ? "s" : "n";
-         System.out.print("Inapto? (s/n)\n  atual: " + unable + "\n   novo: ");
-         unable = ISoccer.input.nextLine().toLowerCase();
-         player.unable = unable.equals("s");
-      }
    }
 
-   protected void partnerInfo(FanPartner partner) throws Exception {
+   protected void setPartnerInfo(FanPartner partner) throws Exception {
       System.out.print("Nome\n  atual: " + partner.getName() + "\n   novo: ");
       partner.setName(ISoccer.input.nextLine());
 
@@ -76,5 +57,5 @@ public abstract class Action {
       partner.defaulting = defaulting.equals("s");
    }
 
-   protected void resourceInfo(Resource resource) {}
+   protected void setResourceInfo(Resource resource) {}
 }

@@ -4,8 +4,6 @@ import isoccer.ISoccer;
 import isoccer.model.resource.*;
 
 public class AddResource extends Action {
-   private int nResource;
-
    @Override
    public void doAction() throws Exception {
       Resource[] creators = new Resource[] {
@@ -19,9 +17,10 @@ public class AddResource extends Action {
       System.out.print("---\nRecurso: ");
       r = Integer.parseInt(ISoccer.input.nextLine());
 
-      Resource resource = (Resource) creators[r].create(nResource++);
-      resourceInfo(resource);
-      ISoccer.resources.put(resource.id, resource);
+      Resource resource = (Resource)
+            creators[r].create(ISoccer.resources.size());
+      setResourceInfo(resource);
+      ISoccer.resources.add(resource);
       
       System.out.println("Recurso '" + resource.id +
             ": " + resource.getType() + "' adicionado.");

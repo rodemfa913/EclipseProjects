@@ -1,4 +1,4 @@
-package isoccer.model.staff;
+package isoccer.model.staff.player;
 
 public class Forward extends Player {
    public Forward() {

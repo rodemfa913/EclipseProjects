@@ -4,8 +4,6 @@ import isoccer.ISoccer;
 import isoccer.model.partner.*;
 
 public class AddPartner extends Action {
-   private int nPartner;
-
    @Override
    public void doAction() throws Exception {
       FanPartner[] creators = new FanPartner[] {
@@ -19,9 +17,10 @@ public class AddPartner extends Action {
       System.out.print("---\nTipo: ");
       t = Integer.parseInt(ISoccer.input.nextLine());
 
-      FanPartner partner = (FanPartner) creators[t].create(nPartner++);
-      partnerInfo(partner);
-      ISoccer.partners.put(partner.id, partner);
+      FanPartner partner = (FanPartner)
+            creators[t].create(ISoccer.partners.size());
+      setPartnerInfo(partner);
+      ISoccer.partners.add(partner);
 
       System.out.println("Sócio-torcedor '" + partner.id +
             ": " + partner.getName() + "' adicionado.");
