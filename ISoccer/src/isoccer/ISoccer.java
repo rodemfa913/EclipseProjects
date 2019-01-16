@@ -2,7 +2,9 @@ package isoccer;
 
 import isoccer.action.*;
 import isoccer.model.partner.FanPartner;
-import isoccer.model.resource.Resource;
+import isoccer.model.resource.Bus;
+import isoccer.model.resource.Stadium;
+import isoccer.model.resource.TrainingCenter;
 import isoccer.model.staff.Coach;
 import isoccer.model.staff.Member;
 import isoccer.model.staff.player.Player;
@@ -10,12 +12,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ISoccer {
-   public static final Scanner input = new Scanner(System.in);
    public static Coach coach;
+   public static final ArrayList<Bus> fleet = new ArrayList<>();
+   public static final Scanner input = new Scanner(System.in);
    public static final ArrayList<Member> members = new ArrayList<>();
    public static final ArrayList<FanPartner> partners = new ArrayList<>();
    public static final ArrayList<Player> players = new ArrayList<>();
-   public static final ArrayList<Resource> resources = new ArrayList<>();
+   public static Stadium stadium;
+   public static TrainingCenter trainingCenter;
 
    public static void main(String[] args) {
       System.out.print("Login: ");
@@ -32,7 +36,7 @@ public class ISoccer {
 
       Action[] actions = new Action[] {
          new AddMember(), new AddCoach(), new AddPlayer(), new AddPartner(),
-         new AddResource()
+         new AddBus(), new AddStadium(), new AddTrainingCenter()
       };
 
       while (true) {

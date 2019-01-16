@@ -1,21 +1,20 @@
 package isoccer.model.resource;
 
 public class Bus extends Resource {
-   public Bus() {
-      super(-1);
-   }
+   public final int id;
+   private int nSeat;
 
    public Bus(int id) {
-      super(id);
+      this.id = id;
    }
 
-   @Override
-   public Bus create(int id) {
-      return new Bus(id);
+   public int getNumSeat() {
+      return nSeat;
    }
 
-   @Override
-   public String getType() {
-      return "ônibus";
+   public void setNumSeat(int nSeat) {
+      if (nSeat < 0)
+         nSeat = 0;
+      this.nSeat = nSeat;
    }
 }

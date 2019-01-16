@@ -1,36 +1,18 @@
 package isoccer.model.resource;
 
 public class Stadium extends Resource {
-   private int capacity, nBathroom, nSnackBar;
-
-   public Stadium() {
-      super(-1);
-   }
-
-   public Stadium(int id) {
-      super(id);
-   }
-
-   @Override
-   public Stadium create(int id) {
-      return new Stadium(id);
-   }
+   private int capacity, nWC, nSnackBar;
 
    public int getCapacity() {
       return capacity;
    }
 
-   public int getNumBathroom() {
-      return nBathroom;
+   public int getNumWC() {
+      return nWC;
    }
 
    public int getNumSnackBar() {
       return nSnackBar;
-   }
-
-   @Override
-   public String getType() {
-      return "estádio";
    }
 
    public void setCapacity(int capacity) {
@@ -39,10 +21,10 @@ public class Stadium extends Resource {
       this.capacity = capacity;
    }
 
-   public void setNumBathroom(int nBathroom) {
-      if (nBathroom < 0)
-         nBathroom = 0;
-      this.nBathroom = nBathroom;
+   public void setNumWC(int nWC) {
+      if (nWC < 0)
+         nWC = 0;
+      this.nWC = nWC;
    }
 
    public void setNumSnackBar(int nSnackBar) {

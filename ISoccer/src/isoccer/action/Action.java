@@ -2,7 +2,6 @@ package isoccer.action;
 
 import isoccer.ISoccer;
 import isoccer.model.partner.FanPartner;
-import isoccer.model.resource.Resource;
 import isoccer.model.staff.Member;
 
 public abstract class Action {
@@ -56,6 +55,4 @@ public abstract class Action {
       defaulting = ISoccer.input.nextLine().toLowerCase();
       partner.defaulting = defaulting.equals("s");
    }
-
-   protected void setResourceInfo(Resource resource) {}
 }
