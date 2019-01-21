@@ -21,10 +21,8 @@ public class AddPlayer extends Action {
       Player player = (Player) creators[p].create(ISoccer.players.size());
 
       setMemberInfo(player);
-      String unable = player.unable ? "s" : "n";
-      System.out.print("Inapto? (s/n)\n  atual: " + unable + "\n   novo: ");
-      unable = ISoccer.input.nextLine().toLowerCase();
-      player.unable = unable.equals("s");
+      System.out.print("Inapto? (s/n): ");
+      player.unable = ISoccer.input.nextLine().toLowerCase().equals("s");
 
       ISoccer.players.add(player);
 

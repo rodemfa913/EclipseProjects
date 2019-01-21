@@ -35,15 +35,16 @@ public class ISoccer {
       }
 
       Action[] actions = new Action[] {
-         new AddMember(), new AddCoach(), new AddPlayer(), new AddPartner(),
-         new AddBus(), new AddStadium(), new AddTrainingCenter()
+         new AddCoach(), new AddPlayer(), new AddMember(), new AddPartner(),
+         new AddBus(), new AddStadium(), new AddTrainingCenter(),
+         new ManageResource(), new GenerateReport()
       };
 
       while (true) {
-         System.out.println("---\n 0 - sair");
+         System.out.println("---\n0 - sair");
          int a;
          for (a = 1; a <= actions.length; a++)
-            System.out.printf("%2d - %s\n", a, actions[a - 1]);
+            System.out.println(a + " - " + actions[a - 1]);
          System.out.print("---\nAção: ");
 
          try {
@@ -54,7 +55,7 @@ public class ISoccer {
             actions[a - 1].doAction();
          }
 
-         catch (NumberFormatException | ArrayIndexOutOfBoundsException ex) {
+         catch (NumberFormatException | IndexOutOfBoundsException ex) {
             System.out.println("<!> Entrada inválida.");
          }
          catch (Exception ex) {
