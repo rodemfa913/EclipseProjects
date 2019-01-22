@@ -8,4 +8,9 @@ public abstract class Player extends Member {
    protected Player(int id) {
       super(id);
    }
+
+   @Override
+   public String toString() {
+      return super.toString() + "\nSituação: " + (unable ? "inapto" : "apto");
+   }
 }

@@ -29,11 +29,11 @@ public class AddMember extends Action {
       setMemberInfo(member);
       if (member instanceof Doctor) {
          Doctor doctor = (Doctor) member;
-         System.out.print("CRM\n  atual: " + doctor.getCRM() + "\n   novo: ");
+         System.out.print("CRM: ");
          doctor.setCRM(ISoccer.input.nextLine());
       } else if (member instanceof Driver) {
          Driver driver = (Driver) member;
-         System.out.print("CNH\n atual: " + driver.cnh + "\n   novo: ");
+         System.out.print("CNH: ");
          driver.cnh = Long.parseLong(ISoccer.input.nextLine());
       }
 

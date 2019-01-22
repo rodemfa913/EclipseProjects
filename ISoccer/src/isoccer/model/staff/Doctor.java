@@ -33,4 +33,9 @@ public class Doctor extends Member {
          throw formatException;
       this.crm = crm;
    }
+
+   @Override
+   public String toString() {
+      return super.toString() + "\nCRM: " + crm;
+   }
 }

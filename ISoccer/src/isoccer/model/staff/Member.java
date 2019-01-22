@@ -55,4 +55,10 @@ public abstract class Member implements Creator {
          salary = 0.0;
       this.salary = salary;
    }
+
+   @Override
+   public String toString() {
+      return "Nome: " + name + "\nE-mail: " + email + "\nCPF: " +
+            cpf + "\nSalário: " + salary + "\nTelefone: " + phone;
+   }
 }
