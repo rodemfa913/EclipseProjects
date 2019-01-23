@@ -1,16 +1,16 @@
 # Sistema de Folha de Pagamento
-Funcionalidades:
-  Adicionar empregado:
-    Adiciona um empregado no sistema. Devem ser fornecidos o tipo de empregado
-    (horista, assalariado ou comissionado) o nome, o endereço, o método de
-    pagamento (cheque por correios, cheque em mãos ou depósito em conta) e o
-    salário; caso seja um empregado comissionado, informa-se também a comissão.
-    O sistema gera então um identificador único para o empregado.
-  Remover empregado:
-    Remove um empregado do sistema.
-  Editar empregado:
-    Edita os atributos de um empregado.
-  Entrar no sindicato:
-    Adiciona um empregado ao sindicato, caso não seja membro. Devem ser
-    fornecidos um identificador único, não necessariamente igual ao
-    identificador do empregado, e a taxa sindical.
+## Funcionalidades:
+### Adicionar empregado:
+Adiciona um empregado no sistema. Devem ser fornecidos o tipo de empregado
+(horista, assalariado ou comissionado) o nome, o endereço, o método de
+pagamento (cheque por correios, cheque em mãos ou depósito em conta) e o
+salário; caso seja um empregado comissionado, informa-se também a comissão.
+O sistema gera então um identificador único para o empregado.
+## Remover empregado:
+Remove um empregado do sistema.
+### Editar empregado:
+Edita os atributos de um empregado.
+### Entrar no sindicato:
+Adiciona um empregado ao sindicato, caso não seja membro. Devem ser
+fornecidos um identificador único, não necessariamente igual ao
+identificador do empregado, e a taxa sindical.
