@@ -29,3 +29,12 @@ fornecidos o identificador de empregado, a data e o valor da venda.
 Adiciona ou edita a taxa de um serviço oferecido pelo sindicato e associa o
 serviço a um membro do sindicato. Devem ser fornecidos o identificador de membro
 do sindicato, o serviço a ser associado e a taxa de serviço.
+### Rodar folha de pagamento
+O sistema busca por todos os empregados que devem ser pagos no dia informado,
+calcula o valor a ser pago e, de acordo com o método de pagamento escolhido pelo
+empregado, providencia o pagamento.
+### Desfazer/refazer
+Desfaz ou refaz a ação da última funcionalidade a ser chamada.
+## Classes
+### payment.PaymentSystem
+todo...
