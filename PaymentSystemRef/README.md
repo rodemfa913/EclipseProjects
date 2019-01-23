@@ -37,4 +37,9 @@ empregado, providencia o pagamento.
 Desfaz ou refaz a ação da última funcionalidade a ser chamada.
 ## Classes
 ### payment.PaymentSystem
-todo...
+A classe principal. Fornece a interface para a chamada das funcionalidades.
+### payment.action.Action
+Classe abstrata que representa uma funcionalidade qualquer. Cada subclasse de
+Action representa uma das funcionalidades do sistema. Dependendo da
+funcionalidade escolhida, a classe principal realiza a chamada do método
+abstrato doAction(), que é implementado pela subclasse associada.
