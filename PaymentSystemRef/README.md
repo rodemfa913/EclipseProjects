@@ -22,3 +22,10 @@ do sindicato.
 Adiciona um cartão de ponto associado a um empregado horista. Devem ser
 fornecidos o identificador de empregado, a data de lançamento do cartão e as
 horas trabalhadas naquela data.
+### Lançar resultado de venda
+Adiciona um resultado de venda associado a um empregado comissionado. Devem ser
+fornecidos o identificador de empregado, a data e o valor da venda.
+### Lançar taxa de serviço
+Adiciona ou edita a taxa de um serviço oferecido pelo sindicato e associa o
+serviço a um membro do sindicato. Devem ser fornecidos o identificador de membro
+do sindicato, o serviço a ser associado e a taxa de serviço.
