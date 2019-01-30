@@ -13,7 +13,7 @@ Para cada solicitação de amizade recebida, o usuário pode aceitar ou não a a
 ### Criar comunidade
 Cria uma comunidade no sistema. Deve-se fornecer um nome (único) e uma breve descrição. O usuário passa a ser então o proprietário (e também membro) da comunidade.
 ### Entrar em comunidade
-Envia uma solicitação de participação em uma comunidade, que será analisada pelo proprietário dela. Deve-se fornecer o nome da comunidade.
+Envia uma solicitação de participação em uma comunidade, que será analisada pelo proprietário dela. O usuário deve fornecer o nome da comunidade.
 ### Aceitar membros
 Para cada comunidade de propriedade do usuário, e para cada solicitação de participação nesta comunidade recebidas, o proprietário pode aceitar ou não a participação.
 ### Enviar mensagem
@@ -21,16 +21,23 @@ Envia uma mensagem para um único usuário ou todos os membros uma comunidade da
 ### Visualizar informações
 O usuário pode visualizar informações sobre seu perfil, comunidades que participa, amigos e mensagens enviadas e recebidas.
 ## Classes e interfaces
+### iface.IFace
+A classe principal do sistema.
 ### iface.action.Action
-Classe abstrata que representa uma funcionalidade qualquer. Cada funcionalidade é representada por uma das subclasses de Action, que são:
-- iface.action.AcceptFriends (aceitar amigos),
-- iface.action.AcceptMembers (aceitar membros),
-- iface.action.AddCommunity (criar comunidade),
-- iface.action.AddFriend (adicionar amigo),
-- iface.action.EditProfile (editar perfil),
-- iface.action.EnterCommunity (entrar em comunidade),
-- iface.action.Sendmessage (enviar mensagem),
-- iface.action.SignOut (remover conta),
-- iface.action.SignUp (criar conta),
+Classe abstrata que representa uma funcionalidade qualquer. Na classe principal, cada funcionalidade é representada por uma das subclasses de Action, que são:
+- iface.action.AcceptFriends (aceitar amigos);
+- iface.action.AcceptMembers (aceitar membros);
+- iface.action.AddCommunity (criar comunidade);
+- iface.action.AddFriend (adicionar amigo);
+- iface.action.EditProfile (editar perfil);
+- iface.action.EnterCommunity (entrar em comunidade);
+- iface.action.Sendmessage (enviar mensagem);
+- iface.action.SignOut (remover conta);
+- iface.action.SignUp (criar conta);
 - iface.action.ViewInfo (visualizar informações).
-Na classe principal, é feita a chamada do método doAction() implementado pela subclasse que representa a funcionalidade escolhida.
+### iface.action.info.Info
+Interface que representa uma informação específica do usuário. Em **iface.action.ViewInfo**, as informações são classificadas em *perfil*, *comunidades*, *amigos* e *mensagens*. Cada uma delas são representadas por uma das implementações de Info, que são:
+- iface.action.info.CommunitiesInfo (comunidades);
+- iface.action.info.FriendsInfo (amigos);
+- iface.action.info.Messagesinfo (mensagens);
+- iface.action.info.ProfileInfo (perfil).
