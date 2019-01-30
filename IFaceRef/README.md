@@ -24,7 +24,8 @@ O usuário pode visualizar informações sobre seu perfil, comunidades que parti
 ### iface.IFace
 A classe principal do sistema.
 ### iface.action.Action
-Classe abstrata que representa uma funcionalidade qualquer. Na classe principal, cada funcionalidade é representada por uma das subclasses de Action, que são:
+1. Motivação: Cada funcionalidade contém um conjunto próprio de ações, que deve ser chamado de uma forma comum pela classe principal.
+2. Solução: *Action* é uma classe abstrata que representa uma funcionalidade qualquer. Cada funcionalidade é representada por uma das subclasses de Action, que são:
 - iface.action.AcceptFriends (aceitar amigos);
 - iface.action.AcceptMembers (aceitar membros);
 - iface.action.AddCommunity (criar comunidade);
@@ -35,9 +36,11 @@ Classe abstrata que representa uma funcionalidade qualquer. Na classe principal,
 - iface.action.SignOut (remover conta);
 - iface.action.SignUp (criar conta);
 - iface.action.ViewInfo (visualizar informações).
+3. Vantagem: seu método abstrato doAction() é implementado de forma específica por cada subclasse, ao mesmo tempo que é chamado de forma comum pela classe principal.
 ### iface.action.info.Info
 Interface que representa uma informação específica do usuário. Em **iface.action.ViewInfo**, as informações são classificadas em *perfil*, *comunidades*, *amigos* e *mensagens*. Cada uma delas são representadas por uma das implementações de Info, que são:
 - iface.action.info.CommunitiesInfo (comunidades);
 - iface.action.info.FriendsInfo (amigos);
 - iface.action.info.Messagesinfo (mensagens);
 - iface.action.info.ProfileInfo (perfil).
+### iface.model.User
