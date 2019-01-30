@@ -13,8 +13,8 @@ public class IFace {
    public static void main(String[] args) {
       Action[] actions = new Action[] {
          new SignUp(), new SignOut(), new EditProfile(), new AddFriend(),
-         new AcceptFriends(), new SendMessage(), new AddCommunity(),
-         new EnterCommunity() ,new AcceptMembers(), new ViewInfo()
+         new AcceptFriends(), new AddCommunity(), new EnterCommunity(),
+         new AcceptMembers(), new SendMessage(), new ViewInfo()
       };
 
       while (true) {
