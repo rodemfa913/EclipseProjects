@@ -35,7 +35,7 @@ public class ISoccer {
       }
 
       Action[] actions = new Action[] {
-         new AddCoach(), new AddPlayer(), new AddMember(), new AddPartner(),
+         new AddMbr(), new AddPlayer(), new AddMember(), new AddPartner(),
          new AddBus(), new AddStadium(), new AddTrainingCenter(),
          new ManageResource(), new GenerateReport()
       };

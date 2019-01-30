@@ -19,7 +19,28 @@ public class AddPartner extends Action {
 
       FanPartner partner = (FanPartner)
             creators[t].create(ISoccer.partners.size());
-      setPartnerInfo(partner);
+
+      System.out.print("Nome: ");
+      partner.setName(ISoccer.input.nextLine());
+
+      System.out.print("E-mail: ");
+      partner.setEmail(ISoccer.input.nextLine());
+
+      System.out.print("CPF: ");
+      partner.setCPF(ISoccer.input.nextLine());
+
+      System.out.print("Telefone: ");
+      partner.phone = Long.parseLong(ISoccer.input.nextLine());
+
+      System.out.print("Endereço: ");
+      partner.setAddress(ISoccer.input.nextLine());
+
+      System.out.print("Valor de contribuição (" + partner.getType() + "): ");
+      partner.setContribution(Double.parseDouble(ISoccer.input.nextLine()));
+
+      System.out.print("Inadiplente? (s/n): ");
+      partner.defaulting = ISoccer.input.nextLine().toLowerCase().equals("s");
+
       ISoccer.partners.add(partner);
 
       System.out.println("Sócio-torcedor '" + partner.id +
