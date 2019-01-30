@@ -25,22 +25,24 @@ O usuário pode visualizar informações sobre seu perfil, comunidades que parti
 A classe principal do sistema.
 ### iface.action.Action
 1. Motivação: Cada funcionalidade contém um conjunto próprio de ações, que deve ser chamado de uma forma comum pela classe principal.
-2. Solução: *Action* é uma classe abstrata que representa uma funcionalidade qualquer. Cada funcionalidade é representada por uma das subclasses de Action, que são:
-- iface.action.AcceptFriends (aceitar amigos);
-- iface.action.AcceptMembers (aceitar membros);
-- iface.action.AddCommunity (criar comunidade);
-- iface.action.AddFriend (adicionar amigo);
-- iface.action.EditProfile (editar perfil);
-- iface.action.EnterCommunity (entrar em comunidade);
-- iface.action.Sendmessage (enviar mensagem);
-- iface.action.SignOut (remover conta);
-- iface.action.SignUp (criar conta);
-- iface.action.ViewInfo (visualizar informações).
-3. Vantagem: seu método abstrato doAction() é implementado de forma específica por cada subclasse, ao mesmo tempo que é chamado de forma comum pela classe principal.
+2. Solução: 'Action' é uma classe abstrata que representa uma funcionalidade qualquer. Cada funcionalidade é representada por uma das subclasses de Action, que são:
+   - 'iface.action.AcceptFriends' (aceitar amigos);
+   - 'iface.action.AcceptMembers' (aceitar membros);
+   - 'iface.action.AddCommunity' (criar comunidade);
+   - 'iface.action.AddFriend' (adicionar amigo);
+   - 'iface.action.EditProfile' (editar perfil);
+   - 'iface.action.EnterCommunity' (entrar em comunidade);
+   - 'iface.action.Sendmessage' (enviar mensagem);
+   - 'iface.action.SignOut' (remover conta);
+   - 'iface.action.SignUp' (criar conta);
+   - 'iface.action.ViewInfo' (visualizar informações).
+3. Vantagem: seu método abstrato 'doAction()' é implementado de forma específica por cada subclasse, ao mesmo tempo que é chamado de forma comum pela classe principal.
 ### iface.action.info.Info
-Interface que representa uma informação específica do usuário. Em **iface.action.ViewInfo**, as informações são classificadas em *perfil*, *comunidades*, *amigos* e *mensagens*. Cada uma delas são representadas por uma das implementações de Info, que são:
-- iface.action.info.CommunitiesInfo (comunidades);
-- iface.action.info.FriendsInfo (amigos);
-- iface.action.info.Messagesinfo (mensagens);
-- iface.action.info.ProfileInfo (perfil).
+1. Motivação: Em 'iface.action.ViewInfo', as informações do usuário são classificadas em *perfil*, *comunidades*, *amigos* e *mensagens*, mas para cada uma delas existe um conjunto próprio de instruções que deve ser chamado de uma forma comum.
+2. Solução: 'Info' é uma interface que representa uma informação específica do usuário. Cada informação específica é representada por uma das implementações de Info, que são:
+   - 'iface.action.info.CommunitiesInfo' (comunidades);
+   - 'iface.action.info.FriendsInfo' (amigos);
+   - 'iface.action.info.Messagesinfo' (mensagens);
+   - 'iface.action.info.ProfileInfo' (perfil).
+3. Vantagem: 'ViewInfo' realiza a chamada do método abstrato 'view()', o qual é implementado pelas implementações da interface.
 ### iface.model.User
