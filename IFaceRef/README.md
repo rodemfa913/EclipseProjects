@@ -3,7 +3,7 @@
 ### Criar conta
 Cria uma conta no sistema. O usuário deve fornecer um login (único), uma senha e um nome de usuário. A partir daqui, o usuário pode acessar cada uma das demais funcionalidades fornecendo seu login e senha.
 ### Remover conta
-Remove do sistema a conta do usuário. Tudo relacionado à conta, incluindo amizades, comunidades criadas, participação em outras comunidades e mensagens enviadas ou recebidas, também é excluído do sistema.
+Remove do sistema a conta do usuário. Tudo relacionado à conta, incluindo amizades, comunidades criadas, participação em outras comunidades e mensagens enviadas e recebidas, também é excluído do sistema.
 ### Editar perfil
 Edita o perfil do usuário. Pode-se editar um atributo existente ou criar um novo atributo.
 ### Adicionar amigo
@@ -19,3 +19,4 @@ Para cada comunidade de propriedade do usuário, e para cada solicitação de pa
 ### Enviar mensagem
 Envia uma mensagem para um único usuário ou todos os membros uma comunidade da qual seja membro. Caso seja um usuário, deve-se fornecer o login do destinatário. Caso seja uma comunidade, deve-se fornecer o nome da comunidade.
 ### Visualizar informações
+O usuário pode visualizar informações sobre seu perfil, comunidades que participa, amigos e mensagens enviadas e recebidas.
