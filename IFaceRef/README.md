@@ -44,7 +44,7 @@ A classe principal do sistema.
    - iface.action.info.FriendsInfo (amigos);
    - iface.action.info.Messagesinfo (mensagens);
    - iface.action.info.ProfileInfo (perfil).
-3. Vantagem: 'ViewInfo' realiza a chamada do método abstrato 'view()', o qual é implementado pelas implementações da interface.
+3. Vantagem: *ViewInfo* realiza a chamada do método abstrato *view()*, o qual é implementado pelas implementações da interface.
 ### iface.model.User
 1. Motivação: As informações de cada usuário, como login, nome, perfil, etc., devem ser agrupadas.
 2. Solução: *User* é a classe que representa um determinado usuário e armazena suas informações.
