@@ -11,8 +11,11 @@ Envia uma solicitação de amizade para outro usuário do sistema. Deve-se forne
 ### Aceitar amigos
 Para cada solicitação de amizade recebida, o usuário pode aceitar ou não a amizade.
 ### Criar comunidade
+Cria uma comunidade no sistema. Deve-se fornecer um nome (único) e uma breve descrição. O usuário passa a ser então o proprietário (e também membro) da comunidade.
 ### Entrar em comunidade
+Envia uma solicitação de participação em uma comunidade, que será analisada pelo proprietário dela. Deve-se fornecer o nome da comunidade.
 ### Aceitar membros
+Para cada comunidade de propriedade do usuário, e para cada solicitação de participação nesta comunidade recebidas, o proprietário pode aceitar ou não a participação.
 ### Enviar mensagem
 Envia uma mensagem para um único usuário ou todos os membros uma comunidade da qual seja membro. Caso seja um usuário, deve-se fornecer o login do destinatário. Caso seja uma comunidade, deve-se fornecer o nome da comunidade.
 ### Visualizar informações
