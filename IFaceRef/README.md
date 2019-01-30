@@ -33,3 +33,4 @@ Classe abstrata que representa uma funcionalidade qualquer. Cada funcionalidade 
 - iface.action.SignOut (remover conta),
 - iface.action.SignUp (criar conta),
 - iface.action.ViewInfo (visualizar informações).
+Na classe principal, é feita a chamada do método doAction() implementado pela subclasse que representa a funcionalidade escolhida.
