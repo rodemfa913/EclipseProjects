@@ -4,8 +4,12 @@ import isoccer.model.staff.President;
 
 public class PresidentBuilder extends MemberBuilder {
    @Override
-   public President build() {
-      return new President(memberCount++);
+   public President build() throws Exception {
+      President president = new President(memberCount++);
+      setInfo(president);
+      put(president);
+
+      return president;
    }
 
    @Override

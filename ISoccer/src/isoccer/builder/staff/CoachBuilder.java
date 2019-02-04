@@ -6,8 +6,12 @@ import isoccer.model.staff.Member;
 
 public class CoachBuilder extends MemberBuilder {
    @Override
-   public Coach build() {
-      return new Coach(0);
+   public Coach build() throws Exception {
+      Coach coach = new Coach(0);
+      setInfo(coach);
+      put(coach);
+
+      return coach;
    }
 
    @Override
@@ -16,7 +20,7 @@ public class CoachBuilder extends MemberBuilder {
    }
 
    @Override
-   public Coach put(Member member) {
+   protected Coach put(Member member) {
       Coach prevCoach = ISoccer.coach;
       ISoccer.coach = (Coach) member;
       return prevCoach;

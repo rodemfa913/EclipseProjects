@@ -41,7 +41,7 @@ public class AddPartner extends Action {
       System.out.print("Inadiplente? (s/n): ");
       partner.defaulting = ISoccer.input.nextLine().toLowerCase().equals("s");
 
-      ISoccer.partners.add(partner);
+      //ISoccer.partners.add(partner);
 
       System.out.println("Sócio-torcedor '" + partner.id +
             ": " + partner.getName() + "' adicionado.");

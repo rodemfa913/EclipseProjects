@@ -13,7 +13,7 @@ public class AddBus extends Action {
       System.out.print("Número de assentos: ");
       bus.setNumSeat(Integer.parseInt(ISoccer.input.nextLine()));
 
-      ISoccer.fleet.add(bus);
+      //ISoccer.fleet.add(bus);
       
       System.out.println("Ônibus " + bus.id + " adicionado.");
    }

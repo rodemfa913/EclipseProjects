@@ -10,11 +10,11 @@ public class StaffReport implements Report {
       System.out.println("Treinador:\n---\n" + ISoccer.coach);
 
       System.out.println("---\nJogadores:");
-      for (Player player : ISoccer.players)
+      for (Player player : ISoccer.players.values())
          System.out.println("---\n" + player);
 
       System.out.println("---\nFuncionários:");
-      for (Member member : ISoccer.members)
+      for (Member member : ISoccer.members.values())
          System.out.println("---\n" + member);
    }
 

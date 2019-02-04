@@ -8,14 +8,4 @@ public class CentreMid extends Player {
    public CentreMid(int id) {
       super(id);
    }
-
-   @Override
-   public CentreMid create(int id) {
-      return new CentreMid(id);
-   }
-
-   @Override
-   public String getType() {
-      return "meia";
-   }
 }

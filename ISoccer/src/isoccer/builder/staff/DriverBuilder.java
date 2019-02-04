@@ -6,8 +6,12 @@ import isoccer.model.staff.Member;
 
 public class DriverBuilder extends MemberBuilder {
    @Override
-   public Driver build() {
-      return new Driver(memberCount++);
+   public Driver build() throws Exception {
+      Driver driver = new Driver(memberCount++);
+      setInfo(driver);
+      put(driver);
+
+      return driver;
    }
 
    @Override
@@ -16,7 +20,7 @@ public class DriverBuilder extends MemberBuilder {
    }
 
    @Override
-   public void setInfo(Member member) throws Exception {
+   protected void setInfo(Member member) throws Exception {
       super.setInfo(member);
 
       Driver driver = (Driver) member;

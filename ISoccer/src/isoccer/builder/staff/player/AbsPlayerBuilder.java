@@ -9,7 +9,16 @@ public abstract class AbsPlayerBuilder extends MemberBuilder {
    protected static int playerCount;
 
    @Override
-   public Player put(Member member) {
+   protected Player put(Member member) {
       return ISoccer.players.put(member.id, (Player) member);
+   }
+
+   @Override
+   protected void setInfo(Member member) throws Exception {
+      super.setInfo(member);
+
+      Player player = (Player) member;
+      System.out.print("Inapto? (s/n): ");
+      player.unable = ISoccer.input.nextLine().toLowerCase().equals("s");
    }
 }

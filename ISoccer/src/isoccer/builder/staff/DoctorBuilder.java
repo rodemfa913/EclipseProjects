@@ -6,8 +6,12 @@ import isoccer.model.staff.Member;
 
 public class DoctorBuilder extends MemberBuilder {
    @Override
-   public Doctor build() {
-      return new Doctor(memberCount++);
+   public Doctor build() throws Exception {
+      Doctor doctor = new Doctor(memberCount++);
+      setInfo(doctor);
+      put(doctor);
+
+      return doctor;
    }
 
    @Override
@@ -16,7 +20,7 @@ public class DoctorBuilder extends MemberBuilder {
    }
 
    @Override
-   public void setInfo(Member member) throws Exception {
+   protected void setInfo(Member member) throws Exception {
       super.setInfo(member);
 
       Doctor doctor = (Doctor) member;

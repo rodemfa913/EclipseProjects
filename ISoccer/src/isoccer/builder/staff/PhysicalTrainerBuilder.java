@@ -4,8 +4,12 @@ import isoccer.model.staff.PhysicalTrainer;
 
 public class PhysicalTrainerBuilder extends MemberBuilder {
    @Override
-   public PhysicalTrainer build() {
-      return new PhysicalTrainer(memberCount++);
+   public PhysicalTrainer build() throws Exception {
+      PhysicalTrainer trainer = new PhysicalTrainer(memberCount++);
+      setInfo(trainer);
+      put(trainer);
+
+      return trainer;
    }
 
    @Override
