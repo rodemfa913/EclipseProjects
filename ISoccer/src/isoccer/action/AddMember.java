@@ -2,6 +2,7 @@ package isoccer.action;
 
 import isoccer.ISoccer;
 import isoccer.builder.staff.*;
+import isoccer.builder.staff.player.PlayerBuilder;
 import isoccer.model.staff.Member;
 
 public class AddMember extends Action {
@@ -10,7 +11,7 @@ public class AddMember extends Action {
       MemberBuilder[] builders = new MemberBuilder[] {
          new PresidentBuilder(), new DoctorBuilder(), new CoachBuilder(),
          new PhysicalTrainerBuilder(), new DriverBuilder(), new CookBuilder(),
-         new LawyerBuilder()
+         new LawyerBuilder(), new PlayerBuilder()
       };
 
       System.out.println("---");

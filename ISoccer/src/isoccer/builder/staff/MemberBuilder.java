@@ -8,6 +8,11 @@ public abstract class MemberBuilder implements Builder<Member> {
    protected static int memberCount;
 
    @Override
+   public Member put(Member member) {
+      return ISoccer.members.put(member.id, member);
+   }
+
+   @Override
    public void setInfo(Member member) throws Exception {
       System.out.print("Nome: ");
       member.setName(ISoccer.input.nextLine());

@@ -1,12 +1,12 @@
 package isoccer.action;
 
-import isoccer.ISoccer;
-import isoccer.model.staff.player.*;
+/*import isoccer.ISoccer;
+import isoccer.model.staff.player.*;*/
 
 public class AddPlayer extends Action {
    @Override
    public void doAction() throws Exception {
-      Player[] creators = new Player[] {
+      /*Player[] creators = new Player[] {
          new GoalKeeper(), new Defender(), new DefensiveMid(),
          new CentreMid(), new LeftMid(), new RightMid(), new Forward()
       };
@@ -27,7 +27,7 @@ public class AddPlayer extends Action {
       ISoccer.players.add(player);
 
       System.out.println("Jogador '" + player.id +
-            ": " + player.getName() + "' adicionado.");
+            ": " + player.getName() + "' adicionado.");*/
    }
 
    @Override

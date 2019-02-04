@@ -16,11 +16,6 @@ public class DoctorBuilder extends MemberBuilder {
    }
 
    @Override
-   public Member put(Member member) {
-      return ISoccer.members.put(member.id, member);
-   }
-
-   @Override
    public void setInfo(Member member) throws Exception {
       super.setInfo(member);
 
