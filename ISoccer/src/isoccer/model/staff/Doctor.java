@@ -14,18 +14,8 @@ public class Doctor extends Member {
       crm = "-";
    }
 
-   @Override
-   public Doctor create(int id) {
-      return new Doctor(id);
-   }
-
    public String getCRM() {
       return crm;
-   }
-
-   @Override
-   public String getType() {
-      return "médico";
    }
 
    public void setCRM(String crm) throws Exception {

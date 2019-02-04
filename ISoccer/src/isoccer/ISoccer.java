@@ -8,16 +8,16 @@ import isoccer.model.resource.TrainingCenter;
 import isoccer.model.staff.Coach;
 import isoccer.model.staff.Member;
 import isoccer.model.staff.player.Player;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class ISoccer {
    public static Coach coach;
-   public static final ArrayList<Bus> fleet = new ArrayList<>();
+   public static final HashMap<Integer, Bus> fleet = new HashMap<>();
    public static final Scanner input = new Scanner(System.in);
-   public static final ArrayList<Member> members = new ArrayList<>();
-   public static final ArrayList<FanPartner> partners = new ArrayList<>();
-   public static final ArrayList<Player> players = new ArrayList<>();
+   public static final HashMap<Integer, Member> members = new HashMap<>();
+   public static final HashMap<Integer, FanPartner> partners = new HashMap<>();
+   public static final HashMap<Integer, Player> players = new HashMap<>();
    public static Stadium stadium;
    public static TrainingCenter trainingCenter;
 
@@ -35,9 +35,10 @@ public class ISoccer {
       }
 
       Action[] actions = new Action[] {
-         new AddMbr(), new AddPlayer(), new AddMember(), new AddPartner(),
+         new AddMember()
+         /*new AddCoach(), new AddPlayer(), new AddMember(), new AddPartner(),
          new AddBus(), new AddStadium(), new AddTrainingCenter(),
-         new ManageResource(), new GenerateReport()
+         new ManageResource(), new GenerateReport()*/
       };
 
       while (true) {

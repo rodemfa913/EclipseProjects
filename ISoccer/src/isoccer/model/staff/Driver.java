@@ -10,14 +10,4 @@ public class Driver extends Member {
    public Driver(int id) {
       super(id);
    }
-
-   @Override
-   public Driver create(int id) {
-      return new Driver(id);
-   }
-
-   @Override
-   public String getType() {
-      return "motorista";
-   }
 }
