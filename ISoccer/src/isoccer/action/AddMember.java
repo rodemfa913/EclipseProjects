@@ -1,7 +1,7 @@
 package isoccer.action;
 
-import isoccer.ISoccer;
 import isoccer.builder.staff.*;
+import isoccer.ISoccer;
 import isoccer.model.staff.Member;
 
 public class AddMember extends Action {

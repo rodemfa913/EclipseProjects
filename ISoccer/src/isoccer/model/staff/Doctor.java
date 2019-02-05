@@ -5,10 +5,6 @@ import isoccer.model.RegEx;
 public class Doctor extends Member {
    private String crm;
 
-   public Doctor() {
-      this(-1);
-   }
-
    public Doctor(int id) {
       super(id);
       crm = "-";

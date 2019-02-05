@@ -3,6 +3,10 @@ package isoccer.model.resource;
 public class Stadium extends Resource {
    private int capacity, nWC, nSnackBar;
 
+   public Stadium(int id) {
+      super(id);
+   }
+
    public int getCapacity() {
       return capacity;
    }

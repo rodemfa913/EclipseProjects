@@ -6,7 +6,7 @@ import isoccer.model.resource.Stadium;
 public class AddStadium extends Action {
    @Override
    public void doAction() throws Exception {
-      ISoccer.stadium = new Stadium();
+      ISoccer.stadium = new Stadium(-1);
 
       ISoccer.stadium.available = true;
 

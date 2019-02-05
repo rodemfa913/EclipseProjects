@@ -6,7 +6,7 @@ import isoccer.model.resource.TrainingCenter;
 public class AddTrainingCenter extends Action {
    @Override
    public void doAction() throws Exception {
-      ISoccer.trainingCenter = new TrainingCenter();
+      ISoccer.trainingCenter = new TrainingCenter(-1);
 
       ISoccer.trainingCenter.available = true;
 

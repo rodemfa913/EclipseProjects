@@ -3,6 +3,10 @@ package isoccer.model.resource;
 public class TrainingCenter extends Resource {
    private int nBedroom;
 
+   public TrainingCenter(int id) {
+      super(id);
+   }
+
    public int getNumBedroom() {
       return nBedroom;
    }

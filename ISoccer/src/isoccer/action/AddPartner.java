@@ -1,47 +1,28 @@
 package isoccer.action;
 
+import isoccer.builder.partner.*;
 import isoccer.ISoccer;
-import isoccer.model.partner.*;
+import isoccer.model.partner.FanPartner;
 
 public class AddPartner extends Action {
+   private FanPartnerBuilder[] builders;
+
+   public AddPartner() {
+      builders = new FanPartnerBuilder[] {
+         new JuniorBuilder(), new SeniorBuilder(), new EliteBuilder()
+      };
+   }
+
    @Override
    public void doAction() throws Exception {
-      FanPartner[] creators = new FanPartner[] {
-         new Junior(), new Senior(), new Elite()
-      };
-
       System.out.println("---");
-      int t;
-      for (t = 0; t < creators.length; t++)
-         System.out.println(t + " - " + creators[t].getType());
+      int p;
+      for (p = 0; p < builders.length; p++)
+         System.out.println(p + " - " + builders[p].getType());
       System.out.print("---\nTipo: ");
-      t = Integer.parseInt(ISoccer.input.nextLine());
+      p = Integer.parseInt(ISoccer.input.nextLine());
 
-      FanPartner partner = (FanPartner)
-            creators[t].create(ISoccer.partners.size());
-
-      System.out.print("Nome: ");
-      partner.setName(ISoccer.input.nextLine());
-
-      System.out.print("E-mail: ");
-      partner.setEmail(ISoccer.input.nextLine());
-
-      System.out.print("CPF: ");
-      partner.setCPF(ISoccer.input.nextLine());
-
-      System.out.print("Telefone: ");
-      partner.phone = Long.parseLong(ISoccer.input.nextLine());
-
-      System.out.print("Endereço: ");
-      partner.setAddress(ISoccer.input.nextLine());
-
-      System.out.print("Valor de contribuição (" + partner.getType() + "): ");
-      partner.setContribution(Double.parseDouble(ISoccer.input.nextLine()));
-
-      System.out.print("Inadiplente? (s/n): ");
-      partner.defaulting = ISoccer.input.nextLine().toLowerCase().equals("s");
-
-      //ISoccer.partners.add(partner);
+      FanPartner partner = builders[p].build();
 
       System.out.println("Sócio-torcedor '" + partner.id +
             ": " + partner.getName() + "' adicionado.");

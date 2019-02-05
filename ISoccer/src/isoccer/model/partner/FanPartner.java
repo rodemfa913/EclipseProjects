@@ -1,9 +1,8 @@
 package isoccer.model.partner;
 
-import isoccer.model.Creator;
 import isoccer.model.RegEx;
 
-public abstract class FanPartner implements Creator {
+public abstract class FanPartner {
    private String address, cpf, email, name;
    public boolean defaulting;
    private static final Exception formatException =
