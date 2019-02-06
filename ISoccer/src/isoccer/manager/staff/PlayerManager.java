@@ -1,17 +1,17 @@
-package isoccer.builder.staff;
+package isoccer.manager.staff;
 
 import isoccer.ISoccer;
-import isoccer.builder.staff.player.*;
+import isoccer.manager.staff.player.*;
 import isoccer.model.staff.player.Player;
 
-public class PlayerBuilder extends MemberBuilder {
-   private AbsPlayerBuilder[] builders;
+public class PlayerManager extends MemberManager {
+   private AbsPlayerManager[] builders;
 
-   public PlayerBuilder() {
-      builders = new AbsPlayerBuilder[] {
-         new GoalKeeperBuilder(), new DefenderBuilder(),
-         new DefMidBuilder(), new CentreMidBuilder(), new LeftMidBuilder(),
-         new RightMidBuilder(), new ForwardBuilder()
+   public PlayerManager() {
+      builders = new AbsPlayerManager[] {
+         new GoalKeeperManager(), new DefenderManager(),
+         new DefMidManager(), new CentreMidManager(), new LeftMidManager(),
+         new RightMidManager(), new ForwardManager()
       };
    }
 

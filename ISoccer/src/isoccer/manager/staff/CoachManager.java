@@ -1,10 +1,10 @@
-package isoccer.builder.staff;
+package isoccer.manager.staff;
 
 import isoccer.ISoccer;
 import isoccer.model.staff.Coach;
 import isoccer.model.staff.Member;
 
-public class CoachBuilder extends MemberBuilder {
+public class CoachManager extends MemberManager {
    @Override
    public Coach build() throws Exception {
       Coach coach = new Coach(0);

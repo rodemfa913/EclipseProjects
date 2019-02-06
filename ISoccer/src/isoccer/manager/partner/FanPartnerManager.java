@@ -1,10 +1,10 @@
-package isoccer.builder.partner;
+package isoccer.manager.partner;
 
-import isoccer.builder.Builder;
 import isoccer.ISoccer;
+import isoccer.manager.Manager;
 import isoccer.model.partner.FanPartner;
 
-public abstract class FanPartnerBuilder extends Builder<FanPartner> {
+public abstract class FanPartnerManager extends Manager<FanPartner> {
    protected static int partnerCount;
 
    @Override

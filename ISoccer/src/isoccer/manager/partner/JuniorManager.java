@@ -1,8 +1,8 @@
-package isoccer.builder.partner;
+package isoccer.manager.partner;
 
 import isoccer.model.partner.Junior;
 
-public class JuniorBuilder extends FanPartnerBuilder {
+public class JuniorManager extends FanPartnerManager {
    @Override
    public Junior build() throws Exception {
       Junior junior = new Junior(partnerCount++);

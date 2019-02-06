@@ -1,8 +1,8 @@
-package isoccer.builder.staff.player;
+package isoccer.manager.staff.player;
 
 import isoccer.model.staff.player.Defender;
 
-public class DefenderBuilder extends AbsPlayerBuilder {
+public class DefenderManager extends AbsPlayerManager {
    @Override
    public Defender build() throws Exception {
       Defender defender = new Defender(playerCount++);

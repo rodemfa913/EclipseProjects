@@ -1,8 +1,8 @@
-package isoccer.builder.staff.player;
+package isoccer.manager.staff.player;
 
 import isoccer.model.staff.player.DefMid;
 
-public class DefMidBuilder extends AbsPlayerBuilder {
+public class DefMidManager extends AbsPlayerManager {
    @Override
    public DefMid build() throws Exception {
       DefMid defMid = new DefMid(playerCount++);

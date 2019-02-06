@@ -1,10 +1,10 @@
-package isoccer.builder.staff;
+package isoccer.manager.staff;
 
 import isoccer.ISoccer;
 import isoccer.model.staff.Driver;
 import isoccer.model.staff.Member;
 
-public class DriverBuilder extends MemberBuilder {
+public class DriverManager extends MemberManager {
    @Override
    public Driver build() throws Exception {
       Driver driver = new Driver(memberCount++);

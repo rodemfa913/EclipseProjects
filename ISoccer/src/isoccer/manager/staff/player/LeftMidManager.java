@@ -1,8 +1,8 @@
-package isoccer.builder.staff.player;
+package isoccer.manager.staff.player;
 
 import isoccer.model.staff.player.LeftMid;
 
-public class LeftMidBuilder extends AbsPlayerBuilder {
+public class LeftMidManager extends AbsPlayerManager {
    @Override
    public LeftMid build() throws Exception {
       LeftMid leftMid = new LeftMid(playerCount++);

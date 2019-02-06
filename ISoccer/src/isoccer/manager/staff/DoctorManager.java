@@ -1,10 +1,10 @@
-package isoccer.builder.staff;
+package isoccer.manager.staff;
 
 import isoccer.ISoccer;
 import isoccer.model.staff.Doctor;
 import isoccer.model.staff.Member;
 
-public class DoctorBuilder extends MemberBuilder {
+public class DoctorManager extends MemberManager {
    @Override
    public Doctor build() throws Exception {
       Doctor doctor = new Doctor(memberCount++);

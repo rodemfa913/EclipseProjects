@@ -1,8 +1,8 @@
-package isoccer.builder.staff;
+package isoccer.manager.staff;
 
 import isoccer.model.staff.Lawyer;
 
-public class LawyerBuilder extends MemberBuilder {
+public class LawyerManager extends MemberManager {
    @Override
    public Lawyer build() throws Exception {
       Lawyer lawyer = new Lawyer(memberCount++);

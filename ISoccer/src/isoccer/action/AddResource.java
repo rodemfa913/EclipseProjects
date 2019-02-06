@@ -1,14 +1,14 @@
 package isoccer.action;
 
-import isoccer.builder.resource.*;
 import isoccer.ISoccer;
+import isoccer.manager.resource.*;
 import isoccer.model.resource.Resource;
 
 public class AddResource extends Action {
-   ResourceBuilder[] builders;
+   ResourceManager[] builders;
 
    public AddResource() {
-      builders = new ResourceBuilder[] {new BusBuilder()};
+      builders = new ResourceManager[] {new BusManager()};
    }
 
    @Override

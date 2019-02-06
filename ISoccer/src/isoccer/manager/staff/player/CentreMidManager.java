@@ -1,8 +1,8 @@
-package isoccer.builder.staff.player;
+package isoccer.manager.staff.player;
 
 import isoccer.model.staff.player.CentreMid;
 
-public class CentreMidBuilder extends AbsPlayerBuilder {
+public class CentreMidManager extends AbsPlayerManager {
    @Override
    public CentreMid build() throws Exception {
       CentreMid centreMid = new CentreMid(playerCount++);
