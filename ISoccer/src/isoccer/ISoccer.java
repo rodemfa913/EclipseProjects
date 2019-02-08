@@ -34,11 +34,7 @@ public class ISoccer {
          System.exit(2);
       }
 
-      Action[] actions = new Action[] {
-         new AddMember(), new AddPartner(), new AddResource(),
-         //new AddStadium(), new AddTrainingCenter()
-         new ManageResource(), new GenerateReport()
-      };
+      Action[] actions = new Action[] {};
 
       while (true) {
          System.out.println("---\n0 - sair");
