@@ -1,8 +1,8 @@
-package isoccer.builder.staff.player;
+package isoccer.manager.staff.player;
 
 import isoccer.model.staff.player.Forward;
 
-public class ForwardBuilder extends AbsPlayerBuilder {
+public class ForwardManager extends AbsPlayerManager {
    @Override
    public Forward build() throws Exception {
       Forward forward = new Forward(playerCount++);

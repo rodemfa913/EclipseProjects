@@ -1,15 +1,15 @@
 package isoccer.action;
 
-import isoccer.builder.partner.*;
 import isoccer.ISoccer;
+import isoccer.manager.partner.*;
 import isoccer.model.partner.FanPartner;
 
 public class AddPartner extends Action {
-   private FanPartnerBuilder[] builders;
+   private FanPartnerManager[] builders;
 
    public AddPartner() {
-      builders = new FanPartnerBuilder[] {
-         new JuniorBuilder(), new SeniorBuilder(), new EliteBuilder()
+      builders = new FanPartnerManager[] {
+         new JuniorManager(), new SeniorManager(), new EliteManager()
       };
    }
 

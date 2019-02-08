@@ -1,8 +1,8 @@
-package isoccer.builder.staff;
+package isoccer.manager.staff;
 
 import isoccer.model.staff.Cook;
 
-public class CookBuilder extends MemberBuilder {
+public class CookManager extends MemberManager {
    @Override
    public Cook build() throws Exception {
       Cook cook = new Cook(memberCount++);

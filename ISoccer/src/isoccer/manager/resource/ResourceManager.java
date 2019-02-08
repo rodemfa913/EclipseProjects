@@ -1,9 +1,9 @@
-package isoccer.builder.resource;
+package isoccer.manager.resource;
 
-import isoccer.builder.Builder;
+import isoccer.manager.Manager;
 import isoccer.model.resource.Resource;
 
-public abstract class ResourceBuilder extends Builder<Resource> {
+public abstract class ResourceManager extends Manager<Resource> {
    @Override
    protected void setInfo(Resource resource) {
       resource.available = true;

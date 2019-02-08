@@ -1,10 +1,10 @@
-package isoccer.builder.resource;
+package isoccer.manager.resource;
 
 import isoccer.ISoccer;
 import isoccer.model.resource.Bus;
 import isoccer.model.resource.Resource;
 
-public class BusBuilder extends ResourceBuilder {
+public class BusManager extends ResourceManager {
    private static int busCount;
    @Override
    public Bus build() throws Exception {

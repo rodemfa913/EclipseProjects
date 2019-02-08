@@ -1,8 +1,8 @@
-package isoccer.builder.staff.player;
+package isoccer.manager.staff.player;
 
 import isoccer.model.staff.player.GoalKeeper;
 
-public class GoalKeeperBuilder extends AbsPlayerBuilder {
+public class GoalKeeperManager extends AbsPlayerManager {
    @Override
    public GoalKeeper build() throws Exception {
       GoalKeeper goalKeeper = new GoalKeeper(playerCount++);

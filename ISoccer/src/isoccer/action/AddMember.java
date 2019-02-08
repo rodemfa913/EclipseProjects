@@ -1,17 +1,17 @@
 package isoccer.action;
 
-import isoccer.builder.staff.*;
 import isoccer.ISoccer;
+import isoccer.manager.staff.*;
 import isoccer.model.staff.Member;
 
 public class AddMember extends Action {
-   private MemberBuilder[] builders;
+   private MemberManager[] builders;
 
    public AddMember() {
-      builders = new MemberBuilder[] {
-         new PresidentBuilder(), new DoctorBuilder(), new CoachBuilder(),
-         new PhysicalTrainerBuilder(), new DriverBuilder(),
-         new CookBuilder(), new LawyerBuilder(), new PlayerBuilder()
+      builders = new MemberManager[] {
+         new PresidentManager(), new DoctorManager(), new CoachManager(),
+         new PhysicalTrainerManager(), new DriverManager(),
+         new CookManager(), new LawyerManager(), new PlayerManager()
       };
    }
 

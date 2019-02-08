@@ -1,8 +1,8 @@
-package isoccer.builder.staff;
+package isoccer.manager.staff;
 
 import isoccer.model.staff.PhysicalTrainer;
 
-public class PhysicalTrainerBuilder extends MemberBuilder {
+public class PhysicalTrainerManager extends MemberManager {
    @Override
    public PhysicalTrainer build() throws Exception {
       PhysicalTrainer trainer = new PhysicalTrainer(memberCount++);

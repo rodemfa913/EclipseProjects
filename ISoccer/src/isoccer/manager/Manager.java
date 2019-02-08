@@ -1,6 +1,6 @@
-package isoccer.builder;
+package isoccer.manager;
 
-public abstract class Builder<T> {
+public abstract class Manager<T> {
    public abstract T build() throws Exception;
    public abstract String getType();
    protected abstract T put(T t);

@@ -1,8 +1,8 @@
-package isoccer.builder.staff.player;
+package isoccer.manager.staff.player;
 
 import isoccer.model.staff.player.RightMid;
 
-public class RightMidBuilder extends AbsPlayerBuilder {
+public class RightMidManager extends AbsPlayerManager {
    @Override
    public RightMid build() throws Exception {
       RightMid rightMid = new RightMid(playerCount++);

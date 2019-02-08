@@ -1,8 +1,8 @@
-package isoccer.builder.staff;
+package isoccer.manager.staff;
 
 import isoccer.model.staff.President;
 
-public class PresidentBuilder extends MemberBuilder {
+public class PresidentManager extends MemberManager {
    @Override
    public President build() throws Exception {
       President president = new President(memberCount++);

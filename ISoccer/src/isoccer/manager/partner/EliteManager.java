@@ -1,8 +1,8 @@
-package isoccer.builder.partner;
+package isoccer.manager.partner;
 
 import isoccer.model.partner.Elite;
 
-public class EliteBuilder extends FanPartnerBuilder {
+public class EliteManager extends FanPartnerManager {
    @Override
    public Elite build() throws Exception {
       Elite elite = new Elite(partnerCount++);

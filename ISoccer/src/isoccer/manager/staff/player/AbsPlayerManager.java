@@ -1,11 +1,11 @@
-package isoccer.builder.staff.player;
+package isoccer.manager.staff.player;
 
 import isoccer.ISoccer;
-import isoccer.builder.staff.MemberBuilder;
+import isoccer.manager.staff.MemberManager;
 import isoccer.model.staff.Member;
 import isoccer.model.staff.player.Player;
 
-public abstract class AbsPlayerBuilder extends MemberBuilder {
+public abstract class AbsPlayerManager extends MemberManager {
    protected static int playerCount;
 
    @Override
