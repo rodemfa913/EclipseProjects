@@ -35,9 +35,9 @@ public class ISoccer {
       }
 
       Action[] actions = new Action[] {
-         new AddMember(), new AddPartner(), new AddResource()
-         /*new AddStadium(),
-         new AddTrainingCenter(), new ManageResource(), new GenerateReport()*/
+         new AddMember(), new AddPartner(), new AddResource(),
+         //new AddStadium(), new AddTrainingCenter()
+         new ManageResource(), new GenerateReport()
       };
 
       while (true) {
