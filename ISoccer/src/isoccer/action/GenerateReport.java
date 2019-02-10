@@ -3,7 +3,7 @@ package isoccer.action;
 import isoccer.action.report.*;
 import isoccer.ISoccer;
 
-public class GenerateReport extends Action {
+public class GenerateReport implements Action {
    @Override
    public void doAction() throws Exception {
       Report[] reports = new Report[] {

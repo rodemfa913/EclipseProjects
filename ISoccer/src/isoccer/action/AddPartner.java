@@ -4,7 +4,7 @@ import isoccer.builder.partner.*;
 import isoccer.ISoccer;
 import isoccer.model.partner.FanPartner;
 
-public class AddPartner extends Action {
+public class AddPartner implements Action {
    private FanPartnerBuilder[] builders;
 
    public AddPartner() {

@@ -4,7 +4,7 @@ import isoccer.builder.staff.*;
 import isoccer.ISoccer;
 import isoccer.model.staff.Member;
 
-public class AddMember extends Action {
+public class AddMember implements Action {
    private MemberBuilder[] builders;
 
    public AddMember() {

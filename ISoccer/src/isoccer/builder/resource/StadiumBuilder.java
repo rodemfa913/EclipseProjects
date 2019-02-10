@@ -15,6 +15,11 @@ public class StadiumBuilder extends ResourceBuilder {
    }
 
    @Override
+   public Stadium getResource() {
+      return ISoccer.stadium;
+   }
+
+   @Override
    public String getType() {
       return "estádio";
    }

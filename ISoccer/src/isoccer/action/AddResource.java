@@ -4,8 +4,8 @@ import isoccer.builder.resource.*;
 import isoccer.ISoccer;
 import isoccer.model.resource.Resource;
 
-public class AddResource extends Action {
-   ResourceBuilder[] builders;
+public class AddResource implements Action {
+   private ResourceBuilder[] builders;
 
    public AddResource() {
       builders = new ResourceBuilder[] {

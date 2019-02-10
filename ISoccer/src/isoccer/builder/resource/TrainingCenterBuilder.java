@@ -15,6 +15,11 @@ public class TrainingCenterBuilder extends ResourceBuilder {
    }
 
    @Override
+   public TrainingCenter getResource() {
+      return ISoccer.trainingCenter;
+   }
+
+   @Override
    public String getType() {
       return "centro de treinamento";
    }

@@ -17,6 +17,12 @@ public class BusBuilder extends ResourceBuilder {
    }
 
    @Override
+   public Bus getResource() {
+      System.out.print("Id: ");
+      return ISoccer.fleet.get(Integer.parseInt(ISoccer.input.nextLine()));
+   }
+
+   @Override
    public String getType() {
       return "ônibus";
    }
