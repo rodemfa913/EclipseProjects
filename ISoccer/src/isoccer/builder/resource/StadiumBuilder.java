@@ -32,7 +32,6 @@ public class StadiumBuilder extends ResourceBuilder {
       stadium.setNumWC(Integer.parseInt(ISoccer.input.nextLine()));
 
       System.out.print("Número de lanchonetes: ");
-      stadium.setNumSnackBar(
-            Integer.parseInt(ISoccer.input.nextLine()));
+      stadium.setNumSnackBar(Integer.parseInt(ISoccer.input.nextLine()));
    }
 }

@@ -9,7 +9,7 @@ public class AddResource extends Action {
 
    public AddResource() {
       builders = new ResourceBuilder[] {
-         new BusBuilder(), new StadiumBuilder()
+         new BusBuilder(), new StadiumBuilder(), new TrainingCenterBuilder()
       };
    }
 
