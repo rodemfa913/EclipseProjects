@@ -9,9 +9,7 @@ public class AddMember implements Action {
 
    public AddMember() {
       builders = new MemberBuilder[] {
-         new PresidentBuilder(), new DoctorBuilder(), new CoachBuilder(),
-         new PhysicalTrainerBuilder(), new DriverBuilder(),
-         new CookBuilder(), new LawyerBuilder(), new PlayerBuilder()
+         new CoachBuilder(), new PlayerBuilder(), new ServiceBuilder()
       };
    }
 

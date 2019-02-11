@@ -1,11 +1,11 @@
-package isoccer.builder.staff;
+package isoccer.builder.staff.service;
 
-import isoccer.model.staff.Lawyer;
+import isoccer.model.staff.service.Lawyer;
 
-public class LawyerBuilder extends MemberBuilder {
+public class LawyerBuilder extends AbsServiceBuilder {
    @Override
    public Lawyer build() throws Exception {
-      Lawyer lawyer = new Lawyer(memberCount++);
+      Lawyer lawyer = new Lawyer(servMemberCount++);
       setInfo(lawyer);
       put(lawyer);
 

@@ -1,11 +1,11 @@
-package isoccer.builder.staff;
+package isoccer.builder.staff.service;
 
-import isoccer.model.staff.Cook;
+import isoccer.model.staff.service.Cook;
 
-public class CookBuilder extends MemberBuilder {
+public class CookBuilder extends AbsServiceBuilder {
    @Override
    public Cook build() throws Exception {
-      Cook cook = new Cook(memberCount++);
+      Cook cook = new Cook(servMemberCount++);
       setInfo(cook);
       put(cook);
 

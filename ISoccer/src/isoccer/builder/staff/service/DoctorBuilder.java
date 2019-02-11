@@ -1,13 +1,13 @@
-package isoccer.builder.staff;
+package isoccer.builder.staff.service;
 
 import isoccer.ISoccer;
-import isoccer.model.staff.Doctor;
 import isoccer.model.staff.Member;
+import isoccer.model.staff.service.Doctor;
 
-public class DoctorBuilder extends MemberBuilder {
+public class DoctorBuilder extends AbsServiceBuilder {
    @Override
    public Doctor build() throws Exception {
-      Doctor doctor = new Doctor(memberCount++);
+      Doctor doctor = new Doctor(servMemberCount++);
       setInfo(doctor);
       put(doctor);
 

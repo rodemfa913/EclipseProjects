@@ -1,11 +1,11 @@
-package isoccer.builder.staff;
+package isoccer.builder.staff.service;
 
-import isoccer.model.staff.President;
+import isoccer.model.staff.service.President;
 
-public class PresidentBuilder extends MemberBuilder {
+public class PresidentBuilder extends AbsServiceBuilder {
    @Override
    public President build() throws Exception {
-      President president = new President(memberCount++);
+      President president = new President(servMemberCount++);
       setInfo(president);
       put(president);
 

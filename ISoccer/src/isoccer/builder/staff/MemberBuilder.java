@@ -5,12 +5,6 @@ import isoccer.ISoccer;
 import isoccer.model.staff.Member;
 
 public abstract class MemberBuilder implements Builder<Member> {
-   protected static int memberCount;
-
-   protected Member put(Member member) {
-      return ISoccer.members.put(member.id, member);
-   }
-
    protected void setInfo(Member member) throws Exception {
       System.out.print("Nome: ");
       member.setName(ISoccer.input.nextLine());

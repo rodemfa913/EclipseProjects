@@ -1,13 +1,13 @@
-package isoccer.builder.staff;
+package isoccer.builder.staff.service;
 
 import isoccer.ISoccer;
-import isoccer.model.staff.Driver;
 import isoccer.model.staff.Member;
+import isoccer.model.staff.service.Driver;
 
-public class DriverBuilder extends MemberBuilder {
+public class DriverBuilder extends AbsServiceBuilder {
    @Override
    public Driver build() throws Exception {
-      Driver driver = new Driver(memberCount++);
+      Driver driver = new Driver(servMemberCount++);
       setInfo(driver);
       put(driver);
 

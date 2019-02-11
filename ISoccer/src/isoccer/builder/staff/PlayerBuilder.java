@@ -1,7 +1,7 @@
 package isoccer.builder.staff;
 
-import isoccer.ISoccer;
 import isoccer.builder.staff.player.*;
+import isoccer.ISoccer;
 import isoccer.model.staff.player.Player;
 
 public class PlayerBuilder extends MemberBuilder {

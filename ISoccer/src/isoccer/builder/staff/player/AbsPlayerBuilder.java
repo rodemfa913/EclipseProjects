@@ -8,7 +8,6 @@ import isoccer.model.staff.player.Player;
 public abstract class AbsPlayerBuilder extends MemberBuilder {
    protected static int playerCount;
 
-   @Override
    protected Player put(Member member) {
       return ISoccer.players.put(member.id, (Player) member);
    }
