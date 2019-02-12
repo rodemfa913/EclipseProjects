@@ -16,4 +16,9 @@ public class TrainingCenter extends Resource {
          nBedroom = 0;
       this.nBedroom = nBedroom;
    }
+
+   @Override
+   public String toString() {
+      return super.toString() + "\nNúmero de dormitórios: " + nBedroom;
+   }
 }

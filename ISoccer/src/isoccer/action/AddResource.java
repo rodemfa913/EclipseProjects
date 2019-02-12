@@ -9,7 +9,8 @@ public class AddResource implements Action {
 
    public AddResource() {
       builders = new ResourceBuilder[] {
-         new BusBuilder(), new StadiumBuilder(), new TrainingCenterBuilder()
+         new TransportBuilder(), new StadiumBuilder(),
+         new TrainingCenterBuilder()
       };
    }
 

@@ -10,7 +10,8 @@ public class ManageResource implements Action {
 
    public ManageResource() {
       getters = new ResourceBuilder[] {
-         new BusBuilder(), new StadiumBuilder(), new TrainingCenterBuilder()
+         new TransportBuilder(), new StadiumBuilder(),
+         new TrainingCenterBuilder()
       };
    }
 

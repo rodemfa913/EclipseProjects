@@ -7,4 +7,9 @@ public abstract class Resource {
    public Resource(int id) {
       this.id = id;
    }
+
+   @Override
+   public String toString() {
+      return "Disponível: " + (available ? "sim" : "não");
+   }
 }

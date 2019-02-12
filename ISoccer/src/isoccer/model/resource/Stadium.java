@@ -36,4 +36,11 @@ public class Stadium extends Resource {
          nSnackBar = 0;
       this.nSnackBar = nSnackBar;
    }
+
+   @Override
+   public String toString() {
+      return super.toString() + "\nCapacidade: " + capacity +
+            "\nNúmero de banheiros: " + nWC +
+            "\nNúmero de lanchonetes: " + nSnackBar;
+   }
 }

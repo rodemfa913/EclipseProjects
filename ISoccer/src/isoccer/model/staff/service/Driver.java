@@ -8,4 +8,9 @@ public class Driver extends Member {
    public Driver(int id) {
       super(id);
    }
+
+   @Override
+   public String toString() {
+      return super.toString() + "\nCNH: " + cnh;
+   }
 }
