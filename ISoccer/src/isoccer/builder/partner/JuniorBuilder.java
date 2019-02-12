@@ -16,4 +16,11 @@ public class JuniorBuilder extends FanPartnerBuilder {
    public String getType() {
       return "júnior";
    }
+
+   @Override
+   public void setContribution(double contribution) {
+      if (contribution < 0.0)
+         contribution = 0.0;
+      Junior.contribution = contribution;
+   }
 }

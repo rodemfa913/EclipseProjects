@@ -21,8 +21,8 @@ public class ISoccer {
 
       Action[] actions = new Action[] {
          new AddMember(), new AddPartner(), new AddResource(),
-         new ManagePlayer(), new ManagePartner(),
-         new ManageResource(), new GenerateReport()
+         new ManagePlayer(), new ManagePartner(), new ManageResource(),
+         new SetContribution(), new GenerateReport()
       };
 
       while (true) {

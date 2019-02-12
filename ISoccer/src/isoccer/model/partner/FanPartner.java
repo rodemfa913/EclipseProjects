@@ -19,7 +19,7 @@ public abstract class FanPartner {
       return address;
    }
 
-   public abstract double getContribution();
+   protected abstract double getContribution();
 
    public String getCPF() {
       return cpf;
@@ -38,8 +38,6 @@ public abstract class FanPartner {
          address = "-";
       this.address = address;
    }
-
-   public abstract void setContribution(double contribution);
 
    public void setCPF(String cpf) throws Exception {
       if (!cpf.matches(RegEx.cpf))
@@ -61,7 +59,8 @@ public abstract class FanPartner {
 
    @Override
    public String toString() {
-      return "Nome: " + name + "\nE-mail: " + email + "\nCPF: " + cpf +
-            "\nEndereço: " + address + "\nTelefone: " + phone;
+      return "Nome: " + name + "\nE-mail: " + email + "\nCPF: " +
+            cpf + "\nEndereço: " + address + "\nTelefone: " +
+            phone + "\nValor de contribuição: " + getContribution();
    }
 }

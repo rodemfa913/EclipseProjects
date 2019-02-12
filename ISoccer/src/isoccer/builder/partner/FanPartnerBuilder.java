@@ -25,6 +25,8 @@ public abstract class FanPartnerBuilder implements Builder<FanPartner> {
       return partners.put(partner.id, partner);
    }
 
+   public abstract void setContribution(double contribution);
+
    protected void setInfo(FanPartner partner) throws Exception {
       System.out.print("Nome: ");
       partner.setName(ISoccer.input.nextLine());
@@ -40,8 +42,5 @@ public abstract class FanPartnerBuilder implements Builder<FanPartner> {
 
       System.out.print("Endereço: ");
       partner.setAddress(ISoccer.input.nextLine());
-
-      System.out.print("Valor de contribuição (" + getType() + "): ");
-      partner.setContribution(Double.parseDouble(ISoccer.input.nextLine()));
    }
 }

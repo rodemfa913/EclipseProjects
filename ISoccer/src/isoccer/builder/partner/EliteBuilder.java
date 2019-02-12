@@ -16,4 +16,11 @@ public class EliteBuilder extends FanPartnerBuilder {
    public String getType() {
       return "elite";
    }
+
+   @Override
+   public void setContribution(double contribution) {
+      if (contribution < 0.0)
+         contribution = 0.0;
+      Elite.contribution = contribution;
+   }
 }
