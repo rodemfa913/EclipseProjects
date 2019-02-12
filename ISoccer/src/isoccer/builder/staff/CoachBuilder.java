@@ -1,15 +1,19 @@
 package isoccer.builder.staff;
 
-import isoccer.ISoccer;
 import isoccer.model.staff.Coach;
 
 public class CoachBuilder extends MemberBuilder {
+   private static Coach coach;
+
    @Override
    public Coach build() throws Exception {
-      Coach coach = new Coach(0);
+      coach = new Coach(0);
       setInfo(coach);
-      ISoccer.coach = coach;
 
+      return coach;
+   }
+
+   public static Coach getCoach() {
       return coach;
    }
 

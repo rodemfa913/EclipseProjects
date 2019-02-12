@@ -1,23 +1,10 @@
 package isoccer;
 
 import isoccer.action.*;
-import isoccer.model.partner.FanPartner;
-import isoccer.model.resource.*;
-import isoccer.model.staff.Coach;
-import isoccer.model.staff.Member;
-import isoccer.model.staff.player.Player;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class ISoccer {
-   public static Coach coach;
-   public static final HashMap<Integer, Bus> fleet = new HashMap<>();
    public static final Scanner input = new Scanner(System.in);
-   public static final HashMap<Integer, Member> members = new HashMap<>();
-   public static final HashMap<Integer, FanPartner> partners = new HashMap<>();
-   public static final HashMap<Integer, Player> players = new HashMap<>();
-   public static Stadium stadium;
-   public static TrainingCenter trainingCenter;
 
    public static void main(String[] args) {
       System.out.print("Login: ");

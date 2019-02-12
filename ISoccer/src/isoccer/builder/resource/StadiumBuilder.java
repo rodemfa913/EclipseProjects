@@ -5,18 +5,23 @@ import isoccer.model.resource.Resource;
 import isoccer.model.resource.Stadium;
 
 public class StadiumBuilder extends ResourceBuilder {
+   private static Stadium stadium;
+
    @Override
    public Stadium build() throws Exception {
-      Stadium stadium = new Stadium(0);
+      stadium = new Stadium(0);
       setInfo(stadium);
-      ISoccer.stadium = stadium;
 
+      return stadium;
+   }
+
+   public static Stadium getStadium() {
       return stadium;
    }
 
    @Override
    public Stadium getResource() {
-      return ISoccer.stadium;
+      return stadium;
    }
 
    @Override

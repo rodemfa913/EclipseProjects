@@ -7,7 +7,7 @@ import isoccer.model.staff.service.Driver;
 public class DriverBuilder extends AbsServiceBuilder {
    @Override
    public Driver build() throws Exception {
-      Driver driver = new Driver(servMemberCount++);
+      Driver driver = new Driver(memberCount++);
       setInfo(driver);
       put(driver);
 

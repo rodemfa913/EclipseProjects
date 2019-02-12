@@ -5,7 +5,7 @@ import isoccer.model.staff.service.President;
 public class PresidentBuilder extends AbsServiceBuilder {
    @Override
    public President build() throws Exception {
-      President president = new President(servMemberCount++);
+      President president = new President(memberCount++);
       setInfo(president);
       put(president);
 

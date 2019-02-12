@@ -5,18 +5,23 @@ import isoccer.model.resource.Resource;
 import isoccer.model.resource.TrainingCenter;
 
 public class TrainingCenterBuilder extends ResourceBuilder {
+   private static TrainingCenter trainingCenter;
+
    @Override
    public TrainingCenter build() throws Exception {
-      TrainingCenter trainingCenter = new TrainingCenter(0);
+      trainingCenter = new TrainingCenter(0);
       setInfo(trainingCenter);
-      ISoccer.trainingCenter = trainingCenter;
 
+      return trainingCenter;
+   }
+
+   public static TrainingCenter getTrainingCenter() {
       return trainingCenter;
    }
 
    @Override
    public TrainingCenter getResource() {
-      return ISoccer.trainingCenter;
+      return trainingCenter;
    }
 
    @Override

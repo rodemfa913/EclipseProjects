@@ -7,7 +7,7 @@ import isoccer.model.staff.service.Doctor;
 public class DoctorBuilder extends AbsServiceBuilder {
    @Override
    public Doctor build() throws Exception {
-      Doctor doctor = new Doctor(servMemberCount++);
+      Doctor doctor = new Doctor(memberCount++);
       setInfo(doctor);
       put(doctor);
 

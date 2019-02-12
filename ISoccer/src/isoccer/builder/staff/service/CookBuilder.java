@@ -5,7 +5,7 @@ import isoccer.model.staff.service.Cook;
 public class CookBuilder extends AbsServiceBuilder {
    @Override
    public Cook build() throws Exception {
-      Cook cook = new Cook(servMemberCount++);
+      Cook cook = new Cook(memberCount++);
       setInfo(cook);
       put(cook);
 

@@ -3,12 +3,19 @@ package isoccer.builder.partner;
 import isoccer.builder.Builder;
 import isoccer.ISoccer;
 import isoccer.model.partner.FanPartner;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class FanPartnerBuilder implements Builder<FanPartner> {
    protected static int partnerCount;
+   private static final HashMap<Integer, FanPartner> partners = new HashMap<>();
+
+   public static ArrayList<FanPartner> getPartners() {
+      return new ArrayList<>(partners.values());
+   }
 
    protected FanPartner put(FanPartner partner) {
-      return ISoccer.partners.put(partner.id, partner);
+      return partners.put(partner.id, partner);
    }
 
    protected void setInfo(FanPartner partner) throws Exception {
