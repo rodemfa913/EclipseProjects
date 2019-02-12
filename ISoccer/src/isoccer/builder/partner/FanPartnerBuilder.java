@@ -10,6 +10,13 @@ public abstract class FanPartnerBuilder implements Builder<FanPartner> {
    protected static int partnerCount;
    private static final HashMap<Integer, FanPartner> partners = new HashMap<>();
 
+   public static FanPartner getPartner() {
+      System.out.print("Id: ");
+      int id = Integer.parseInt(ISoccer.input.nextLine());
+
+      return partners.get(id);
+   }
+
    public static ArrayList<FanPartner> getPartners() {
       return new ArrayList<>(partners.values());
    }
@@ -36,8 +43,5 @@ public abstract class FanPartnerBuilder implements Builder<FanPartner> {
 
       System.out.print("Valor de contribuição (" + getType() + "): ");
       partner.setContribution(Double.parseDouble(ISoccer.input.nextLine()));
-
-      System.out.print("Inadiplente? (s/n): ");
-      partner.defaulting = ISoccer.input.nextLine().toLowerCase().equals("s");
    }
 }

@@ -6,7 +6,7 @@ import isoccer.model.resource.Resource;
 
 public class ManageResource implements Action {
    private ResourceBuilder[] getters;
-   private final Exception unavailableException = new Exception("indisponível");
+   private final Exception unavailableException = new Exception("Indisponível.");
 
    public ManageResource() {
       getters = new ResourceBuilder[] {

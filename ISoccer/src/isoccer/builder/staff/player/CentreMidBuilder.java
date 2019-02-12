@@ -14,7 +14,6 @@ public class CentreMidBuilder extends AbsPlayerBuilder {
 
    @Override
    public String getType() {
-      // TODO Auto-generated method stub
-      return null;
+      return "meia";
    }
 }
