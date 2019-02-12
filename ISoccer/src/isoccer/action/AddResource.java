@@ -25,8 +25,8 @@ public class AddResource implements Action {
 
       Resource resource = builders[r].build();
 
-      System.out.println("Recurso físico '" + resource.id +
-            ": " + builders[r].getType() + "' adicionado.");
+      System.out.println("Recurso físico '" + builders[r].getType() + " " +
+            resource.id + ": " + resource.getName() + "' adicionado.");
    }
 
    @Override

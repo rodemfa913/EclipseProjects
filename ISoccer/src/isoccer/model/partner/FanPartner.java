@@ -58,4 +58,10 @@ public abstract class FanPartner {
          name = "-";
       this.name = name;
    }
+
+   @Override
+   public String toString() {
+      return "Nome: " + name + "\nE-mail: " + email + "\nCPF: " + cpf +
+            "\nEndereço: " + address + "\nTelefone: " + phone;
+   }
 }
